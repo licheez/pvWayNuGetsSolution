@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>pvWay.MsSqlLoggerService</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>pvWay.MsSqlLoggerService</PackageId>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Product>pvWay MsSqlLoggerService</Product>
+    <Copyright>2020</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>http://www.pvWay.com</PackageProjectUrl>
+    <PackageIconUrl>http://www.pvway.com/images/Logo150x200px.png</PackageIconUrl>
+    <PackageTags>pvWay Logger MsSql</PackageTags>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <Description>Implement a pvWay.LoggerService persisting logs into an MsSqlDatabase</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="pvWay.LoggerService" Version="1.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+
+    <Content Include="readMe.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+
+  </ItemGroup>
+
+</Project>

@@ -1,1 +1,29 @@
 https://www.youtube.com/watch?v=AF1y9gLcxjQ 
+
+include a readMe.txt file by editing the csproj file of the project
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>...</PropertyGroup>
+
+  INSERT THIS SECTION
+  ===================
+
+  <ItemGroup>
+    <Content Include="readMe.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+</Project>
+
+nuGet commands
+
+d:\nuGets\nuGet source list
+
+d:\nuGets\nuGet.exe push -Source "pvWayLabFeed" -ApiKey "DevAzureOps" PACKAGE_FILE_NAME.nupkg
+
+d:\nuGets\nuGet.exe push -Source "pvWayLabFeed" -ApiKey "DevAzureOps" pvWay.LoggerService.1.0.0.nupkg
+d:\nuGets\nuGet.exe push -Source "pvWayLabFeed" -ApiKey "DevAzureOps" pvWay.MethodResult.1.0.0.nupkg
+d:\nuGets\nuGet.exe push -Source "pvWayLabFeed" -ApiKey "DevAzureOps" pvWay.MsSqlLoggerService.1.0.0.nupkg

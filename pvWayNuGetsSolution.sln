@@ -3,14 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodResultLib", "..\MethodResultLib\MethodResultLib.csproj", "{03AB028F-B966-4899-AEC2-1121CB7D45EC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D166B91-A8C4-476B-8D30-8EB09A5D0E80}"
 	ProjectSection(SolutionItems) = preProject
 		introductionToNuGetPackages.txt = introductionToNuGetPackages.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerServiceLib", "LoggerServiceLib\LoggerServiceLib.csproj", "{81709315-189C-470F-883B-0BEA97CF5DBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerServiceLib", "LoggerServiceLib\LoggerServiceLib.csproj", "{81709315-189C-470F-883B-0BEA97CF5DBC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MethodResultLib", "MethodResultLib\MethodResultLib.csproj", "{691349F4-AB11-4DE6-834D-4627336A28FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlLoggerServiceLib", "MsSqlLoggerServiceLib\MsSqlLoggerServiceLib.csproj", "{FE274F68-29E8-4B1C-AC97-4C5EA08DE7A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,14 +20,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{03AB028F-B966-4899-AEC2-1121CB7D45EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03AB028F-B966-4899-AEC2-1121CB7D45EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03AB028F-B966-4899-AEC2-1121CB7D45EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03AB028F-B966-4899-AEC2-1121CB7D45EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81709315-189C-470F-883B-0BEA97CF5DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81709315-189C-470F-883B-0BEA97CF5DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81709315-189C-470F-883B-0BEA97CF5DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81709315-189C-470F-883B-0BEA97CF5DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{691349F4-AB11-4DE6-834D-4627336A28FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691349F4-AB11-4DE6-834D-4627336A28FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691349F4-AB11-4DE6-834D-4627336A28FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691349F4-AB11-4DE6-834D-4627336A28FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE274F68-29E8-4B1C-AC97-4C5EA08DE7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE274F68-29E8-4B1C-AC97-4C5EA08DE7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE274F68-29E8-4B1C-AC97-4C5EA08DE7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE274F68-29E8-4B1C-AC97-4C5EA08DE7A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
