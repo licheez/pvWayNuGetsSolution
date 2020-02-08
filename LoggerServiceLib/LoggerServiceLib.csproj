@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>pvWay.LoggerService</PackageId>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Product>pvWay LoggerService</Product>
+    <Copyright>2020</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>http://www.pvWay.com</PackageProjectUrl>
+    <PackageIconUrl>http://www.pvway.com/images/Logo150x200px.png</PackageIconUrl>
+    <PackageTags>pvWay Logger</PackageTags>
+    <RootNamespace>pvWay.LoggerService</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="pvWay.MethodResult" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
