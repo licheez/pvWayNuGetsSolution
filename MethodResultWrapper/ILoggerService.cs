@@ -6,8 +6,8 @@ namespace pvWay.MethodResultWrapper
 {
     public interface ILoggerService : IDisposable
     {
-        Guid? UserId { get; set; }
-        Guid? CompanyId { get; set; }
+        void SetUser(string userId, string companyId = null);
+
         void Log(
             string message = "passed",
             SeverityEnum severity = SeverityEnum.Debug,
@@ -21,7 +21,6 @@ namespace pvWay.MethodResultWrapper
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
-
 
         void Log(
             IMethodResult result,

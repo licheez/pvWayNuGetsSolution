@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
+    <version>1.1.0</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides a generic wrapper that returns whether or not a method succeeded of failed carrying the method result on success or a list of notifications/errors in case of failure</description>
-    <releaseNotes>Initial version</releaseNotes>
+    <releaseNotes>ILoggerService updated</releaseNotes>
     <copyright>Copyright pvWay 2020</copyright>
     <tags>pvWay MethodResult Logger</tags>
   </metadata>

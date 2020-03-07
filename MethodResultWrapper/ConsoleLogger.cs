@@ -5,8 +5,10 @@ namespace pvWay.MethodResultWrapper
 {
     public class ConsoleLogger : ILoggerService
     {
-        public Guid? UserId { get; set; }
-        public Guid? CompanyId { get; set; }
+        public void SetUser(string userId, string companyId = null)
+        {
+            // nop
+        }
 
         public void Log(
             string message = "pass",
