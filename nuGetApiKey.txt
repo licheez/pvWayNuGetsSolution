@@ -1,3 +1,0 @@
-nuGet accoun PiVaWa using Microsoft Personal Account (pierre@pvway.com)
-KeyName: PiVaWa 
-Key: oy2ky2kuh4ltjgmrfukq33qqfjjm2xxe3cv3ehl2n4yllq
