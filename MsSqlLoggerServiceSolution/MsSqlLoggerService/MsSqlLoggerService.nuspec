@@ -7,13 +7,12 @@
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
     <license type="expression">MIT</license>
-    <projectUrl>http://www.pvWay.com</projectUrl>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlLoggerServiceSolution/MsSqlLoggerService</projectUrl>
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Ms Sql implementation of MethodResultWrapper ILoggerService. Persists logs into a MsSql table.</description>
-    <releaseNotes>Readme file included</releaseNotes>
+    <releaseNotes>gitHub link added</releaseNotes>
     <copyright>Copyright pvWay 2020</copyright>
     <tags>pvWay MsSql Logger MethodResultWrapper</tags>
-    <readme>readMe.txt</readme>
   </metadata>
 </package>
