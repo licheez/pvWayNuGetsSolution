@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
+    <version>1.1.0</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,8 +11,9 @@
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Ms Sql implementation of MethodResultWrapper ILoggerService. Persists logs into a MsSql table.</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>Readme file included</releaseNotes>
     <copyright>Copyright pvWay 2020</copyright>
-    <tags>pvWay Ms Sql Logger</tags>
+    <tags>pvWay MsSql Logger MethodResultWrapper</tags>
+    <readme>readMe.txt</readme>
   </metadata>
 </package>

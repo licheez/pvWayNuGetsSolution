@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace pvWay.MsSqlLoggerService
 {
-    class ColumnInfo
+    internal class ColumnInfo
     {
         public string ColumnName { get; }
         public string Type { get; }
@@ -29,16 +29,20 @@ namespace pvWay.MsSqlLoggerService
                 ? (int?)null : dr.GetInt32(iLength);
 
             var iIsNullable = dr.GetOrdinal("is_nullable");
-            IsNullable = dr.GetBoolean(iIsNullable);
+            IsNullable = dr.GetString(iIsNullable) == "YES";
         }
     }
 
     public class Logger : ILoggerService
     {
+        private static volatile ILoggerService _instance;
+        private static readonly object Locker = new object();
+
         private readonly string _msSqlConnectionString;
+        private readonly string _tableSchema;
+        private readonly string _tableName;
 
         private readonly SeverityEnum _logLevel;
-        private readonly string _tableName;
 
         private readonly string _userIdColumnName;
         private int _userIdLength;
@@ -61,9 +65,10 @@ namespace pvWay.MsSqlLoggerService
         private string _userId;
         private string _companyId;
 
-        public Logger(
+        private Logger(
             string msSqlConnectionString,
             SeverityEnum logLevel = SeverityEnum.Debug,
+            string tableSchema = "dbo",
             string tableName = "ApplicationLog",
             string userIdColumnName = "AspNetUserId",
             string companyIdColumnName = "CompanyId",
@@ -77,6 +82,7 @@ namespace pvWay.MsSqlLoggerService
         {
             _msSqlConnectionString = msSqlConnectionString;
             _logLevel = logLevel;
+            _tableSchema = tableSchema;
             _tableName = tableName;
             _userIdColumnName = userIdColumnName;
             _companyIdColumnName = companyIdColumnName;
@@ -95,12 +101,13 @@ namespace pvWay.MsSqlLoggerService
             using (var cn = new SqlConnection(_msSqlConnectionString))
             {
                 cn.Open();
-                var cmdText = "SELECT column_name, " +
-                              "       data_type, " +
-                              "       is_nullable, " +
-                              "       character_maximum_length "
-                            + "FROM information_schema.columns"
-                            + $"WHERE table_name = '{_tableName}'";
+                var cmdText = "SELECT [column_name], " +
+                              "       [data_type], " +
+                              "       [is_nullable], " +
+                              "       [character_maximum_length] "
+                            + "FROM [information_schema].[columns] "
+                            + $"WHERE [table_schema] = '{_tableSchema}' " +
+                              $"AND   [table_name] = '{_tableName}'";
 
                 var cmd = cn.CreateCommand();
                 cmd.CommandText = cmdText;
@@ -123,7 +130,7 @@ namespace pvWay.MsSqlLoggerService
                 }
                 else
                 {
-                    CheckColumn(errors, dic, _userId, "varchar", 
+                    CheckColumn(errors, dic, _userIdColumnName, "varchar", 
                         true, out _userIdLength);
                     CheckColumn(errors, dic, _companyIdColumnName, "varchar", 
                         true, out _companyIdLength);
@@ -148,7 +155,7 @@ namespace pvWay.MsSqlLoggerService
                 if (errors.Any())
                 {
                     var errorMessage = string.Empty;
-                    foreach (var error in errorMessage)
+                    foreach (var error in errors)
                     {
                         if (!string.IsNullOrEmpty(errorMessage)) errorMessage += Environment.NewLine;
                         errorMessage += error;
@@ -188,6 +195,41 @@ namespace pvWay.MsSqlLoggerService
 
             var neg = isNullable ? "" : "not ";
             errors.Add($"{columnName} should {neg}be nullable");
+        }
+
+        public static ILoggerService GetInstance(
+            string msSqlConnectionString,
+            SeverityEnum logLevel = SeverityEnum.Debug,
+            string tableSchema = "dbo",
+            string tableName = "ApplicationLog",
+            string userIdColumnName = "UserId",
+            string companyIdColumnName = "CompanyId",
+            string machineNameColumnName = "MachineName",
+            string severityCodeColumnName = "SeverityCode",
+            string contextColumnName = "Context",
+            string messageColumnName = "Message",
+            string createDateColumnName = "CreateDateUtc",
+            string userId = null,
+            string companyId = null)
+        {
+            if (_instance != null) return _instance;
+            lock (Locker)
+            {
+                return _instance ?? (_instance = new Logger(
+                           msSqlConnectionString,
+                           logLevel,
+                           tableSchema,
+                           tableName,
+                           userIdColumnName,
+                           companyIdColumnName,
+                           machineNameColumnName,
+                           severityCodeColumnName,
+                           contextColumnName,
+                           messageColumnName,
+                           createDateColumnName,
+                           userId,
+                           companyId));
+            }
         }
         
         public void SetUser(string userId, string companyId = null)
@@ -234,7 +276,8 @@ namespace pvWay.MsSqlLoggerService
             string callerFilePath = "",
             int callerLineNumber = -1)
         {
-            Log(e.GetDeepMessage(), severity, callerMemberName, callerFilePath, callerLineNumber);
+            var message = e.GetDeepMessage() + $"stackTrace:{e.StackTrace}";
+            Log(message, severity, callerMemberName, callerFilePath, callerLineNumber);
         }
 
         public void Log(
@@ -292,7 +335,7 @@ namespace pvWay.MsSqlLoggerService
                     machineName = machineName.Substring(0, _machineNameLength);
                 machineName = machineName.Replace("'", "''");
 
-                var cmdText = $"INSERT INTO [{_tableName}] "
+                var cmdText = $"INSERT INTO [{_tableSchema}].[{_tableName}] "
                               + "( "
                               + $" [{_userIdColumnName}], "
                               + $" [{_companyIdColumnName}], "

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MsSqlLoggerService")]
-[assembly: AssemblyDescription("Ms Sql Implementation of the ILoggerService from MethodResultWrapper")]
+[assembly: AssemblyTitle("MsSqlLoggerServiceLab")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("pvWay")]
-[assembly: AssemblyProduct("MsSqlLoggerService")]
-[assembly: AssemblyCopyright("Copyright pvWay Ltd ©  2020")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("MsSqlLoggerServiceLab")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6e4f8b44-7684-47a9-b232-c13efce30fd7")]
+[assembly: Guid("7e1480c5-ea1b-4b68-a648-610499f3135a")]
 
 // Version information for an assembly consists of the following four values:
 //
