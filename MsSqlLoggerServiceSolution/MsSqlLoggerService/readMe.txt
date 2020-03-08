@@ -5,10 +5,7 @@ This service implements the ILoggerService from the
 MethodResultWrapper nuGet package using an Ms Sql database table
 as persistence layer
 
-The service is implemented as a singleton
-
-You can get an instance of the service by calling the 
-static MsSqlLoggerService.GetInstance method
+Instantiate the service by invoking its constructor;
 
 Pre-conditions for this service to work property
 ************************************************
@@ -100,52 +97,68 @@ CreateDateUtc (default column name)
 Usage
 *****
 
-See here after how to invoke the GetInstance method for
-getting a (singleton) instance of the logger.
-
 Example 1 : providing your own values for the schema, table and column names
 ----------------------------------------------------------------------------
-private static void Main(string[] args)
+
+using System;
+using pvWay.MethodResultWrapper;
+using pvWay.MsSqlLoggerService;
+
+namespace MsSqlLoggerServiceLab
 {
-    const string cs = "data source=Localhost;initial catalog=MyLoggingMsSqlDb;"
-                    + "integrated security=True;MultipleActiveResultSets=True;";
+    internal static class Program
+    {
+        private static void Main(/*string[] args*/)
+        {
+            const string cn = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
+                              "integrated security=True;MultipleActiveResultSets=True;";
 
-    var ls = Logger.GetInstance(
-        cs,
-        SeverityEnum.Debug,
-        "dbo", // table schema
-        "Log", // table name
-        "UserId", // userId column name
-        "CompanyId", // companyId column name
-        "MachineName", // machineName column name
-        "SeverityCode", // severityCode column name
-        "Context", // context column name
-        "Message", // message column name
-        "CreateDateUtc", // createDateUtc column name
-        "me", // userId (can be set at construction time and updated later
-        "myCompany" // companyId (can be set at construction time and updated later
-		);
+            var ls = new Logger(
+                cn,
+                SeverityEnum.Debug,
+                "dbo",
+                "Log",
+                "UserId",
+                "CompanyId",
+                "MachineName",
+                "SeverityCode",
+                "Context",
+                "Message",
+                "CreateDateUtc",
+                "me",
+                "myCompany");
 
-    ls.Log(new Exception());
+            ls.Log(new Exception());
 
-    Console.WriteLine("hit enter to quit");
-    Console.ReadLine();
+            Console.WriteLine("hit enter to quit");
+            Console.ReadLine();
+        }
+    }
 }
 
 Example 2 : using all default values
 ----------------------------------------------------------------------------
-private static void Main(string[] args)
+using System;
+using pvWay.MethodResultWrapper;
+using pvWay.MsSqlLoggerService;
+
+namespace MsSqlLoggerServiceLab
 {
-    const string cs = "data source=Localhost;initial catalog=MyLoggingMsSqlDb;"
-                    + "integrated security=True;MultipleActiveResultSets=True;";
+    internal static class Program
+    {
+        private static void Main(/*string[] args*/)
+        {
+            const string cn = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
+                              "integrated security=True;MultipleActiveResultSets=True;";
 
-    var ls = Logger.GetInstance(
-        cs,
-        SeverityEnum.Debug);
+            var ls = new Logger(cn);
 
-    ls.Log(new Exception());
+			ls.SetUser("me", "myCompany");
 
-    Console.WriteLine("hit enter to quit");
-    Console.ReadLine();
+            ls.Log(new Exception());
+
+            Console.WriteLine("hit enter to quit");
+            Console.ReadLine();
+        }
+    }
 }
-

@@ -35,8 +35,8 @@ namespace pvWay.MsSqlLoggerService
 
     public class Logger : ILoggerService
     {
-        private static volatile ILoggerService _instance;
-        private static readonly object Locker = new object();
+        //private static volatile ILoggerService _instance;
+        //private static readonly object Locker = new object();
 
         private readonly string _msSqlConnectionString;
         private readonly string _tableSchema;
@@ -65,7 +65,28 @@ namespace pvWay.MsSqlLoggerService
         private string _userId;
         private string _companyId;
 
-        private Logger(
+        /// <summary>
+        /// Instantiates a new LoggerService.
+        /// This will check that the table exits and that all columns are compliant.
+        /// The constructor also store the max length of the columns so that the
+        /// info will be properly truncated when logging the data into the db.
+        /// The constructor throws a system exception when the table definition
+        /// does not comply to the requested pre-conditions.
+        /// </summary>
+        /// <param name="msSqlConnectionString"></param>
+        /// <param name="logLevel">default to SeverityEnum.Debug</param>
+        /// <param name="tableSchema">default to "dbo"</param>
+        /// <param name="tableName">default to "ApplicationLog"</param>
+        /// <param name="userIdColumnName">name of the UserId column (should be varchar nullable). default "UserId"</param>
+        /// <param name="companyIdColumnName">name of the CompanyId column (should be varchar nullable). default "CompanyId"</param>
+        /// <param name="machineNameColumnName">name of the MachineName column (should be varchar non nullable). default "MachineName"</param>
+        /// <param name="severityCodeColumnName">name of the SeverityCode column (should be char non nullable). default "SeverityCode"</param>
+        /// <param name="contextColumnName">name of the Context column (should be varchar non nullable). default "Context"</param>
+        /// <param name="messageColumnName">name of the Message column (should be varchar(MAX) non nullable). default "Message"</param>
+        /// <param name="createDateColumnName">name of the CreateDateUtc column (should be datetime non nullable). default "CreateDateUtc"</param>
+        /// <param name="userId">Identification of the connected user (optional... can also be set later)</param>
+        /// <param name="companyId">Identification of the company of the connected user (optional... can also be set later)</param>
+        public Logger(
             string msSqlConnectionString,
             SeverityEnum logLevel = SeverityEnum.Debug,
             string tableSchema = "dbo",
@@ -195,41 +216,6 @@ namespace pvWay.MsSqlLoggerService
 
             var neg = isNullable ? "" : "not ";
             errors.Add($"{columnName} should {neg}be nullable");
-        }
-
-        public static ILoggerService GetInstance(
-            string msSqlConnectionString,
-            SeverityEnum logLevel = SeverityEnum.Debug,
-            string tableSchema = "dbo",
-            string tableName = "ApplicationLog",
-            string userIdColumnName = "UserId",
-            string companyIdColumnName = "CompanyId",
-            string machineNameColumnName = "MachineName",
-            string severityCodeColumnName = "SeverityCode",
-            string contextColumnName = "Context",
-            string messageColumnName = "Message",
-            string createDateColumnName = "CreateDateUtc",
-            string userId = null,
-            string companyId = null)
-        {
-            if (_instance != null) return _instance;
-            lock (Locker)
-            {
-                return _instance ?? (_instance = new Logger(
-                           msSqlConnectionString,
-                           logLevel,
-                           tableSchema,
-                           tableName,
-                           userIdColumnName,
-                           companyIdColumnName,
-                           machineNameColumnName,
-                           severityCodeColumnName,
-                           contextColumnName,
-                           messageColumnName,
-                           createDateColumnName,
-                           userId,
-                           companyId));
-            }
         }
         
         public void SetUser(string userId, string companyId = null)
