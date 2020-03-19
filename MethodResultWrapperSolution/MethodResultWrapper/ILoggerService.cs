@@ -54,7 +54,7 @@ namespace pvWay.MethodResultWrapper
             [CallerLineNumber] int lineNumber = -1);
 
 
-        // TOPIC LESS METHODS
+        // TOPIC METHODS
         void Log(
             string message,
             string topic,
