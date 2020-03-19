@@ -266,7 +266,6 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
 
 ```
 
-
 ## Usage
 ```csharp
 using pvWay.MethodResultWrapper;
@@ -372,7 +371,3 @@ namespace MrwConsole
     }
 }
 ```
-
-## Feedback
-
-https://github.com/chenzhiwei/chrome-markdown-editor

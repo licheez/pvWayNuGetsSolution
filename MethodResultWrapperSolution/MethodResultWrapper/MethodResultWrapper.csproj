@@ -49,5 +49,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeverityEnum.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="MethodResultWrapperReadMe.md" >
+      <Pack>true</Pack>
+      <PackagePath>/</PackagePath>
+    </Content>
+  </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
