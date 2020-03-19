@@ -73,9 +73,7 @@ namespace pvWay.MethodResultWrapper
         /// <param name="e"></param>
         /// <param name="severity"></param>
         public MethodResult(Exception e, SeverityEnum severity = SeverityEnum.Fatal)
-            : this(
-                $"Exception: {e.GetDeepMessage()} // StackTrace: {e.StackTrace}", 
-                severity)
+            : this(GetExceptionMessage(e), severity)
         {
         }
 
@@ -139,10 +137,10 @@ namespace pvWay.MethodResultWrapper
 
         public override string ToString()
         {
-            var str = string.Empty;
+            var str = String.Empty;
             foreach (var notification in _notifications)
             {
-                if (!string.IsNullOrEmpty(str))
+                if (!String.IsNullOrEmpty(str))
                     str += Environment.NewLine;
                 str += notification.ToString();
             }
@@ -150,6 +148,11 @@ namespace pvWay.MethodResultWrapper
         }
 
         public static MethodResult Ok => new MethodResult();
+
+        public static string GetExceptionMessage(Exception e)
+        {
+            return $"Exception: {e.GetDeepMessage()}{Environment.NewLine}StackTrace: {e.StackTrace}";
+        }
     }
 
     public class MethodResult<T> : MethodResult, IMethodResult<T>

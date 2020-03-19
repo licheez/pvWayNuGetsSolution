@@ -15,8 +15,18 @@ namespace pvWay.MethodResultWrapper
         /// <param name="companyId"></param>
         void SetUser(string userId, string companyId = null);
 
+        /// <summary>
+        /// Topic is an optional extra column in the log
+        /// that enables grouping logs. Subsequent calls to
+        /// the Log method will store the provided
+        /// topic into the corresponding column
+        /// </summary>
+        /// <param name="topic"></param>
+        void SetTopic(string topic);
+
+        // TOPIC LESS METHODS
         void Log(
-            string message = "passed",
+            string message,
             SeverityEnum severity = SeverityEnum.Debug,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string filePath = "",
@@ -35,11 +45,46 @@ namespace pvWay.MethodResultWrapper
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
 
+
         void Log(
             Exception e,
             SeverityEnum severity = SeverityEnum.Fatal,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
+
+
+        // TOPIC LESS METHODS
+        void Log(
+            string message,
+            string topic,
+            SeverityEnum severity = SeverityEnum.Debug,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
+        void Log(
+            IEnumerable<string> messages,
+            string topic,
+            SeverityEnum severity,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
+        void Log(
+            IMethodResult result,
+            string topic,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
+        void Log(
+            Exception e,
+            string topic,
+            SeverityEnum severity = SeverityEnum.Fatal,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
     }
 }
