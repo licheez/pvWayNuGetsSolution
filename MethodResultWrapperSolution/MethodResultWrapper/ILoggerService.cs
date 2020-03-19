@@ -6,6 +6,13 @@ namespace pvWay.MethodResultWrapper
 {
     public interface ILoggerService : IDisposable
     {
+        /// <summary>
+        /// Subsequent calls to the Log method will
+        /// store the provided UserId and CompanyId
+        /// into their corresponding columns
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="companyId"></param>
         void SetUser(string userId, string companyId = null);
 
         void Log(

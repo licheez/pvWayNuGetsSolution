@@ -10,7 +10,7 @@
     <projectUrl>http://www.pvWay.com</projectUrl>
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Provides a generic wrapper that returns whether or not a method succeeded of failed carrying the method result on success or a list of notifications/errors in case of failure</description>
+    <description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</description>
     <releaseNotes>ILoggerService updated</releaseNotes>
     <copyright>Copyright pvWay 2020</copyright>
     <tags>pvWay MethodResult Logger</tags>
