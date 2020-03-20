@@ -20,11 +20,10 @@ namespace MsSqlLoggerServiceConsumer
                 "CompanyId",
                 "MachineName",
                 "SeverityCode",
+                "Topic",
                 "Context",
                 "Message",
-                "CreateDateUtc",
-                "me",
-                "myCompany");
+                "CreateDateUtc");
 
             ls.Log(new Exception());
 

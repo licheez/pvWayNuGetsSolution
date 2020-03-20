@@ -50,6 +50,9 @@ namespace pvWay.MsSqlLoggerService
         private readonly string _companyIdColumnName;
         private int _companyIdLength;
 
+        private readonly string _topicColumnName;
+        private int _topicLength;
+
         private readonly string _machineNameColumnName;
         private int _machineNameLength;
 
@@ -64,6 +67,7 @@ namespace pvWay.MsSqlLoggerService
 
         private string _userId;
         private string _companyId;
+        private string _topic;
 
         /// <summary>
         /// Instantiates a new LoggerService.
@@ -74,32 +78,30 @@ namespace pvWay.MsSqlLoggerService
         /// does not comply to the requested pre-conditions.
         /// </summary>
         /// <param name="msSqlConnectionString"></param>
-        /// <param name="logLevel">default to SeverityEnum.Debug</param>
-        /// <param name="tableSchema">default to "dbo"</param>
-        /// <param name="tableName">default to "ApplicationLog"</param>
-        /// <param name="userIdColumnName">name of the UserId column (should be varchar nullable). default "UserId"</param>
-        /// <param name="companyIdColumnName">name of the CompanyId column (should be varchar nullable). default "CompanyId"</param>
-        /// <param name="machineNameColumnName">name of the MachineName column (should be varchar non nullable). default "MachineName"</param>
-        /// <param name="severityCodeColumnName">name of the SeverityCode column (should be char non nullable). default "SeverityCode"</param>
-        /// <param name="contextColumnName">name of the Context column (should be varchar non nullable). default "Context"</param>
-        /// <param name="messageColumnName">name of the Message column (should be varchar(MAX) non nullable). default "Message"</param>
-        /// <param name="createDateColumnName">name of the CreateDateUtc column (should be datetime non nullable). default "CreateDateUtc"</param>
-        /// <param name="userId">Identification of the connected user (optional... can also be set later)</param>
-        /// <param name="companyId">Identification of the company of the connected user (optional... can also be set later)</param>
+        /// <param name="logLevel"></param>
+        /// <param name="tableSchema"></param>
+        /// <param name="tableName"></param>
+        /// <param name="userIdColumnName">name of the UserId column (should be varchar nullable)</param>
+        /// <param name="companyIdColumnName">name of the CompanyId column (should be varchar nullable)"</param>
+        /// <param name="machineNameColumnName">name of the MachineName column (should be varchar non nullable)</param>
+        /// <param name="severityCodeColumnName">name of the SeverityCode column (should be char non nullable)</param>
+        /// <param name="contextColumnName">name of the Context column (should be varchar non nullable)"</param>
+        /// <param name="topicColumnName">name of the Topic column (should be varchar nullable)</param>
+        /// <param name="messageColumnName">name of the Message column (should be varchar(MAX) non nullable)</param>
+        /// <param name="createDateColumnName">name of the CreateDateUtc column (should be datetime non nullable)</param>
         public Logger(
             string msSqlConnectionString,
-            SeverityEnum logLevel = SeverityEnum.Debug,
-            string tableSchema = "dbo",
-            string tableName = "ApplicationLog",
-            string userIdColumnName = "AspNetUserId",
-            string companyIdColumnName = "CompanyId",
-            string machineNameColumnName = "MachineName",
-            string severityCodeColumnName = "SeverityCode",
-            string contextColumnName = "Context",
-            string messageColumnName = "Message",
-            string createDateColumnName = "CreateDateUtc",
-            string userId = null,
-            string companyId = null)
+            SeverityEnum logLevel,
+            string tableSchema,
+            string tableName,
+            string userIdColumnName,
+            string companyIdColumnName,
+            string machineNameColumnName,
+            string severityCodeColumnName,
+            string contextColumnName,
+            string topicColumnName,
+            string messageColumnName,
+            string createDateColumnName)
         {
             _msSqlConnectionString = msSqlConnectionString;
             _logLevel = logLevel;
@@ -110,10 +112,9 @@ namespace pvWay.MsSqlLoggerService
             _machineNameColumnName = machineNameColumnName;
             _severityCodeColumnName = severityCodeColumnName;
             _contextColumnName = contextColumnName;
+            _topicColumnName = topicColumnName;
             _messageColumnName = messageColumnName;
             _createDateColumnName = createDateColumnName;
-            _userId = userId;
-            _companyId = companyId;
             CheckTable();
         }
 
@@ -151,24 +152,24 @@ namespace pvWay.MsSqlLoggerService
                 }
                 else
                 {
-                    CheckColumn(errors, dic, _userIdColumnName, "varchar", 
+                    CheckColumn(errors, dic, _userIdColumnName, "varchar",
                         true, out _userIdLength);
-                    CheckColumn(errors, dic, _companyIdColumnName, "varchar", 
+                    CheckColumn(errors, dic, _companyIdColumnName, "varchar",
                         true, out _companyIdLength);
                     CheckColumn(errors, dic, _severityCodeColumnName, "char",
                         false, out _);
-                    CheckColumn(errors, dic, _machineNameColumnName, "varchar", 
+                    CheckColumn(errors, dic, _machineNameColumnName, "varchar",
                         false, out _machineNameLength);
-                    CheckColumn(errors, dic, _contextColumnName, "varchar", 
+                    CheckColumn(errors, dic, _topicColumnName, "varchar",
+                        true, out _topicLength);
+                    CheckColumn(errors, dic, _contextColumnName, "varchar",
                         false, out _contextLength);
-
-                    CheckColumn(errors, dic, _messageColumnName, "nvarchar", 
+                    CheckColumn(errors, dic, _messageColumnName, "nvarchar",
                         false, out var len);
                     if (len != -1)
                     {
                         errors.Add($"column {_messageColumnName} should be nvarchar(MAX)");
                     }
-
                     CheckColumn(errors, dic, _createDateColumnName, "datetime",
                         false, out _);
                 }
@@ -189,7 +190,7 @@ namespace pvWay.MsSqlLoggerService
         private static void CheckColumn(
             ICollection<string> errors,
             IDictionary<string, ColumnInfo> dic,
-            string columnName, 
+            string columnName,
             string expectedType,
             bool isNullable,
             out int length)
@@ -217,24 +218,26 @@ namespace pvWay.MsSqlLoggerService
             var neg = isNullable ? "" : "not ";
             errors.Add($"{columnName} should {neg}be nullable");
         }
-        
+
         public void SetUser(string userId, string companyId = null)
         {
             _userId = userId;
             _companyId = companyId;
         }
 
+        public void SetTopic(string topic)
+        {
+            _topic = topic;
+        }
+
         public void Log(
-            string message = "pass",
+            string message,
             SeverityEnum severity = SeverityEnum.Debug,
             string callerMemberName = "",
             string callerFilePath = "",
             int callerLineNumber = -1)
         {
-            if (severity < _logLevel) return;
-            WriteLog(severity,
-                $"{callerMemberName} # {callerFilePath} # {callerLineNumber}",
-                message);
+            Log(message, _topic, severity, callerMemberName, callerFilePath, callerLineNumber);
         }
 
         public void Log(
@@ -244,15 +247,15 @@ namespace pvWay.MsSqlLoggerService
             string filePath = "",
             int lineNumber = -1)
         {
-            var errorMessage = string.Empty;
-            foreach (var message in messages)
-            {
-                if (!string.IsNullOrEmpty(errorMessage))
-                    errorMessage += Environment.NewLine;
-                errorMessage += message;
-            }
-
-            Log(errorMessage, severity, memberName, filePath, lineNumber);
+            Log(messages, _topic, severity, memberName, filePath, lineNumber);
+        }
+        public void Log(
+            IMethodResult res,
+            string callerMemberName = "",
+            string callerFilePath = "",
+            int callerLineNumber = -1)
+        {
+            Log(res, _topic, callerMemberName, callerFilePath, callerLineNumber);
         }
 
         public void Log(
@@ -262,22 +265,70 @@ namespace pvWay.MsSqlLoggerService
             string callerFilePath = "",
             int callerLineNumber = -1)
         {
-            var message = e.GetDeepMessage() + $"stackTrace:{e.StackTrace}";
-            Log(message, severity, callerMemberName, callerFilePath, callerLineNumber);
+            Log(e, _topic, severity, callerMemberName, callerFilePath, callerLineNumber);
+        }
+
+        public void Log(
+            string message,
+            string topic,
+            SeverityEnum severity = SeverityEnum.Debug,
+            string memberName = "", string filePath = "",
+            int lineNumber = -1)
+        {
+            if (severity < _logLevel) return;
+            WriteLog(
+                severity,
+                topic,
+                $"{memberName} # {filePath} # {lineNumber}",
+                message);
+        }
+
+        public void Log(
+            IEnumerable<string> messages,
+            string topic,
+            SeverityEnum severity,
+            string memberName = "",
+            string filePath = "",
+            int lineNumber = -1)
+        {
+
+            var errorMessage = string.Empty;
+            foreach (var message in messages)
+            {
+                if (!string.IsNullOrEmpty(errorMessage))
+                    errorMessage += Environment.NewLine;
+                errorMessage += message;
+            }
+
+            Log(errorMessage, topic, severity, memberName, filePath, lineNumber);
         }
 
         public void Log(
             IMethodResult res,
-            string callerMemberName = "",
-            string callerFilePath = "",
-            int callerLineNumber = -1)
+            string topic,
+            string memberName = "",
+            string filePath = "",
+            int lineNumber = -1)
         {
-            Log(res.ErrorMessage, res.Severity, callerMemberName, callerFilePath, callerLineNumber);
+            Log(res.ErrorMessage, topic, res.Severity, memberName, filePath, lineNumber);
+        }
+
+        public void Log(
+            Exception e,
+            string topic,
+            SeverityEnum severity = SeverityEnum.Fatal,
+            string memberName = "",
+            string filePath = "",
+            int lineNumber = -1)
+        {
+            var message = MethodResult.GetExceptionMessage(e);
+            Log(message, topic, severity, memberName, filePath, lineNumber);
         }
 
         private void WriteLog(
-            SeverityEnum severity, string context, string message)
+            SeverityEnum severity, string topic, string context, string message)
         {
+
             using (var cn = new SqlConnection(_msSqlConnectionString))
             {
                 cn.Open();
@@ -286,34 +337,48 @@ namespace pvWay.MsSqlLoggerService
                 if (context.Length > _contextLength)
                     context = context.Substring(0, _contextLength);
 
+                // topic
+                string pTopic;
+                if (string.IsNullOrEmpty(topic))
+                {
+                    pTopic = "NULL";
+                }
+                else
+                {
+                    if (topic.Length > _topicLength)
+                        topic = topic.Substring(0, _topicLength);
+                    topic = topic.Replace("'", "''");
+                    pTopic = $"{topic}";
+                }
+
                 message = message?.Replace("'", "''") ?? "na";
 
                 // userId
-                string uId;
+                string pUserId;
                 if (string.IsNullOrEmpty(_userId))
                 {
-                    uId = "NULL";
+                    pUserId = "NULL";
                 }
                 else
                 {
                     if (_userId.Length > _userIdLength)
                         _userId = _userId.Substring(0, _userIdLength);
                     _userId = _userId.Replace("'", "''");
-                    uId = $"'{_userId}'";
+                    pUserId = $"'{_userId}'";
                 }
 
                 // companyId
-                string cId;
+                string pCompanyId;
                 if (string.IsNullOrEmpty(_companyId))
                 {
-                    cId = "NULL";
+                    pCompanyId = "NULL";
                 }
                 else
                 {
                     if (_companyId.Length > _companyIdLength)
                         _companyId = _companyId.Substring(0, _companyIdLength);
                     _companyId = _companyId.Replace("'", "''");
-                    cId = $"'{_companyId}'";
+                    pCompanyId = $"'{_companyId}'";
                 }
 
                 var machineName = Environment.MachineName;
@@ -327,16 +392,18 @@ namespace pvWay.MsSqlLoggerService
                               + $" [{_companyIdColumnName}], "
                               + $" [{_severityCodeColumnName}], "
                               + $" [{_machineNameColumnName}], "
+                              + $" [{_topicColumnName}], "
                               + $" [{_contextColumnName}], "
                               + $" [{_messageColumnName}], "
                               + $" [{_createDateColumnName}] "
                               + ")"
                               + "VALUES "
                               + "( "
-                              + $"{uId}, "
-                              + $"{cId}, "
+                              + $"{pUserId}, "
+                              + $"{pCompanyId}, "
                               + $"'{EnumSeverity.GetCode(severity)}', "
                               + $"'{machineName}', "
+                              + $"{pTopic}, "
                               + $"'{context}', "
                               + $"'{message}', "
                               + $"'{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss.sss}' "

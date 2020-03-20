@@ -78,14 +78,15 @@ namespace pvWay.MethodResultWrapper
             [CallerLineNumber] int lineNumber = -1)
         {
             var line = 
-                $"{severity}-" +
-                $"{memberName}-" +
-                $"{filePath}-" +
-                $"{lineNumber}-" +
-                $"{topic}-" +
-                $"{message}-" +
-                $"{_userId}-" +
-                $"{_companyId}";
+                $"sev: {severity}-" +
+                $"member: {memberName}-" +
+                $"file: {filePath}-" +
+                $"line: {lineNumber}-" +
+                $"topic: {topic}-" +
+                $"message:{message}-" +
+                $"user: {_userId}-" +
+                $"company: {_companyId}" +
+                $"{Environment.NewLine}";
             Console.WriteLine(line);
         }
 
@@ -125,7 +126,7 @@ namespace pvWay.MethodResultWrapper
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1)
         {
-            var message = MethodResult.GetExceptionMessage(e);
+            var message = e.GetDeepMessage();
             Log(message, topic, severity, memberName, filePath, lineNumber);
         }
 

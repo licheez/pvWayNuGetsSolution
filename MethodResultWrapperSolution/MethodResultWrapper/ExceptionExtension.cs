@@ -6,12 +6,17 @@ namespace pvWay.MethodResultWrapper
     {
         public static string GetDeepMessage(this Exception e)
         {
-            var message = e.Message
-                          + Environment.NewLine
-                          + e.StackTrace;
+            var message = _getDeepMessage(e);
+            var stackTrace = e.StackTrace;
+            return $"Exception: {message}{Environment.NewLine}StackTrace: {stackTrace}";
+        }
+
+        private static string _getDeepMessage(Exception e)
+        {
+            var message = e.Message;
             if (e.InnerException != null)
                 message += Environment.NewLine
-                           + e.InnerException.GetDeepMessage();
+                           + _getDeepMessage(e.InnerException);
             return message;
         }
     }

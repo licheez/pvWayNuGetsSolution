@@ -73,7 +73,7 @@ namespace pvWay.MethodResultWrapper
         /// <param name="e"></param>
         /// <param name="severity"></param>
         public MethodResult(Exception e, SeverityEnum severity = SeverityEnum.Fatal)
-            : this(GetExceptionMessage(e), severity)
+            : this(e.GetDeepMessage(), severity)
         {
         }
 
@@ -149,10 +149,6 @@ namespace pvWay.MethodResultWrapper
 
         public static MethodResult Ok => new MethodResult();
 
-        public static string GetExceptionMessage(Exception e)
-        {
-            return $"Exception: {e.GetDeepMessage()}{Environment.NewLine}StackTrace: {e.StackTrace}";
-        }
     }
 
     public class MethodResult<T> : MethodResult, IMethodResult<T>

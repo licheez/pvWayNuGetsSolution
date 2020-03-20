@@ -21,10 +21,9 @@ namespace MsSqlLoggerServiceLab
                 "MachineName",
                 "SeverityCode",
                 "Context",
+                "Topic",
                 "Message",
-                "CreateDateUtc",
-                "me",
-                "myCompany");
+                "CreateDateUtc");
 
             ls.Log(new Exception());
 
