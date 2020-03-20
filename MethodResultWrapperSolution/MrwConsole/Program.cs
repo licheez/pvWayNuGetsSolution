@@ -117,7 +117,7 @@ namespace MrwConsole
     {
         public IUser GetUser(string userName)
         {
-            throw  new Exception();
+            throw new Exception();
             // return null;
         }
     }

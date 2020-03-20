@@ -78,14 +78,14 @@ namespace pvWay.MethodResultWrapper
             [CallerLineNumber] int lineNumber = -1)
         {
             var line = 
-                $"sev: {severity}-" +
-                $"member: {memberName}-" +
-                $"file: {filePath}-" +
-                $"line: {lineNumber}-" +
-                $"topic: {topic}-" +
-                $"message:{message}-" +
-                $"user: {_userId}-" +
-                $"company: {_companyId}" +
+                $"severity: {severity}{Environment.NewLine}" +
+                $"memberName: {memberName}{Environment.NewLine}" +
+                $"filePath: {filePath}{Environment.NewLine}" +
+                $"lineNumber: {lineNumber}{Environment.NewLine}" +
+                $"topic: {topic}{Environment.NewLine}" +
+                $"message:{message}{Environment.NewLine}" +
+                $"user: {_userId}{Environment.NewLine}" +
+                $"company: {_companyId}{Environment.NewLine}" +
                 $"{Environment.NewLine}";
             Console.WriteLine(line);
         }
