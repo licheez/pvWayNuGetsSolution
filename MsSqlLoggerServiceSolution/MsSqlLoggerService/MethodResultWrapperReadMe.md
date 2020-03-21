@@ -109,7 +109,7 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
             [CallerLineNumber] int lineNumber = -1);
 
 
-        // TOPIC LESS METHODS
+        // TOPIC METHODS
         void Log(
             string message,
             string topic,

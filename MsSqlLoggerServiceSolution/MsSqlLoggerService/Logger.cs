@@ -5,6 +5,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace pvWay.MsSqlLoggerService
 {
@@ -233,47 +235,49 @@ namespace pvWay.MsSqlLoggerService
         public void Log(
             string message,
             SeverityEnum severity = SeverityEnum.Debug,
-            string callerMemberName = "",
-            string callerFilePath = "",
-            int callerLineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
-            Log(message, _topic, severity, callerMemberName, callerFilePath, callerLineNumber);
+            Log(message, _topic, severity, memberName, filePath, lineNumber);
         }
 
         public void Log(
             IEnumerable<string> messages,
             SeverityEnum severity,
-            string memberName = "",
-            string filePath = "",
-            int lineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
             Log(messages, _topic, severity, memberName, filePath, lineNumber);
         }
+
         public void Log(
             IMethodResult res,
-            string callerMemberName = "",
-            string callerFilePath = "",
-            int callerLineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
-            Log(res, _topic, callerMemberName, callerFilePath, callerLineNumber);
+            Log(res, _topic, memberName, filePath, lineNumber);
         }
 
         public void Log(
             Exception e,
             SeverityEnum severity = SeverityEnum.Fatal,
-            string callerMemberName = "",
-            string callerFilePath = "",
-            int callerLineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
-            Log(e, _topic, severity, callerMemberName, callerFilePath, callerLineNumber);
+            Log(e, _topic, severity, memberName, filePath, lineNumber);
         }
 
         public void Log(
             string message,
             string topic,
             SeverityEnum severity = SeverityEnum.Debug,
-            string memberName = "", string filePath = "",
-            int lineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
             if (severity < _logLevel) return;
             WriteLog(
@@ -287,9 +291,9 @@ namespace pvWay.MsSqlLoggerService
             IEnumerable<string> messages,
             string topic,
             SeverityEnum severity,
-            string memberName = "",
-            string filePath = "",
-            int lineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
 
             var errorMessage = string.Empty;
@@ -306,9 +310,9 @@ namespace pvWay.MsSqlLoggerService
         public void Log(
             IMethodResult res,
             string topic,
-            string memberName = "",
-            string filePath = "",
-            int lineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
             Log(res.ErrorMessage, topic, res.Severity, memberName, filePath, lineNumber);
         }
@@ -317,11 +321,13 @@ namespace pvWay.MsSqlLoggerService
             Exception e,
             string topic,
             SeverityEnum severity = SeverityEnum.Fatal,
-            string memberName = "",
-            string filePath = "",
-            int lineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
-            var message = MethodResult.GetExceptionMessage(e);
+            var exception = GetDeepMessage(e);
+            var stackTrace = e.StackTrace;
+            var message = $"Exception: {exception}{Environment.NewLine}StackTrace: {stackTrace}";
             Log(message, topic, severity, memberName, filePath, lineNumber);
         }
 
@@ -428,6 +434,15 @@ namespace pvWay.MsSqlLoggerService
                 }
             }
         }
+
+        private static string GetDeepMessage(Exception e)
+        {
+            var str = e.Message;
+            if (e.InnerException != null)
+                str = str + Environment.NewLine + GetDeepMessage(e.InnerException);
+            return str;
+        }
+
 
         public void Dispose()
         {

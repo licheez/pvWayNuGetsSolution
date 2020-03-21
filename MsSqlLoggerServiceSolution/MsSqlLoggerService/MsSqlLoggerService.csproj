@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MethodResultWrapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MethodResultWrapper.2.0.0\lib\net461\MethodResultWrapper.dll</HintPath>
+    <Reference Include="MethodResultWrapper, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MethodResultWrapper.2.0.1\lib\net461\MethodResultWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,12 +53,13 @@
   <ItemGroup>
     <None Include="MethodResultWrapperReadMe.md" />
     <None Include="packages.config" />
+    <None Include="readMe.me" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="readMe.txt">
+    <None Include="MsSqlLoggerServiceReadMe.md">
       <Pack>true</Pack>
       <PackagePath>/</PackagePath>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

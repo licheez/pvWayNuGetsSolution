@@ -8,11 +8,11 @@ namespace MsSqlLoggerServiceLab
     {
         private static void Main(/*string[] args*/)
         {
-            const string cn = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
+            const string cs = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
                               "integrated security=True;MultipleActiveResultSets=True;";
 
             var ls = new Logger(
-                cn,
+                cs,
                 SeverityEnum.Debug,
                 "dbo",
                 "Log",
