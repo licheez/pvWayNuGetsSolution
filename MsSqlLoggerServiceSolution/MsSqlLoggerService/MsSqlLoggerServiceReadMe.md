@@ -1,5 +1,5 @@
 # MsSQLLoggerService
-## Version 1.2.1
+## Version 1.2.2
 
 This service implements the ILoggerService from the **[MethodResultWrapper](https://www.nuget.org/packages/MethodResultWrapper/)** nuGet package using an Ms Sql database table as persistence layer
 
@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[Log] (
     [CompanyId] [varchar](36) NULL, 
 	[SeverityCode] [char](1) NOT NULL, -- [D]Debug... [F] Fatal (see SeverityEnum)
 	[MachineName] [varchar](50) NOT NULL, -- Environment.MachineName
-	[Topic] varchar](50) NULL, -- enables to groupe log items
+	[Topic] varchar](50) NULL, -- enables to group log items for a given Topic
 	[Context] [varchar](256) NOT NULL, -- membername, filepath, line number...
 	[Message] [nvarchar](max) NOT NULL, -- the message
 	[CreateDateUtc] [datetime] NOT NULL, -- timestamp in universal central time
@@ -45,7 +45,7 @@ If you define this column make sure the database will fill it accordingly by for
 #### UserId
 
 * You can provide your own column name for this column
-* The userId column persists the identification of the connected user if any
+* The UserId column persists the identification of the connected user if any
 * This column should be nullable
 * This column should be of type varchar
 * The logger will truncate any info exceding the max column length
@@ -53,7 +53,7 @@ If you define this column make sure the database will fill it accordingly by for
 #### CompanyId
 
 * You can provide your own column name for this column
-* The companyId column persists the identification of the company of the connected user if any
+* The CompanyId column persists the identification of the company of the connected user if any
 * This column should be nullable
 * This column should be of type varchar
 * The logger will truncate any info exceding the max column length
@@ -84,12 +84,24 @@ If you define this column make sure the database will fill it accordingly by for
 *This column is certainly usefull in web farms*
 
 * You can provide your own column name for this column
-* The CompanyName column persists Environment.MachineName
+* The MachineName column persists Environment.MachineName
 * This column should be non nullable
 * This column should be of type varchar
 * The logger will truncate any info exceding the max column length
 
+#### Topic
+
+*This column lets you group logs for a given topic*
+
+* You can provide your own column name for this column
+* This column should be nullable
+* This column should be of type varchar
+* The logger will truncate any info exceding the max column length
+
+
 #### Context
+
+*Where does it happened*
 
 * You can provide your own column name for this column
 * The Context column persists method name, filepath and code line number.
@@ -99,12 +111,16 @@ If you define this column make sure the database will fill it accordingly by for
  
 #### Message
 
+*What happened*
+
 * You can provide your own column name for this column
-* The Message column persists the message info.
+* The Message column persists the message info
 * This column should be non nullable.
 * This column should be of type nvarchar(MAX)
 
 #### CreateDateUtc
+
+*When does it happened*
 
 * You can provide your own column name for this column
 * The Message column persists the UTC date.

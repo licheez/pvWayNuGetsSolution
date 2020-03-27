@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleLogger.cs" />
+    <Compile Include="DsoHttpResult.cs" />
+    <Compile Include="DsoHttpResultMutationEnum.cs" />
+    <Compile Include="DsoHttpResultNotification.cs" />
     <Compile Include="ExceptionExtension.cs" />
     <Compile Include="ILoggerService.cs" />
     <Compile Include="IMethodResult.cs" />
@@ -50,11 +53,10 @@
     <Compile Include="SeverityEnum.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MethodResultWrapperReadMe.md" >
+    <Content Include="MethodResultWrapperReadMe.md">
       <Pack>true</Pack>
       <PackagePath>/</PackagePath>
     </Content>
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

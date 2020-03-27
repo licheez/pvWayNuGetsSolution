@@ -25,6 +25,8 @@ namespace MsSqlLoggerServiceLab
                 "Message",
                 "CreateDateUtc");
 
+            ls.SetTopic("topic");
+
             ls.Log(new Exception());
 
             Console.WriteLine("hit enter to quit");

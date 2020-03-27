@@ -354,7 +354,7 @@ namespace pvWay.MsSqlLoggerService
                     if (topic.Length > _topicLength)
                         topic = topic.Substring(0, _topicLength);
                     topic = topic.Replace("'", "''");
-                    pTopic = $"{topic}";
+                    pTopic = $"'{topic}'";
                 }
 
                 message = message?.Replace("'", "''") ?? "na";
@@ -442,7 +442,6 @@ namespace pvWay.MsSqlLoggerService
                 str = str + Environment.NewLine + GetDeepMessage(e.InnerException);
             return str;
         }
-
 
         public void Dispose()
         {
