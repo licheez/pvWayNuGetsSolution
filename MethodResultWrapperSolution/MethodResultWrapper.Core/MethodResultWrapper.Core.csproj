@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>pvWay.MethodResultWrapper.Core</RootNamespace>
+    <PackageId>pvWay.MethodResultWrapper.Core</PackageId>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
+    <Copyright>Copyright pvWay 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper</PackageProjectUrl>
+    <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
+
+    <PackageTags>pvway methodresult logger</PackageTags>
+    <PackageReleaseNotes>initial core version</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MethodResultWrapper.Core.nuspec" />
+    <None Remove="MethodResultWrapperReadMe.md" />
+    <None Remove="nuget5.2.0.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MethodResultWrapperReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MethodResultWrapperReadMe.md">
+      <Pack>true</Pack>
+      <PackagePath>/</PackagePath>
+    </Content>
+  </ItemGroup>
+
+</Project>
