@@ -13,10 +13,11 @@
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
 
     <PackageTags>pvway methodresult logger</PackageTags>
-    <PackageReleaseNotes>initial core version</PackageReleaseNotes>
+    <PackageReleaseNotes>DsoHttpResult.HttpStatusCode made public</PackageReleaseNotes>
     <PackageIcon>Logo150x200px.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

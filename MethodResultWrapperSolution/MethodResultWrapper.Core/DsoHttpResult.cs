@@ -12,9 +12,9 @@ namespace pvWay.MethodResultWrapper.Core
     /// <summary>
     /// Downstream object Http Result
     /// </summary>
-    public class DsoHttpResult
+    public class DsoHttpResult 
     {
-        internal HttpStatusCode HttpStatusCode =>
+        public HttpStatusCode HttpStatusCode =>
             Status == SeverityEnum.Fatal
             || Status == SeverityEnum.Error
                 ? HttpStatusCode.InternalServerError

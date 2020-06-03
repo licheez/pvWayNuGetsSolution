@@ -1,5 +1,5 @@
 # Method Result Wrapper Core
-## Version 1.0.0
+## Version 1.0.1
 
 Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications in case of failure.
 
