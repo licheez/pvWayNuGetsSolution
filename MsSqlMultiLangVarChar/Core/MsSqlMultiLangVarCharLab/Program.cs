@@ -9,7 +9,7 @@ namespace MsSqlMultiPartVarCharLab.Core
         {
             const string mpString =
                 "en::english text::fr::texte en français avec le caractère \\: au milieu::nl::nederlandse tekst::";
-            
+
             var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var res);
             if (ok)
             {

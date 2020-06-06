@@ -72,7 +72,7 @@ namespace pvWay.MsSqlMultiPartVarChar.Core
                     StringSplitOptions.RemoveEmptyEntries);
                 for (var i = 0; i < parts.Length; i += 2)
                 {
-                    var key = parts[i];
+                    var key = parts[i].Replace("\\:", ":");
                     var value = parts[i+1].Replace("\\:", ":");
                     dic.Add(key, value);
                 }
@@ -107,9 +107,10 @@ namespace pvWay.MsSqlMultiPartVarChar.Core
         public override string ToString()
         {
             var res = string.Empty;
-            foreach (var (key, val) in MpDic)
+            foreach (var (k, v) in MpDic)
             {
-                var value = val.Replace(":", "\\:");
+                var key = k.Replace(":", "\\:");
+                var value = v.Replace(":", "\\:");
                 res += $"{key}::{value}::";
             }
             return res;

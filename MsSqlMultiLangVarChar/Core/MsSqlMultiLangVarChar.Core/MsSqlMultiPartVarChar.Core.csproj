@@ -15,6 +15,8 @@
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>iso639 translations resources multi lingual pvWay MsSql</PackageTags>
     <PackageReleaseNotes>Initial Version</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Core</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
