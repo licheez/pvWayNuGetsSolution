@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>pvWay.MsSqlMultiPartVarChar.Core</RootNamespace>
+    <ApplicationIcon>pvWayLogoTextLess.ico</ApplicationIcon>
+    <PackageId>pvWay.MsSqlMultiPartVarChar.Core</PackageId>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Product>pvWay.MsSqlMultiPartVarChar.Core</Product>
+    <Description>Persists multi part text values (dictionary string - string) into one single VARCHAR column into an Ms SQL Db (2014 or &gt;=). The package contains a cSharp class for storing/retreiving the dictionary to/from the field and the SQL code for creating a scalar function for stored procedure implementation.</Description>
+    <Copyright>pvWay ltd 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>iso639 translations resources multi lingual pvWay MsSql</PackageTags>
+    <PackageReleaseNotes>Initial Version</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
