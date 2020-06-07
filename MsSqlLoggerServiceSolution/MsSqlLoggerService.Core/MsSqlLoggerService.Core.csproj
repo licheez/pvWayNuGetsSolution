@@ -6,7 +6,7 @@
     <PackageId>pvWay.MsSqlLoggerService.Core</PackageId>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
-    <PackageIcon>Logo150x200px.png</PackageIcon>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Ms Sql implementation of MethodResultWrapper ILoggerService. Persists logs into a MsSql table.</Description>
     <Copyright>Copyright pvWay 2020</Copyright>
@@ -14,11 +14,13 @@
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlLoggerServiceSolution/MsSqlLoggerService.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>pvWay MsSql Logger MethodResultWrapper</PackageTags>
-    <PackageReleaseNotes>Initial version for Core</PackageReleaseNotes>
+    <PackageReleaseNotes>small fixes / improvements</PackageReleaseNotes>
+    <ApplicationIcon>pvWayLogoTextLess.ico</ApplicationIcon>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Logo150x200px.png">
+    <None Include="..\..\pvwayLogoTextLess256.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -32,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="pvWay.MethodResultWrapper.Core" Version="1.0.0" />
+    <PackageReference Include="pvWay.MethodResultWrapper.Core" Version="1.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 

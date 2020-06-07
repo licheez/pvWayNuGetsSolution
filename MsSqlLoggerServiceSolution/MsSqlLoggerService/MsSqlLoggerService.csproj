@@ -53,7 +53,7 @@
   <ItemGroup>
     <None Include="MethodResultWrapperReadMe.md" />
     <None Include="packages.config" />
-    <None Include="readMe.me" />
+    <None Include="readMe.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MsSqlLoggerServiceReadMe.md">

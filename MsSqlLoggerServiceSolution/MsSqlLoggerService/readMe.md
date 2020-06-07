@@ -1,4 +1,4 @@
-# MsSQLLoggerService for .Net Core
+﻿# MsSQLLoggerService
 
 This service implements the ILoggerService from the **[MethodResultWrapper](https://www.nuget.org/packages/MethodResultWrapper/)** nuGet package using an Ms Sql database table as persistence layer
 
@@ -11,17 +11,16 @@ into a table that should conform to the following DDL.
 ### Log table definition example
 ``` sql
 
-    CREATE TABLE [dbo].[ApplicationLog] (
-
-	    [Id]			INT			IDENTITY(1,1) NOT NULL,
-	    [UserId]		VARCHAR(36) NULL,
-        [CompanyId]		VARCHAR(36) NULL, 
-	    [SeverityCode]	CHAR(1) NOT NULL, -- [D]Debug... [F] Fatal (see SeverityEnum)
-	    [MachineName]	VARCHAR(50) NOT NULL, -- Environment.MachineName
-	    [Topic]			VARCHAR(50) NULL, -- enables to group log items for a given Topic
-	    [Context]		VARCHAR(256) NOT NULL, -- membername, filepath, line number...
-	    [Message]		NVARCHAR(MAX) NOT NULL, -- the message
-	    [CreateDateUtc] DATETIME NOT NULL, -- timestamp in universal central time
+    CREATE TABLE [dbo].[Log] (
+	    [Id] [int] IDENTITY(1,1) NOT NULL,
+	    [UserId] [varchar](36) NULL,
+        [CompanyId] [varchar](36) NULL, 
+	    [SeverityCode] [char](1) NOT NULL, -- [D]Debug... [F] Fatal (see SeverityEnum)
+	    [MachineName] [varchar](50) NOT NULL, -- Environment.MachineName
+	    [Topic] varchar](50) NULL, -- enables to group log items for a given Topic
+	    [Context] [varchar](256) NOT NULL, -- membername, filepath, line number...
+	    [Message] [nvarchar](max) NOT NULL, -- the message
+	    [CreateDateUtc] [datetime] NOT NULL, -- timestamp in universal central time
 
 	    CONSTRAINT [PK_Log] 
 		    PRIMARY KEY CLUSTERED ([Id] DESC)
@@ -29,9 +28,9 @@ into a table that should conform to the following DDL.
 
 
     GO
-    CREATE NONCLUSTERED INDEX [IX_TOPIC]
-	    ON [dbo].[ApplicationLog] ([Topic] ASC)
-        WHERE [Topic] IS NOT NULL;
+    CREATE NONCLUSTERED INDEX 
+	    ON TABLE [dbo].[Log] ([Topic] ASC)
+        WHERE [Topic] IS NOT NULL
     
 ```
 ### Columns
@@ -97,6 +96,7 @@ If you define this column make sure the database will fill it accordingly by for
 * This column should be nullable
 * This column should be of type varchar
 * The logger will truncate any info exceding the max column length
+
 
 #### Context
 
