@@ -7,8 +7,7 @@ namespace MsSqlMultiPartVarCharLab.Core
     {
         private static void Main(/*string[] args*/)
         {
-            const string mpString =
-                "en::english text::fr::texte en français avec le caractère \\: au milieu::nl::nederlandse tekst::";
+            const string mpString = "<en>bear</en><fr>ours</fr>";
 
             var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var res);
             if (ok)
@@ -18,7 +17,7 @@ namespace MsSqlMultiPartVarCharLab.Core
             }
             Console.ReadKey();
 
-            var createScript = MpVarChar.CreateFunctionScript;
+            var createScript = MpVarChar.CreateFunctionScript("dbo", "FnGetMpPart");
             Console.WriteLine(createScript);
             Console.ReadKey();
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 using pvWay.MsSqlMultiPartVarChar.Core;
 
@@ -7,19 +8,80 @@ namespace MsSqlMultiPartVarChar.Core.Tests
     {
 
         [Test]
+        public void SerializeShouldSucceed()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                {"en", "bear"},
+                { "fr", "ours"}
+            };
+            var mpVarChar = new MpVarChar(dic);
+            var mpString = mpVarChar.ToString();
+            Assert.IsTrue(mpString == "<en>bear</en><fr>ours</fr>");
+        }
+
+        [Test]
+        public void EscapingShouldSucceed()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                {"en", "five > four < six"}
+            };
+            var mpVarChar = new MpVarChar(dic);
+            var mpString = mpVarChar.ToString();
+            Assert.IsTrue(mpString == "<en>five &gt; four &lt; six</en>");
+        }
+
+        [Test]
+        public void KeepGtLtCodeShouldSucceed()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                {"en", "five &gt; four &lt; six"}
+            };
+            var mpVarChar = new MpVarChar(dic);
+            var mpString = mpVarChar.ToString();
+            Assert.IsTrue(mpString == "<en>five ;tg& four ;tl& six</en>");
+        }
+
+
+        [Test]
         public void DeserializeShouldSucceed()
         {
-            const string mpString =
-                "en::english text::fr::texte en français avec le caractère \\: au milieu::nl::nederlandse tekst::";
+            const string mpString = "<en>bear</en><fr>ours</fr>";
             var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var res);
             Assert.IsTrue(ok);
             Assert.AreEqual(mpString, mpVarChar.ToString());
             Assert.AreEqual(res, "Ok");
-            Assert.IsTrue(mpVarChar.MpDic.Count == 3);
-            Assert.IsTrue(mpVarChar.MpDic["en"] == "english text");
-            Assert.IsTrue(mpVarChar.MpDic["fr"] == "texte en français avec le caractère : au milieu");
-            Assert.IsTrue(mpVarChar.MpDic["nl"] == "nederlandse tekst");
+            Assert.IsTrue(mpVarChar.MpDic.Count == 2);
+            Assert.IsTrue(mpVarChar.MpDic["en"] == "bear");
+            Assert.IsTrue(mpVarChar.MpDic["fr"] == "ours");
         }
+
+        [Test]
+        public void DeserializeEscapingShouldSucceed()
+        {
+            const string mpString = "<en>five &gt; four &lt; six</en>";
+            var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var res);
+            Assert.IsTrue(ok);
+            Assert.AreEqual(mpString, mpVarChar.ToString());
+            Assert.AreEqual(res, "Ok");
+            Assert.IsTrue(mpVarChar.MpDic.Count == 1);
+            Assert.IsTrue(mpVarChar.MpDic["en"] == "five > four < six");
+        }
+
+        [Test]
+        public void DeserializeGtLtShouldSucceed()
+        {
+            const string mpString = "<en>five ;tg& four ;tl& six</en>";
+            var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var res);
+            Assert.IsTrue(ok);
+            Assert.AreEqual(mpString, mpVarChar.ToString());
+            Assert.AreEqual(res, "Ok");
+            Assert.IsTrue(mpVarChar.MpDic.Count == 1);
+            Assert.IsTrue(mpVarChar.MpDic["en"] == "five &gt; four &lt; six");
+        }
+
 
         [Test]
         public void DeserializeNullOrEmptyShouldSucceed()
@@ -45,15 +107,17 @@ namespace MsSqlMultiPartVarChar.Core.Tests
         [Test]
         public void GetPartForKeyShouldSucceed()
         {
-            const string mpString =
-                "en::english text::fr::texte en français avec le caractère \\: au milieu::nl::nederlandse tekst::";
-            var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var _);
-            Assert.IsTrue(ok);
+            var dic = new Dictionary<string, string>
+            {
+                {"en", "bear"},
+                { "fr", "ours"}
+            };
+            var mpVarChar = new MpVarChar(dic);
 
             var part = mpVarChar.GetPartForKey("en");
-            Assert.IsTrue(part == "english text");
+            Assert.IsTrue(part == "bear");
             part = mpVarChar.GetPartForKey("fr");
-            Assert.IsTrue(part == "texte en français avec le caractère : au milieu");
+            Assert.IsTrue(part == "ours");
             part = mpVarChar.GetPartForKey("de");
             Assert.IsNull(part);
         }
@@ -61,28 +125,30 @@ namespace MsSqlMultiPartVarChar.Core.Tests
         [Test]
         public void TryGetPartForKeyShouldSucceed()
         {
-            const string mpString =
-                "en::english text::fr::texte en français avec le caractère \\: au milieu::nl::nederlandse tekst::";
-            var ok = MpVarChar.TryDeserialize(mpString, out var mpVarChar, out var _);
-            Assert.IsTrue(ok);
+            var dic = new Dictionary<string, string>
+            {
+                {"en", "bear"},
+                { "fr", "ours"}
+            };
+            var mpVarChar = new MpVarChar(dic);
 
             var found = mpVarChar.TryGetPartForKey("en", out var part);
             Assert.IsTrue(found);
-            Assert.IsTrue(part == "english text");
+            Assert.IsTrue(part == "bear");
 
             found = mpVarChar.TryGetPartForKey("fr", out part);
             Assert.IsTrue(found);
-            Assert.IsTrue(part == "texte en français avec le caractère : au milieu");
+            Assert.IsTrue(part == "ours");
 
             found = mpVarChar.TryGetPartForKey("de", out part);
             Assert.IsFalse(found);
-            Assert.IsTrue(part == "english text");
+            Assert.IsTrue(part == "bear");
         }
 
         [Test]
         public void GetCreateScriptShouldSucceed()
         {
-            var createScript = MpVarChar.CreateFunctionScript;
+            var createScript = MpVarChar.CreateFunctionScript("dbo","FnGetMpPart");
             Assert.IsNotEmpty(createScript);
         }
 
