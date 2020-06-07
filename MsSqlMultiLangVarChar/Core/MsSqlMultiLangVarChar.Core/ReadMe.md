@@ -16,8 +16,8 @@ From the business layer of your applicaiton use the Dictionary constructor
 	
 	var dic = new Dictionary<string, string>()
 	{
-		{"en", "a nice text in English"},
-		{"fr", "un autre texte en français"}
+		{"en", "bear"},
+		{"fr", "ours"}
 	};
 	IMpVarChar myMpVarChar = new MpVarChar(dic);
 
@@ -41,7 +41,7 @@ The following example prepares a simple SQL statement for a DAO implementation o
     var insertStatement = $"INSERT INTO [dbo].[MyTable] ([MpText]) VALUES ('{mpText}');";
     
     // The line above will generate the following text
-    // INSERT INTO [dbo].[MyTable] ([MpText]) VALUES ('en::a nice text in English::fr::un autre texte en français::');
+    // INSERT INTO [dbo].[MyTable] ([MpText]) VALUES ('<en>bear</en><fr>ours</fr>');
 
     // for the simplicity i do not provide here the code executing this insert
 
@@ -53,7 +53,7 @@ The key value dictionnary is serialized to a single string that can be saved int
 
 ``` csharp
 
-  // here above the SELECT code that populate the IDataRecord object 
+  // (not shown) here above the SELECT code that populates the IDataRecord object 
   var ord = dataRecord.GetOrdinal("MpText");
   var retrievedMpText = dataRecord.GetString(ord); // let's retreive the raw text from the Db
 
@@ -75,17 +75,17 @@ The key value dictionnary is serialized to a single string that can be saved int
     // using the Dicionnary
     var enVal = retrievedMpVarChar.MpDic["en"];
     Console.WriteLine(enVal);
-	// ==> displays "a nice text in English"                
+	// ==> displays "bear"                
     
     // using the GetPartForKey method
     var frVal = retrievedMpVarChar.GetPartForKey("fr");
     Console.WriteLine(frVal);
-	// ==> displays "un autre texte en français"                
+	// ==> displays "ours"                
     
     // using the TryGetPartForKey method
     var deOk = retrievedMpVarChar.TryGetPartForKey("de", out var deVal);
     Console.WriteLine(deVal);
-	// ==> displays "a nice text in English" taking de first key in the dic as default value                
+	// ==> displays "bear" taking de first key in the dic as default value                
   }
 
 ```
@@ -98,40 +98,49 @@ The key value dictionnary is serialized to a single string that can be saved int
   CREATE FUNCTION [dbo].[FnGetTranslation] 
   (
       @str NVARCHAR(MAX),
-      @lang VARCHAR(3)
+      @key NVARCHAR(MAX)
   )
-  RETURNS NVARCHAR(MAX)
-  AS
-  BEGIN
+    RETURNS NVARCHAR(MAX)
+    AS
+    BEGIN
 
-      IF @str IS NULL
-      BEGIN
-          RETURN NULL;
-      END
+	    IF @str IS NULL
+	    BEGIN
+		    RETURN NULL;
+	    END
 
-      /*
-      'en::english text::fr::texte en français avec le caractère ''\:'' au milieu::nl::nederlandse tekst::'
-      */
+        /*
+        within the values the character '<' and '>' are replaced by '&lt;' and '&gt;'.
+	    the keys are encoded as XML tags <key></key> 
+	    '<en>english &lt;text&gt;</en><fr>texte en français</fr><nl>nederlandse tekst</nl>'
+	    */
+	    DECLARE @startTag NVARCHAR(MAX) = '<' + @key + '>';
+	    DECLARE @startTagPos INT = CHARINDEX(@startTag, @str, 0);
 
-      DECLARE @a INT = LEN(@lang);
-      DECLARE @p1 INT = CHARINDEX(@lang + '::', @str, 0);
+	    if (@startTagPos = 0)
+	    BEGIN
+	        -- find the position of the first '>' in the string
+		    DECLARE @gtPos INT = CHARINDEX('>', @str, 0);
+		    -- set the key to the first key in the collection
+		    SET @key = SUBSTRING(@str, 2, @gtPos - 2);
+		    -- adjust startTag & pos
+		    SET @startTag = '<' + @key + '>';
+		    SET @startTagPos = 1;
+	    END
 
-      IF @p1 = 0
-      BEGIN
+	    DECLARE @startTagLen INT = LEN(@startTag);
+	    DECLARE @valueStartPos INT = @startTagPos + @startTagLen;
+	    DECLARE @endTag NVARCHAR(MAX) = '</' + @key + '>';
+	    DECLARE @endTagPos INT = CHARINDEX(@endTag, @str, @valueStartPos);
+	    DECLARE @valueLen INT = @endTagPos - @valueStartPos;
+	    DECLARE @encodedValue NVARCHAR(MAX) = SUBSTRING(@str, @valueStartPos, @valueLen);
+	    DECLARE @value NVARCHAR(MAX) = REPLACE(@encodedValue, '&lt;', '<');
+	    SET @value = REPLACE(@value, ';tl&', '&lt;');
+	    SET @value = REPLACE(@value, '&gt;', '>');
+	    SET @value = REPLACE(@value, ';tg&', '&gt;');
+	    RETURN @value;
 
-          SET @p1 = CHARINDEX('::', @str, 0);
-          SET @a = 0;
-
-      END
-
-      DECLARE @p2 INT = CHARINDEX('::', @str, @p1 + @a + 2);
-      DECLARE @len INT = @p2 - @p1 - @a - 2;
-      DECLARE @s NVARCHAR(MAX) = SUBSTRING(@str, @p1 + @a + 2, @len);
-      SET @s = REPLACE(@s, '\:', ':');
-      RETURN @s;
-
-  END
-
+    END
 ```
 
 #### Call the function from any SQL SELECT
