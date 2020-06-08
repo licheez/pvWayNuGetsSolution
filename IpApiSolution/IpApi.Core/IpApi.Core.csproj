@@ -7,7 +7,7 @@
     <ApplicationIcon>pvWayLogoTextLess.ico</ApplicationIcon>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
-    <Description>Geolocalize an Ip address. The service uses the free plan from the https://ipapi.co/ service</Description>
+    <Description>Provides geolocalization info for a given ip. This service is based on IpStack API.</Description>
     <Copyright>pvWay 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
