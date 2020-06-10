@@ -48,7 +48,7 @@
     <Compile Include="Interfaces\IDsoHttpResultNotification.cs" />
     <Compile Include="Model\ConsoleLogger.cs" />
     <Compile Include="Model\DsoHttpResult.cs" />
-    <Compile Include="Enums\DsoHttpResultMutationEnum.cs" />
+    <Compile Include="Enums\MutationEnum.cs" />
     <Compile Include="Model\DsoHttpResultNotification.cs" />
     <Compile Include="Extensions\ExceptionExtension.cs" />
     <Compile Include="Interfaces\ILoggerService.cs" />

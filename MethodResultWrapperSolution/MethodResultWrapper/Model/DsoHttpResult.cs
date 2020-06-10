@@ -37,8 +37,8 @@ namespace pvWay.MethodResultWrapper.Model
         {
             StatusCode = EnumSeverity.GetCode(SeverityEnum.Ok);
             Notifications = new List<DsoHttpResultNotification>();
-            MutationCode = EnumDsoHttpResultMutation
-                .GetCode(DsoHttpResultMutationEnum.None);
+            MutationCode = EnumMutation
+                .GetCode(MutationEnum.None);
         }
 
         /// <summary>
@@ -49,15 +49,15 @@ namespace pvWay.MethodResultWrapper.Model
         {
             StatusCode = EnumSeverity.GetCode(severity);
             Notifications = new List<DsoHttpResultNotification>();
-            MutationCode = EnumDsoHttpResultMutation
-                .GetCode(DsoHttpResultMutationEnum.None);
+            MutationCode = EnumMutation
+                .GetCode(MutationEnum.None);
         }
 
         /// <summary>
         /// Successful constructor passing the mutation type
         /// </summary>
         /// <param name="mutation"></param>
-        public DsoHttpResult(DsoHttpResultMutationEnum mutation) :
+        public DsoHttpResult(MutationEnum mutation) :
             this(SeverityEnum.Ok, false, mutation)
         {
         }
@@ -65,11 +65,11 @@ namespace pvWay.MethodResultWrapper.Model
         protected DsoHttpResult(
             SeverityEnum severity,
             bool hasMoreResults,
-            DsoHttpResultMutationEnum mutation = DsoHttpResultMutationEnum.None) :
+            MutationEnum mutation = MutationEnum.None) :
             this()
         {
             StatusCode = EnumSeverity.GetCode(severity);
-            MutationCode = EnumDsoHttpResultMutation.GetCode(mutation);
+            MutationCode = EnumMutation.GetCode(mutation);
             HasMoreResults = hasMoreResults;
         }
 
@@ -130,7 +130,7 @@ namespace pvWay.MethodResultWrapper.Model
         /// <param name="mutation"></param>
         public DsoHttpResult(
             T data,
-            DsoHttpResultMutationEnum mutation) :
+            MutationEnum mutation) :
             base(SeverityEnum.Ok, false, mutation)
         {
             Data = data;
