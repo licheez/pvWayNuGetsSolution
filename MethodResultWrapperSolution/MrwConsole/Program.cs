@@ -1,5 +1,7 @@
-﻿using pvWay.MethodResultWrapper;
-using System;
+﻿using System;
+using pvWay.MethodResultWrapper.Enums;
+using pvWay.MethodResultWrapper.Interfaces;
+using pvWay.MethodResultWrapper.Model;
 
 namespace MrwConsole
 {

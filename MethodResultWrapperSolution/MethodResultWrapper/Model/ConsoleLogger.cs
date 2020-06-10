@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using pvWay.MethodResultWrapper.Enums;
+using pvWay.MethodResultWrapper.Extensions;
+using pvWay.MethodResultWrapper.Interfaces;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace pvWay.MethodResultWrapper
+namespace pvWay.MethodResultWrapper.Model
 {
     public class ConsoleLogger : ILoggerService
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using pvWay.MethodResultWrapper.Enums;
 
-namespace pvWay.MethodResultWrapper
+namespace pvWay.MethodResultWrapper.Interfaces
 {
     public interface ILoggerService : IDisposable
     {

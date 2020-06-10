@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using pvWay.MethodResultWrapper.Enums;
+using pvWay.MethodResultWrapper.Interfaces;
 
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace pvWay.MethodResultWrapper
+namespace pvWay.MethodResultWrapper.Model
 {
     /// <summary>
     /// Downstream object Http Result
     /// </summary>
-    public class DsoHttpResult
+    public class DsoHttpResult : IDsoHttpResult
     {
         internal HttpStatusCode HttpStatusCode =>
             Status == SeverityEnum.Fatal
@@ -22,10 +25,10 @@ namespace pvWay.MethodResultWrapper
 
         internal SeverityEnum Status => EnumSeverity.GetValue(StatusCode);
 
-        public string StatusCode { get; }
-        public string MutationCode { get; }
-        public ICollection<DsoHttpResultNotification> Notifications { get; }
-        public bool HasMoreResults { get; }
+        public string StatusCode { get; set; }
+        public string MutationCode { get; set; }
+        public IEnumerable<IDsoHttpResultNotification> Notifications { get; set; }
+        public bool HasMoreResults { get; set; }
 
         /// <summary>
         /// Successful constructor 
@@ -90,14 +93,14 @@ namespace pvWay.MethodResultWrapper
 
     }
 
-    public class DsoHttpResult<T> : DsoHttpResult
+    public class DsoHttpResult<T> : DsoHttpResult, IDsoHttpResult<T>
     {
-        public T Data { get; }
+        public T Data { get; set; }
 
-        //public DsoResponseData()
-        //{
-        //}
-
+        public DsoHttpResult()
+        {
+        }
+        
         /// <summary>
         /// Successful constructor passing back some data
         /// </summary>

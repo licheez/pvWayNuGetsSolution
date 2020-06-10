@@ -1,9 +1,12 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace pvWay.MethodResultWrapper
+using pvWay.MethodResultWrapper.Enums;
+using pvWay.MethodResultWrapper.Interfaces;
+
+namespace pvWay.MethodResultWrapper.Model
 {
-    public class DsoHttpResultNotification
+    public class DsoHttpResultNotification : IDsoHttpResultNotification
     {
         public string SeverityCode { get; }
         public string Message { get; }

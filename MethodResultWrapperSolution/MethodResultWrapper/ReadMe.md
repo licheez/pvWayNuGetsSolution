@@ -1,7 +1,7 @@
 # Method Result Wrapper
-## Version 2.0.0
 
 Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications in case of failure.
+As of version 3.0.0 The package includes the DsoHttpResult&lt;T&gt; object that enables to standardize response from Web API. See interface here after.
 
 ## Interfaces
 
@@ -38,7 +38,7 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
         /// </summary>
         void Throw();
     }
-    
+
     public interface IMethodResult<out T> : IMethodResult
     {
         T Data { get; }
@@ -49,8 +49,6 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
         SeverityEnum Severity { get; }
         string Message { get; }
     }
-    
-
 ```
 
 ### ILoggerService interface
@@ -109,7 +107,7 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
             [CallerLineNumber] int lineNumber = -1);
 
 
-        // TOPIC LESS METHODS
+        // TOPIC METHODS
         void Log(
             string message,
             string topic,
@@ -142,6 +140,43 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
             [CallerLineNumber] int lineNumber = -1);
 
 ```
+## DsoHttpResult
+
+``` csharp
+
+    public interface IDsoHttpResult
+    {
+        /// <summary>
+        /// Status O (ok) W (warning) E (error) F (fatal)...
+        /// </summary>
+        string StatusCode { get; }
+        /// <summary>
+        /// The mutation performed if any N (none) C (create) U (update) D (delete)
+        /// </summary>
+        string MutationCode { get; }
+        /// <summary>
+        /// useful for paging
+        /// </summary>
+        bool HasMoreResults { get; }
+        IEnumerable<IDsoHttpResultNotification> Notifications { get; }
+    }
+
+    public interface IDsoHttpResult<out T>: IDsoHttpResult
+    {
+        T Data { get; }
+    }
+    
+    public interface IDsoHttpResultNotification
+    {
+        string Message { get; }
+        /// <summary>
+        /// Severity O (ok) W (warning) E (error) F (fatal)...
+        /// </summary>
+        string SeverityCode { get; }
+    }  
+
+```
+
 
 ## Features
 

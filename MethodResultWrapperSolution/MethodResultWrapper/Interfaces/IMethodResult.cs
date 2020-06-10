@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using pvWay.MethodResultWrapper.Enums;
 
-namespace pvWay.MethodResultWrapper
+namespace pvWay.MethodResultWrapper.Interfaces
 {
     public interface IMethodResult
     {
@@ -43,4 +44,5 @@ namespace pvWay.MethodResultWrapper
         SeverityEnum Severity { get; }
         string Message { get; }
     }
+
 }

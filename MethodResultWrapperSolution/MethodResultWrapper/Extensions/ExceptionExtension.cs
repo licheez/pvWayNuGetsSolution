@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace pvWay.MethodResultWrapper
+namespace pvWay.MethodResultWrapper.Extensions
 {
     public static class ExceptionExtension
     {

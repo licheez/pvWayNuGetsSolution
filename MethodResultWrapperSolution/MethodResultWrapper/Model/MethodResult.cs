@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using pvWay.MethodResultWrapper.Enums;
+using pvWay.MethodResultWrapper.Extensions;
+using pvWay.MethodResultWrapper.Interfaces;
 
-namespace pvWay.MethodResultWrapper
+namespace pvWay.MethodResultWrapper.Model
 {
     public class MethodResult : IMethodResult
     {
