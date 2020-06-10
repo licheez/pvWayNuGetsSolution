@@ -1,8 +1,6 @@
 # MsSQLLoggerService
-## Version 1.2.2
 
 This service implements the ILoggerService from the **[MethodResultWrapper](https://www.nuget.org/packages/MethodResultWrapper/)** nuGet package using an Ms Sql database table as persistence layer
-
 
 ### Pre-conditions for this service to work property
 
@@ -12,26 +10,24 @@ into a table that should conform to the following DDL.
 ### Log table definition example
 ``` sql
 
-CREATE TABLE [dbo].[Log] (
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [varchar](36) NULL,
-    [CompanyId] [varchar](36) NULL, 
-	[SeverityCode] [char](1) NOT NULL, -- [D]Debug... [F] Fatal (see SeverityEnum)
-	[MachineName] [varchar](50) NOT NULL, -- Environment.MachineName
-	[Topic] varchar](50) NULL, -- enables to group log items for a given Topic
-	[Context] [varchar](256) NOT NULL, -- membername, filepath, line number...
-	[Message] [nvarchar](max) NOT NULL, -- the message
-	[CreateDateUtc] [datetime] NOT NULL, -- timestamp in universal central time
-
-	CONSTRAINT [PK_Log] 
-		PRIMARY KEY CLUSTERED ([Id] DESC)
-);
+    CREATE TABLE [dbo].[Log] (
+        [Id]            INT            IDENTITY (1, 1) NOT NULL,
+        [UserId]        VARCHAR (36)   NULL,
+        [CompanyId]     VARCHAR (36)   NULL,
+        [SeverityCode]  CHAR (1)       NOT NULL,
+        [MachineName]   VARCHAR (50)   NOT NULL,
+        [Topic]         VARCHAR (50)   NULL,
+        [Context]       VARCHAR (512)  NOT NULL,
+        [Message]       NVARCHAR (MAX) NOT NULL,
+        [CreateDateUtc] DATETIME       NOT NULL,
+        CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED ([Id] DESC)
+    );
 
 
-GO
-CREATE NONCLUSTERED INDEX 
-	ON TABLE [dbo].[Log] ([Topic] ASC)
-    WHERE [Topic] IS NOT NULL
+    GO
+    CREATE NONCLUSTERED INDEX [IX_Log]
+        ON [dbo].[Log]([Topic] ASC) WHERE ([Topic] IS NOT NULL);
+
     
 ```
 ### Columns
@@ -98,7 +94,6 @@ If you define this column make sure the database will fill it accordingly by for
 * This column should be of type varchar
 * The logger will truncate any info exceding the max column length
 
-
 #### Context
 
 *Where does it happened*
@@ -123,7 +118,7 @@ If you define this column make sure the database will fill it accordingly by for
 *When does it happened*
 
 * You can provide your own column name for this column
-* The Message column persists the UTC date.
+* The CreateDateUtc column persists the UTC date.
 * This column should be non nullable.
 * This column should be of type datetime
 
@@ -143,7 +138,7 @@ namespace MsSqlLoggerServiceLab
             const string cs = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
                               "integrated security=True;MultipleActiveResultSets=True;";
 
-            var ls = new Logger(
+            var ls = new MsSqlLogger(
                 cs,
                 SeverityEnum.Debug,
                 "dbo",

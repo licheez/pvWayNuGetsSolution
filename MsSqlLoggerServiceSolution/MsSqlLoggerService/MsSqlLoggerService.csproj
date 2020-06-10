@@ -30,9 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>pvWayLogoTextLess.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MethodResultWrapper, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MethodResultWrapper.2.0.1\lib\net461\MethodResultWrapper.dll</HintPath>
+      <HintPath>..\packages\MethodResultWrapper.3.0.0\lib\net461\MethodResultWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logger.cs" />
+    <Compile Include="MsSqlLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +63,9 @@
       <Pack>true</Pack>
       <PackagePath>/</PackagePath>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pvWayLogoTextLess.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

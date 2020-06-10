@@ -1,6 +1,5 @@
 ﻿using System;
 using pvWay.MethodResultWrapper;
-using pvWay.MsSqlLoggerService;
 
 namespace MsSqlLoggerServiceConsumer
 {
@@ -11,7 +10,7 @@ namespace MsSqlLoggerServiceConsumer
             const string cn = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
                               "integrated security=True;MultipleActiveResultSets=True;";
 
-            var ls = new Logger(
+            var ls = new LoggerService(
                 cn,
                 SeverityEnum.Debug,
                 "dbo",

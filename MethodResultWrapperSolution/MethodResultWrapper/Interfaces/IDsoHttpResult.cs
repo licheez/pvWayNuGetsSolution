@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using pvWay.MethodResultWrapper.Enums;
 
 namespace pvWay.MethodResultWrapper.Interfaces
 {
     public interface IDsoHttpResult
     {
+        HttpStatusCode HttpStatusCode { get; }
+        SeverityEnum Status { get; }
+
         /// <summary>
         /// Status O (ok) W (warning) E (error) F (fatal)...
         /// </summary>

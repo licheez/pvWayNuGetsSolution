@@ -1,11 +1,14 @@
-﻿using pvWay.MethodResultWrapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using pvWay.MethodResultWrapper.Enums;
+using pvWay.MethodResultWrapper.Extensions;
+using pvWay.MethodResultWrapper.Interfaces;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace pvWay.MsSqlLoggerService
@@ -35,7 +38,7 @@ namespace pvWay.MsSqlLoggerService
         }
     }
 
-    public class Logger : ILoggerService
+    public class MsSqlLogger : ILoggerService
     {
         //private static volatile ILoggerService _instance;
         //private static readonly object Locker = new object();
@@ -91,7 +94,7 @@ namespace pvWay.MsSqlLoggerService
         /// <param name="topicColumnName">name of the Topic column (should be varchar nullable)</param>
         /// <param name="messageColumnName">name of the Message column (should be varchar(MAX) non nullable)</param>
         /// <param name="createDateColumnName">name of the CreateDateUtc column (should be datetime non nullable)</param>
-        public Logger(
+        public MsSqlLogger(
             string msSqlConnectionString,
             SeverityEnum logLevel,
             string tableSchema,

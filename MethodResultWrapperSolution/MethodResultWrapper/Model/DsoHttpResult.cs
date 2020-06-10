@@ -17,13 +17,13 @@ namespace pvWay.MethodResultWrapper.Model
     /// </summary>
     public class DsoHttpResult : IDsoHttpResult
     {
-        internal HttpStatusCode HttpStatusCode =>
+        public HttpStatusCode HttpStatusCode =>
             Status == SeverityEnum.Fatal
             || Status == SeverityEnum.Error
                 ? HttpStatusCode.InternalServerError
                 : HttpStatusCode.OK;
 
-        internal SeverityEnum Status => EnumSeverity.GetValue(StatusCode);
+        public SeverityEnum Status => EnumSeverity.GetValue(StatusCode);
 
         public string StatusCode { get; set; }
         public string MutationCode { get; set; }

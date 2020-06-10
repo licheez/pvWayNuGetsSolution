@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MethodResultWrapper, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\MsSqlLoggerServiceSolution\packages\MethodResultWrapper.1.1.0\lib\net461\MethodResultWrapper.dll</HintPath>
+    <Reference Include="MethodResultWrapper, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MethodResultWrapper.3.0.0\lib\net461\MethodResultWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="MethodResultWrapperReadMe.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,9 @@
       <Project>{6e4f8b44-7684-47a9-b232-c13efce30fd7}</Project>
       <Name>MsSqlLoggerService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pvWayLogoTextLess.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

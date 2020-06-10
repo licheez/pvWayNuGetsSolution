@@ -1,5 +1,5 @@
 ﻿using System;
-using pvWay.MethodResultWrapper;
+using pvWay.MethodResultWrapper.Enums;
 using pvWay.MsSqlLoggerService;
 
 namespace MsSqlLoggerServiceLab
@@ -11,7 +11,7 @@ namespace MsSqlLoggerServiceLab
             const string cs = "data source=Localhost;initial catalog=iota_PRD_20200208;" +
                               "integrated security=True;MultipleActiveResultSets=True;";
 
-            var ls = new Logger(
+            var ls = new MsSqlLogger(
                 cs,
                 SeverityEnum.Debug,
                 "dbo",
