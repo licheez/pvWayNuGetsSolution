@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>pvWay.ViesApi.Core</RootNamespace>
+    <AssemblyName>pvWay.ViesApi.Core</AssemblyName>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Product>ViesApi.Core</Product>
+    <Description>Very simple service that checks a VAT number returning whether or not the number is valid, the official company name and address when available using the EU web service</Description>
+    <Copyright>Copyright pvWay 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>VAT check europe VIES</PackageTags>
+    <PackageReleaseNotes>initial version</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

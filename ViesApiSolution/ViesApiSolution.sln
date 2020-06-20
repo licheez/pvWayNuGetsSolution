@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetFramework", "dotNetFramework", "{CFD92E61-9159-40F0-B7C4-94AF6E32466F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{7093DBCF-7664-4B7E-BD3C-AFC1B2EB6282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViesApi.Core", "dotNetCore\ViesApi.Core\ViesApi.Core.csproj", "{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF} = {CFD92E61-9159-40F0-B7C4-94AF6E32466F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BFB08A2-D336-4648-B26C-74322D5DEC6F}
+	EndGlobalSection
+EndGlobal
