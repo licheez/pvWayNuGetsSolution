@@ -14,7 +14,7 @@
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>VAT check europe VIES</PackageTags>
     <PackageReleaseNotes>initial version</PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ViesApiSolution</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ViesApiSolution/dotNetCore/ViesApi.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ViesApiSolution</RepositoryUrl>
   </PropertyGroup>
 
