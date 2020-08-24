@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
-<package >
-  <metadata>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<metadata>
     <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <version>1.0.0</version>
+    <title>Ms Sql Backup</title>
+    <authors>Pierre Van Wallendael</authors>
+    <owners>pvWay</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution/nf/MsSqlBackup</projectUrl>
+    <iconUrl>https://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>Copyright 2020</copyright>
-    <tags>Tag1 Tag2</tags>
+    <summary>Backup any Ms Sql database to a local or network folder</summary>
+    <description>Backup any Ms Sql database to a local or network folder</description>
+    <releaseNotes>Initial</releaseNotes>
+    <copyright>Copyright pvWay Ltd 2020</copyright>
+    <tags>pvWay Ms Sql Backup</tags>
   </metadata>
 </package>

@@ -64,6 +64,8 @@
     </Content>
     <Content Include="pvWayLogoTextLess.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="MethodResultWrapper.nuspec" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
