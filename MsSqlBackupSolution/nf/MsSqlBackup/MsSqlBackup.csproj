@@ -61,7 +61,6 @@
     <Content Include="pvWayLogoTextLess.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MethodResultWrapperReadMe.md" />
     <None Include="MsSqlBackup.nuspec" />
     <None Include="packages.config" />
     <None Include="readMe.md" />

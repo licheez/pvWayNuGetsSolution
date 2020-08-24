@@ -10,11 +10,22 @@
     <Copyright>pvWay Ltd 2020</Copyright>
     <PackageId>pvWay.MsSqlBackup.Core</PackageId>
     <Description>Backup any Ms Sql database to a local or network folder</Description>
+    <PackageReleaseNotes>Initial</PackageReleaseNotes>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution/nc/MsSqlBackup.Core</PackageProjectUrl>
+    <PackageTags>pvWay Ms Sql Backup</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="pvWay.MethodResultWrapper.Core" Version="1.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
