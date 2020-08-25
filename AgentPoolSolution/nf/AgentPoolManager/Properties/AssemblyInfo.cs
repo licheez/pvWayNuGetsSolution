@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AgentPoolManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Manage a pool of asynchronous agents running in background")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("pvWay")]
 [assembly: AssemblyProduct("AgentPoolManager")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © pvWay 2020")]
+[assembly: AssemblyTrademark("pvWay ltd")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
