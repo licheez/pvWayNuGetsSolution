@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nf", "nf", "{175313A0-0771-427D-B8AF-614AAE3792FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nc", "nc", "{52A857B1-7C36-4C2F-8DBF-7F812777A1CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentPoolManager", "nf\AgentPoolManager\AgentPoolManager.csproj", "{81A1E3E5-332E-4EA6-B448-682E6EF41B49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentPoolManager.Core", "nc\AgentPoolManager.Core\AgentPoolManager.Core.csproj", "{DEC7AB9F-B517-4BDE-B9E5-7A0018B98BBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentPoolManagerLab", "nf\AgentPoolManagerLab\AgentPoolManagerLab.csproj", "{D5FA9CCB-F97D-40FC-9505-C3A17555BFED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentPoolManagerLab.Core", "nc\AgentPoolManagerLab.Core\AgentPoolManagerLab.Core.csproj", "{6A0B10B1-71C6-4AE0-B05E-9B39BCF64B37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81A1E3E5-332E-4EA6-B448-682E6EF41B49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81A1E3E5-332E-4EA6-B448-682E6EF41B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81A1E3E5-332E-4EA6-B448-682E6EF41B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81A1E3E5-332E-4EA6-B448-682E6EF41B49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEC7AB9F-B517-4BDE-B9E5-7A0018B98BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEC7AB9F-B517-4BDE-B9E5-7A0018B98BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEC7AB9F-B517-4BDE-B9E5-7A0018B98BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEC7AB9F-B517-4BDE-B9E5-7A0018B98BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5FA9CCB-F97D-40FC-9505-C3A17555BFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5FA9CCB-F97D-40FC-9505-C3A17555BFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5FA9CCB-F97D-40FC-9505-C3A17555BFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5FA9CCB-F97D-40FC-9505-C3A17555BFED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A0B10B1-71C6-4AE0-B05E-9B39BCF64B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A0B10B1-71C6-4AE0-B05E-9B39BCF64B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A0B10B1-71C6-4AE0-B05E-9B39BCF64B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A0B10B1-71C6-4AE0-B05E-9B39BCF64B37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{81A1E3E5-332E-4EA6-B448-682E6EF41B49} = {175313A0-0771-427D-B8AF-614AAE3792FD}
+		{DEC7AB9F-B517-4BDE-B9E5-7A0018B98BBB} = {52A857B1-7C36-4C2F-8DBF-7F812777A1CF}
+		{D5FA9CCB-F97D-40FC-9505-C3A17555BFED} = {175313A0-0771-427D-B8AF-614AAE3792FD}
+		{6A0B10B1-71C6-4AE0-B05E-9B39BCF64B37} = {52A857B1-7C36-4C2F-8DBF-7F812777A1CF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1AA2645-8295-4BF7-860F-A0D558CB6B85}
+	EndGlobalSection
+EndGlobal
