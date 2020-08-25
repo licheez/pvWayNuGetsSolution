@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgentPoolManager\AgentPoolManager.csproj">
+      <Project>{81a1e3e5-332e-4ea6-b448-682e6ef41b49}</Project>
+      <Name>AgentPoolManager</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@
     <ProjectGuid>{81A1E3E5-332E-4EA6-B448-682E6EF41B49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AgentPoolManager</RootNamespace>
+    <RootNamespace>pvWay.AgentPoolManager</RootNamespace>
     <AssemblyName>AgentPoolManager</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgentHandler.cs" />
+    <Compile Include="Agent.cs" />
+    <Compile Include="IAgent.cs" />
+    <Compile Include="IAgentPoolManager.cs" />
+    <Compile Include="PoolManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
