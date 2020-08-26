@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 <metadata>
     <id>$id$</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Ms Sql Backup</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -13,7 +13,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Backup any Ms Sql database to a local or network folder</summary>
     <description>Backup any Ms Sql database to a local or network folder</description>
-    <releaseNotes>Initial</releaseNotes>
+    <releaseNotes>Added sync and background methods</releaseNotes>
     <copyright>Copyright pvWay Ltd 2020</copyright>
     <tags>pvWay Ms Sql Backup</tags>
   </metadata>

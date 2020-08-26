@@ -4,11 +4,14 @@ Tiny DAO utility that backs up any Ms Sql Db (any edition) to a local or network
 
 ## Interface
 
-The nuGet has only one method
+The nuGet has three method.
+
+One async, one purely sync and one fully running in background
 
 ```csharp
+using System;
 using System.Threading.Tasks;
-using pvWay.MethodResultWrapper.Model;
+using pvWay.MethodResultWrapper.Interfaces;
 
 namespace pvWay.MsSqlBackup.Core
 {
@@ -19,7 +22,22 @@ namespace pvWay.MsSqlBackup.Core
         /// </summary>
         /// <param name="bakFileName">Fully qualified backup file name where the running app has write access</param>
         /// <returns>MethodResult see pvWay MethodResultWrapper nuGet package</returns>
-        Task<MethodResult> BackupDbAsync(string bakFileName);
+        Task<IMethodResult> BackupDbAsync(string bakFileName);
+
+        /// <summary>
+        /// Creates a full backup of the database
+        /// </summary>
+        /// <param name="bakFileName">Fully qualified backup file name where the running app has write access</param>
+        /// <returns>MethodResult see pvWay MethodResultWrapper nuGet package</returns>
+        IMethodResult BackupDb(string bakFileName);
+
+        /// <summary>
+        /// Creates a full backup of the database in background
+        /// </summary>
+        /// <param name="bakFileName">Fully qualified backup file name where the running app has write access</param>
+        /// <param name="callback">A method that will be called on completion</param>
+        /// <returns>void</returns>
+        void BgBackupDb(string bakFileName, Action<IMethodResult> callback);
     }
 }
 ```
