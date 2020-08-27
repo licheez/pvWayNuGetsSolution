@@ -139,8 +139,6 @@ See here after a short Console that use the service
 * need to pass a destination file where the app has write access
 * you can follow up on progress by passing a notifier callback
 
-remark: you'll need to get the [MethodResultWrapper.Core](remark: you'll need to get the [MethodResultWrapper](https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper) to use this service
-
 ### The code
 
 ```csharp
