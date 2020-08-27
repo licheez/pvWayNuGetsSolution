@@ -144,7 +144,6 @@ See here after a short Console that use the service
 ```csharp
 
 using System;
-using pvWay.MethodResultWrapper.Model;
 using pvWay.MsSqlBackup.Core;
 
 namespace MsSqlBackupLab.Core
@@ -153,11 +152,6 @@ namespace MsSqlBackupLab.Core
     {
         private static void Main(/*string[] args*/)
         {
-            // need to pass the ILoggerService from pvWay MethodResultWrapper nuGet package
-            // her I use the ConsoleLogger implementation
-            // see remark: you'll need to get the [MethodResultWrapper](https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper) to use this service
-            var ls = new ConsoleLogger();
-
             // make sure Ms Sql Server has write access to this work folder
             const string localWorkFolder = "d:\\temp";
 
@@ -168,7 +162,6 @@ namespace MsSqlBackupLab.Core
                                             "MultipleActiveResultSets = True; ";
 
             var backupCreator = new MsSqlBackupCreator(
-                ls,
                 localWorkFolder,
                 connectionString,
                 // let's redirect progress notifications to the console
@@ -195,7 +188,7 @@ namespace MsSqlBackupLab.Core
 
             if (res.Failure)
             {
-                ls.Log(res);
+                Console.WriteLine(res.Exception);
             }
             else
             {
@@ -207,6 +200,7 @@ namespace MsSqlBackupLab.Core
         }
     }
 }
+
 
 ```
 

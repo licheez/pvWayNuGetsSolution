@@ -1,5 +1,4 @@
 ﻿using System;
-using pvWay.MethodResultWrapper.Model;
 using pvWay.MsSqlBackup;
 
 namespace MsSqlBackupLab
@@ -8,11 +7,6 @@ namespace MsSqlBackupLab
     {
         private static void Main(/*string[] args*/)
         {
-            // need to pass the ILoggerService from pvWay MethodResultWrapper nuGet package
-            // her I use the ConsoleLogger implementation
-            // see https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper
-            var ls = new ConsoleLogger();
-
             // make sure Ms Sql Server has write access to this work folder
             const string localWorkFolder = "d:\\temp";
 
@@ -23,7 +17,6 @@ namespace MsSqlBackupLab
                                             "MultipleActiveResultSets = True; ";
 
             var backupCreator = new MsSqlBackupCreator(
-                ls,
                 localWorkFolder,
                 connectionString,
                 // let's redirect progress notifications to the console
@@ -50,7 +43,7 @@ namespace MsSqlBackupLab
 
             if (res.Failure)
             {
-                ls.Log(res);
+                Console.WriteLine(res.Exception);
             }
             else
             {

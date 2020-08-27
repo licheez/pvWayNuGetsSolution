@@ -37,9 +37,6 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MethodResultWrapper, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MethodResultWrapper.3.0.3\lib\net461\MethodResultWrapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlClient, Version=4.6.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -54,8 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMsSqlBackupCreator.cs" />
+    <Compile Include="IResult.cs" />
     <Compile Include="MsSqlBackupCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MsSqlBackup.nuspec" />
