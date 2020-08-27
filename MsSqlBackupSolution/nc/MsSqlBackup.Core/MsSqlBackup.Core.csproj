@@ -9,16 +9,15 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>pvWay Ltd 2020</Copyright>
     <PackageId>pvWay.MsSqlBackup.Core</PackageId>
-    <Description>Backup any Ms Sql database to a local or network folder</Description>
-    <PackageReleaseNotes>added sync and background methods</PackageReleaseNotes>
+    <Description>Backup any Ms Sql database to a local or network folder and execute maintenance plans</Description>
+    <PackageReleaseNotes>added maintenance plan, removed MethodResultWrapper dependency</PackageReleaseNotes>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution/nc/MsSqlBackup.Core</PackageProjectUrl>
     <PackageTags>pvWay Ms Sql Backup</PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="pvWay.MethodResultWrapper.Core" Version="1.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 

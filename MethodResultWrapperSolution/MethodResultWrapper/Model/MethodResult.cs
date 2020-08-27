@@ -140,10 +140,10 @@ namespace pvWay.MethodResultWrapper.Model
 
         public override string ToString()
         {
-            var str = String.Empty;
+            var str = string.Empty;
             foreach (var notification in _notifications)
             {
-                if (!String.IsNullOrEmpty(str))
+                if (!string.IsNullOrEmpty(str))
                     str += Environment.NewLine;
                 str += notification.ToString();
             }

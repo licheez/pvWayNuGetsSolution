@@ -1,17 +1,16 @@
 ﻿# Ms Sql Backup dotNet Core
 
-Tiny DAO utility that backs up any Ms Sql Db (any edition) to a local or network drive.
+Tiny DAO utility that backs up any Ms Sql Db (any edition) to a local or network drive and execute maintenance plans
 
-## Interface
+## Interfaces
 
-The nuGet has three method.
+### IMsSqlBackupCreator
 
-One async, one purely sync and one fully running in background
+The nuGet has several methods all in three modes sync, async and pure background.
 
 ```csharp
 using System;
 using System.Threading.Tasks;
-using pvWay.MethodResultWrapper.Interfaces;
 
 namespace pvWay.MsSqlBackup.Core
 {
@@ -21,15 +20,15 @@ namespace pvWay.MsSqlBackup.Core
         /// Creates a full backup of the database
         /// </summary>
         /// <param name="bakFileName">Fully qualified backup file name where the running app has write access</param>
-        /// <returns>MethodResult see pvWay MethodResultWrapper nuGet package</returns>
-        Task<IMethodResult> BackupDbAsync(string bakFileName);
+        /// <returns>IResult</returns>
+        Task<IResult> BackupDbAsync(string bakFileName);
 
         /// <summary>
         /// Creates a full backup of the database
         /// </summary>
         /// <param name="bakFileName">Fully qualified backup file name where the running app has write access</param>
-        /// <returns>MethodResult see pvWay MethodResultWrapper nuGet package</returns>
-        IMethodResult BackupDb(string bakFileName);
+        /// <returns>IResult</returns>
+        IResult BackupDb(string bakFileName);
 
         /// <summary>
         /// Creates a full backup of the database in background
@@ -37,8 +36,95 @@ namespace pvWay.MsSqlBackup.Core
         /// <param name="bakFileName">Fully qualified backup file name where the running app has write access</param>
         /// <param name="callback">A method that will be called on completion</param>
         /// <returns>void</returns>
-        void BgBackupDb(string bakFileName, Action<IMethodResult> callback);
+        void BgBackupDb(string bakFileName, Action<IResult> callback);
+
+        /// <summary>
+        /// (1) finds the last backup file in the &lt;backupDestinationFolder&gt;
+        /// by looking to files beginning with &lt;backupFilePrefix&gt; and ending with '.bak'
+        /// (2) gets the last backup file modification time.
+        /// (3) gets the elapsed time since this last backup.
+        /// (4) if no file were found or elapsed time is greater
+        /// than &lt;backupInterval&gt; then creates a new backup
+        /// with a constructed file name
+        /// &lt;backupFilePrefix&gt;_&lt;yyyyMMdd_HHmmss&gt;.bak;
+        /// and save this new backup file into the &lt;backupDestinationFolder&gt;
+        /// </summary>
+        /// <param name="backupDestinationFolder"></param>
+        /// <param name="backupFilePrefix"></param>
+        /// <param name="backupInterval"></param>
+        /// <returns>IExecuteMaintenancePlanResult</returns>
+        Task<IExecuteMaintenancePlanResult> ExecuteMaintenancePlanAsync(
+            string backupDestinationFolder,
+            string backupFilePrefix,
+            TimeSpan backupInterval);
+
+        /// <summary>
+        /// (1) finds the last backup file in the &lt;backupDestinationFolder&gt;
+        /// by looking to files beginning with &lt;backupFilePrefix&gt; and ending with '.bak'
+        /// (2) gets the last backup file modification time.
+        /// (3) gets the elapsed time since this last backup.
+        /// (4) if no file were found or elapsed time is greater
+        /// than &lt;backupInterval&gt; then creates a new backup
+        /// with a constructed file name
+        /// &lt;backupFilePrefix&gt;_&lt;yyyyMMdd_HHmmss&gt;.bak;
+        /// and save this new backup file into the &lt;backupDestinationFolder&gt;
+        /// </summary>
+        /// <param name="backupDestinationFolder">the folder where all backup files reside</param>
+        /// <param name="backupFilePrefix"></param>
+        /// <param name="backupInterval"></param>
+        /// <returns>IExecuteMaintenancePlanResult</returns>
+        IExecuteMaintenancePlanResult ExecuteMaintenancePlan(
+            string backupDestinationFolder,
+            string backupFilePrefix,
+            TimeSpan backupInterval);
+
+        /// <summary>
+        /// Performs the following task in background and callbacks on completion:
+        /// (1) finds the last backup file in the &lt;backupDestinationFolder&gt;
+        /// by looking to files beginning with &lt;backupFilePrefix&gt; and ending with '.bak'
+        /// (2) gets the last backup file modification time.
+        /// (3) gets the elapsed time since this last backup.
+        /// (4) if no file were found or elapsed time is greater
+        /// than &lt;backupInterval&gt; then creates a new backup
+        /// with a constructed file name
+        /// &lt;backupFilePrefix&gt;_&lt;yyyyMMdd_HHmmss&gt;.bak;
+        /// and save this new backup file into the &lt;backupDestinationFolder&gt;
+        /// </summary>
+        /// <param name="backupDestinationFolder"></param>
+        /// <param name="backupFilePrefix"></param>
+        /// <param name="backupInterval"></param>
+        /// <param name="callback"></param>
+        /// <returns>IExecuteMaintenancePlanResult</returns>
+        void BgExecuteMaintenancePlan(
+            string backupDestinationFolder,
+            string backupFilePrefix,
+            TimeSpan backupInterval,
+            Action<IExecuteMaintenancePlanResult> callback);
+
     }
+}
+```
+
+### return values
+
+```csharp
+using System;
+
+namespace pvWay.MsSqlBackup.Core
+{
+    public interface IResult
+    {
+        bool Success { get; }
+        bool Failure { get; }
+        Exception Exception { get; }
+    }
+
+    public interface IExecuteMaintenancePlanResult : IResult
+    {
+        bool BackupCreated { get; }
+        string BackupFileName { get; }
+    }
+
 }
 ```
 
