@@ -12,6 +12,8 @@
     <PackageReleaseNotes>Initial</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.Core</PackageProjectUrl>
     <PackageTags>pvWay agent pool scheduler</PackageTags>
+    <PackageId>pvWay.AgentPoolManager.Core</PackageId>
+    <Product>pvWay.AgentPoolManager.Core</Product>
   </PropertyGroup>
 
   <ItemGroup>
