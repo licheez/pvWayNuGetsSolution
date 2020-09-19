@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodResultWrapperConsumer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetCore", "dotNetCore", "{7221BF40-FE7E-41FD-B994-4AC47653F85C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodResultWrapperLab.Core", "MethodResultWrapperLab.Core\MethodResultWrapperLab.Core.csproj", "{3F6EAA8A-8BA4-4FEB-A9A3-037B962E1E22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{8BBD71A6-BDC2-4E35-A282-F10785718D58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BBD71A6-BDC2-4E35-A282-F10785718D58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BBD71A6-BDC2-4E35-A282-F10785718D58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6EAA8A-8BA4-4FEB-A9A3-037B962E1E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6EAA8A-8BA4-4FEB-A9A3-037B962E1E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6EAA8A-8BA4-4FEB-A9A3-037B962E1E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6EAA8A-8BA4-4FEB-A9A3-037B962E1E22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{DF800E8E-B11C-428D-9CEB-C2C016DCC5EC} = {7221BF40-FE7E-41FD-B994-4AC47653F85C}
 		{4AE6CE8F-82E0-4750-90D6-8C2ACE51CDAA} = {0316BB7D-E75E-420C-A4B4-00B447676958}
 		{8BBD71A6-BDC2-4E35-A282-F10785718D58} = {0316BB7D-E75E-420C-A4B4-00B447676958}
+		{3F6EAA8A-8BA4-4FEB-A9A3-037B962E1E22} = {7221BF40-FE7E-41FD-B994-4AC47653F85C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82C5B190-E9BD-48B8-84A7-3DCC6853BA6F}

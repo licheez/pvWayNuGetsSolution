@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace pvWay.MethodResultWrapper.Core
 {
-    internal class ConsoleLogWriter: ILogWriter
+    public class ConsoleLogWriter: ILogWriter
     {
         public void Dispose()
         {
@@ -32,7 +32,7 @@ namespace pvWay.MethodResultWrapper.Core
         {
             var line =
                 $"severity: {severityCode}{Environment.NewLine}" +
-                $"machineName: {machineName}" +
+                $"machineName: {machineName}{Environment.NewLine}" +
                 $"memberName: {memberName}{Environment.NewLine}" +
                 $"filePath: {filePath}{Environment.NewLine}" +
                 $"lineNumber: {lineNumber}{Environment.NewLine}" +
