@@ -1,5 +1,4 @@
-﻿using System;
-using pvWay.MethodResultWrapper.Core;
+﻿using pvWay.MethodResultWrapper.Core;
 
 namespace MethodResultWrapperLab.Core
 {
