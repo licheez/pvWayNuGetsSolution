@@ -40,7 +40,7 @@ namespace pvWay.MethodResultWrapper.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1)
         {
-            WriteLog(message, null, severity,
+            WriteLog(message, _topic, severity,
                 memberName, filePath, lineNumber);
         }
 
@@ -100,9 +100,9 @@ namespace pvWay.MethodResultWrapper.Core
         public void Log(
             Exception e,
             SeverityEnum severity = SeverityEnum.Fatal,
-            string memberName = "",
-            string filePath = "",
-            int lineNumber = -1)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1)
         {
             WriteLog(e.GetDeepMessage(), _topic, severity,
                 memberName, filePath, lineNumber);

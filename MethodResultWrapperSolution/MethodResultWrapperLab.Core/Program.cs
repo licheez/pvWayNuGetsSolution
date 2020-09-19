@@ -1,4 +1,5 @@
-﻿using pvWay.MethodResultWrapper.Core;
+﻿using System;
+using pvWay.MethodResultWrapper.Core;
 
 namespace MethodResultWrapperLab.Core
 {
@@ -23,7 +24,18 @@ namespace MethodResultWrapperLab.Core
                         p.machineName, p.memberName,
                         p.filePath, p.lineNumber,
                         p.message, p.dateUtc));
+            pw.SetTopic("the topic");
+            pw.SetUser("the user", "the company");
             pw.Log("test");
+
+            try
+            {
+                throw new Exception("test");
+            }
+            catch (Exception e)
+            {
+                pw.Log(e);
+            }
         }
     }
 }
