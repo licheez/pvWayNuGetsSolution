@@ -6,12 +6,11 @@ You'll need a valid IpStack API key to use this nuGet service.
 
 Ip Stack offers a free API key that enables up to 10.000 requests per month.
 
-Susbscribe here https://ipstack.com/product for getting your API key
+Susbscribe here https://ipstack.com/product for getting your free API key
 
 ### Usage
 
 #### Constructor
-
 
 ``` csharp
 	
@@ -27,7 +26,7 @@ Susbscribe here https://ipstack.com/product for getting your API key
     var localize = localizer.LocalizeAsync("109.88.95.155").Result;
     if (localize.Failure)
     {
-    	Console.WriteLine(localize.ErrorMessage);
+    	Console.WriteLine(localize.Exception);
     }
     else
     {
@@ -43,10 +42,17 @@ Susbscribe here https://ipstack.com/product for getting your API key
 	
     public interface ILocalizer
     {
-        // see MethodResultWrapper package for more info on IMethodResult
-        Task<IMethodResult<ILocalization>> LocalizeAsync(string ip);
+        Task<<ILocalizerResult>> LocalizeAsync(string ip);
     }
     
+    public interface ILocalizerResult
+    {
+        bool Success { get; }
+        bool Failure { get; }
+        Exception Exception { get; }
+        ILocalization Data { get; }
+    }
+
     public interface ILocalization
     {
         string Ip { get; }
@@ -126,5 +132,5 @@ Susbscribe here https://ipstack.com/product for getting your API key
 
 ```
 
-Thanks for reading so far :-)
+Happy coding !
 

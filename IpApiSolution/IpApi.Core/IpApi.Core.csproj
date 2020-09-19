@@ -11,11 +11,12 @@
     <Copyright>pvWay 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
-    <PackageTags>Free ip geo localization</PackageTags>
-    <PackageReleaseNotes>initial version</PackageReleaseNotes>
+    <PackageTags>Free ip geo localization IpStack</PackageTags>
+    <PackageReleaseNotes>breaking change: clear dependency with pvWayMethodResult</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +28,6 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="pvWay.MethodResultWrapper.Core" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

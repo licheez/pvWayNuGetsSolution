@@ -11,7 +11,7 @@ namespace IpApiLab
             var localize = localizer.LocalizeAsync("****************").Result;
             if (localize.Failure)
             {
-                Console.WriteLine(localize.ErrorMessage);
+                Console.WriteLine(localize.Exception);
             }
             else
             {
