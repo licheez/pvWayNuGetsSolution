@@ -7,14 +7,38 @@ Tiny async service that checks a VAT number against the European Vat Number data
 ### IViesResult
 
 ```csharp
-public interface IViesResult
-{
-  bool Valid { get; }
-  string CountryCode { get; }
-  string VatNumber { get; }
-  string Name { get; }
-  string Address { get; }
-}
+
+    public interface IViesResult
+    {
+        bool Success { get; }
+        bool Failure { get; }
+
+        /// <summary>
+        /// Exception is only set on Failure
+        /// </summary>
+        Exception Exception { get; }
+
+        /// <summary>
+        /// Data is only set on Success
+        /// </summary>
+        IViesData Data { get; }
+    }
+```
+
+### IViesData
+
+```csharp
+
+    public interface IViesData
+    {
+        bool Valid { get; }
+        string CountryCode { get; }
+        string VatNumber { get; }
+        string Name { get; }
+        string Address { get; }
+    }
+
+
 ```
 
 ### IViesService
@@ -22,15 +46,10 @@ public interface IViesResult
 ```csharp
     public interface IViesService
     {
-        Task<IMethodResult<IViesResult>> CheckVatAsync(
-        string countryCode, string vatNumber);
+        Task<IViesResult> CheckVatAsync(
+            string countryCode, string vatNumber);
     }
 ```
-
-## Dependencies
-
-This package is using the [MethodResult.Core nuGet package](https://www.nuget.org/packages/pvWay.MethodResultWrapper.Core/)
-
 
 ## Usage
 ```csharp
@@ -44,12 +63,11 @@ namespace ViesApiConsumer.Core
     {
         private static void Main(/*string[] args*/)
         {
-            var ls = new ConsoleLogger();
-            var viesService = new ViesService(ls);
+            var viesService = new ViesService();
             var checkVat = viesService.CheckVatAsync("BE", "0459415853").Result;
             if (checkVat.Failure)
             {
-                Console.WriteLine(checkVat.ErrorMessage);
+                Console.WriteLine(checkVat.Exception);
             }
             else
             {
@@ -64,3 +82,4 @@ namespace ViesApiConsumer.Core
     }
 }
 ```
+Happi Coding

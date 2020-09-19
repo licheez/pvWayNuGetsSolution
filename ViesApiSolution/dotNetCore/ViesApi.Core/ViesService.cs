@@ -1,5 +1,4 @@
-﻿using pvWay.MethodResultWrapper.Core;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using ViesWebService;
 
@@ -7,28 +6,17 @@ namespace pvWay.ViesApi.Core
 {
     public class ViesService : IViesService
     {
-        private readonly ILoggerService _ls;
-
-        public ViesService(ILoggerService ls)
-        {
-            _ls = ls;
-        }
-
-        public async Task<IMethodResult<IViesResult>> CheckVatAsync(string countryCode, string vatNumber)
+        public async Task<IViesResult> CheckVatAsync(string countryCode, string vatNumber)
         {
             if (string.IsNullOrEmpty(countryCode))
             {
-                var err = new MethodResult<IViesResult>("country code should not be null or empty",
-                    SeverityEnum.Error);
-                _ls.Log(err);
-                return err;
+                var err = new Exception("country code should not be null or empty");
+                return new ViesResult(err);
             }
             if (string.IsNullOrEmpty(vatNumber))
             {
-                var err = new MethodResult<IViesResult>("vat number should not be null or empty",
-                    SeverityEnum.Error);
-                _ls.Log(err);
-                return err;
+                var err = new Exception("vat number should not be null or empty");
+                return new ViesResult(err);
             }
             vatNumber = vatNumber
                 .Replace(" ", "")
@@ -40,13 +28,12 @@ namespace pvWay.ViesApi.Core
             {
                 var vs = new checkVatPortTypeClient();
                 var vr = await vs.checkVatAsync(request);
-                var res = new ViesResult(vr);
-                return new MethodResult<IViesResult>(res);
+                var vd = new ViesData(vr);
+                return new ViesResult(vd);
             }
             catch (Exception e)
             {
-                _ls.Log(e);
-                return new MethodResult<IViesResult>(e);
+                return new ViesResult(e);
             }
         }
     }

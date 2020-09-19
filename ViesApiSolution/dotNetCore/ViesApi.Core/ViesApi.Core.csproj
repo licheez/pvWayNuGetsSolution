@@ -6,16 +6,17 @@
     <AssemblyName>pvWay.ViesApi.Core</AssemblyName>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
-    <Product>ViesApi.Core</Product>
+    <Product>pvWay.ViesApi.Core</Product>
     <Description>Very simple service that checks a VAT number returning whether or not the number is valid, the official company name and address when available using the EU web service</Description>
     <Copyright>Copyright pvWay 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>VAT check europe VIES</PackageTags>
-    <PackageReleaseNotes>initial version</PackageReleaseNotes>
+    <PackageReleaseNotes>remove dependency with MethodResult</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ViesApiSolution/dotNetCore/ViesApi.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ViesApiSolution</RepositoryUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="pvWay.MethodResultWrapper.Core" Version="1.0.1" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />

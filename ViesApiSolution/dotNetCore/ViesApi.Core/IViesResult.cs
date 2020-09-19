@@ -1,11 +1,20 @@
-﻿namespace pvWay.ViesApi.Core
+﻿using System;
+
+namespace pvWay.ViesApi.Core
 {
     public interface IViesResult
     {
-        bool Valid { get; }
-        string CountryCode { get; }
-        string VatNumber { get; }
-        string Name { get; }
-        string Address { get; }
+        bool Success { get; }
+        bool Failure { get; }
+
+        /// <summary>
+        /// Exception is only set on Failure
+        /// </summary>
+        Exception Exception { get; }
+
+        /// <summary>
+        /// Data is only set on Success
+        /// </summary>
+        IViesData Data { get; }
     }
 }
