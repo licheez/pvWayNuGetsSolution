@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace pvWay.MethodResultWrapper.Core
 {
@@ -24,7 +25,7 @@ namespace pvWay.MethodResultWrapper.Core
         /// <param name="topic"></param>
         void SetTopic(string topic);
 
-        // TOPIC LESS METHODS
+        // TOPIC-LESS METHODS
         void Log(
             string message,
             SeverityEnum severity = SeverityEnum.Debug,
@@ -32,7 +33,21 @@ namespace pvWay.MethodResultWrapper.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
 
+        Task LogAsync(
+            string message,
+            SeverityEnum severity = SeverityEnum.Debug,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+        
         void Log(
+            IEnumerable<string> messages,
+            SeverityEnum severity,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
+        Task LogAsync(
             IEnumerable<string> messages,
             SeverityEnum severity,
             [CallerMemberName] string memberName = "",
@@ -45,8 +60,20 @@ namespace pvWay.MethodResultWrapper.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
 
+        Task LogAsync(
+            IMethodResult result,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
 
         void Log(
+            Exception e,
+            SeverityEnum severity = SeverityEnum.Fatal,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
+        Task LogAsync(
             Exception e,
             SeverityEnum severity = SeverityEnum.Fatal,
             [CallerMemberName] string memberName = "",
@@ -63,7 +90,23 @@ namespace pvWay.MethodResultWrapper.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
 
+        Task LogAsync(
+            string message,
+            string topic,
+            SeverityEnum severity = SeverityEnum.Debug,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+        
         void Log(
+            IEnumerable<string> messages,
+            string topic,
+            SeverityEnum severity,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
+        Task LogAsync(
             IEnumerable<string> messages,
             string topic,
             SeverityEnum severity,
@@ -78,6 +121,13 @@ namespace pvWay.MethodResultWrapper.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
 
+        Task LogAsync(
+            IMethodResult result,
+            string topic,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
+
         void Log(
             Exception e,
             string topic,
@@ -86,5 +136,12 @@ namespace pvWay.MethodResultWrapper.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = -1);
 
+        Task LogAsync(
+            Exception e,
+            string topic,
+            SeverityEnum severity = SeverityEnum.Fatal,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = -1);
     }
 }

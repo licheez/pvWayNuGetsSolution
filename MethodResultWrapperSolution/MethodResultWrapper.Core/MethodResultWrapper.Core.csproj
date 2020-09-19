@@ -13,11 +13,11 @@
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
 
     <PackageTags>pvway methodresult logger</PackageTags>
-    <PackageReleaseNotes>DsoHttpResult.HttpStatusCode made public</PackageReleaseNotes>
-    <PackageIcon>Logo150x200px.png</PackageIcon>
+    <PackageReleaseNotes>integrates MsSqlLogger</PackageReleaseNotes>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>1.0.1</Version>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Logo150x200px.png">
+    <None Include="..\..\pvwayLogoTextLess256.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
