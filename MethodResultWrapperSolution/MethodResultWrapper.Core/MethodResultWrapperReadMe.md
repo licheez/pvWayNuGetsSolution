@@ -1,5 +1,4 @@
 # Method Result Wrapper Core
-## Version 1.0.1
 
 Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications in case of failure.
 
@@ -50,98 +49,29 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
         string Message { get; }
     }
     
-
 ```
 
 ### ILoggerService interface
 
-* This nuget package also provides the ILoggerService interface and a ConsoleLogger concrete that supports the MethodResult object
+* This nuget package also provides the ILoggerService interface with 3 built in implementations. 
+(1) ConsoleLogger that writes logs onto the Console,
+(2) MuteLogger that can be used for unit testing and
+(3) PersistenceLogger that can be used for persiting rich log rows into a database, a file or any other persistence layer
+by injecting the appropriate LogWriter (see **[pvWay.MsSqlLogWriter.Core nuGet](https://www.nuget.org/packages/MsSqlLogWriter.Core/)**)
 
-* Remark: feel free to get the MsSqlLoggerService nuget package that implements this interface enabling to persist logs into a table of your choice in a Ms Sql database
+The ILoggerService provides both sync and async methods with serveral signatures including
+(1) simple message,
+(2) list of messages,
+(3) MethodResult object (see above)
+(4) Exception
 
-```csharp
+Each log row is also qualified by a Severity level from Debug to Fatal and enables also some interesting meta data like
+(1) UserId,
+(2) CompanyId,
+(3) Topic
+(4) MachineName
 
-        /// <summary>
-        /// Subsequent calls to the Log method will
-        /// store the provided UserId and CompanyId
-        /// into their corresponding columns
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="companyId"></param>
-        void SetUser(string userId, string companyId = null);
-
-        /// <summary>
-        /// Topic is an optional extra column in the log
-        /// that enables grouping logs. Subsequent calls to
-        /// the Log method will store the provided
-        /// topic into the corresponding column
-        /// </summary>
-        /// <param name="topic"></param>
-        void SetTopic(string topic);
-
-        // TOPIC LESS METHODS
-        void Log(
-            string message,
-            SeverityEnum severity = SeverityEnum.Debug,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-        void Log(
-            IEnumerable<string> messages,
-            SeverityEnum severity,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-        void Log(
-            IMethodResult result,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-
-        void Log(
-            Exception e,
-            SeverityEnum severity = SeverityEnum.Fatal,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-
-        // TOPIC METHODS
-        void Log(
-            string message,
-            string topic,
-            SeverityEnum severity = SeverityEnum.Debug,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-        void Log(
-            IEnumerable<string> messages,
-            string topic,
-            SeverityEnum severity,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-        void Log(
-            IMethodResult result,
-            string topic,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-        void Log(
-            Exception e,
-            string topic,
-            SeverityEnum severity = SeverityEnum.Fatal,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = -1);
-
-```
+The service will also capture MemberName, FilePath and LineNumber
 
 ## Features
 

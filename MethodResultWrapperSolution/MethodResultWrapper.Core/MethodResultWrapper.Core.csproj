@@ -13,7 +13,9 @@
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
 
     <PackageTags>pvway methodresult logger</PackageTags>
-    <PackageReleaseNotes>integrates MsSqlLogger</PackageReleaseNotes>
+    <PackageReleaseNotes>loggerWriter injection made possible
+async logging enabled
+muteLogger added</PackageReleaseNotes>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>

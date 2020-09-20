@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>MsSqlLogWriter.Core</AssemblyName>
+    <RootNamespace>pvWay.MsSqlLogWriter.Core</RootNamespace>
+    <PackageId>pvWay.MsSqlLogWriter.Core</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Product>pvWay.MsSqlLogWriter.Core</Product>
+    <Description>Exposes two log writer methods (one sync and one async) for persisting rich log rows into an Ms Sql database. This can be used in conjunction with the MethodResultWrapper.Core nuGet package.</Description>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlLogWriterSolution/MsSqlLogWriter.Core</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlLogWriterSolution/MsSqlLogWriter.Core</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>pvWay MsSql Database Logger Persistence</PackageTags>
+    <PackageReleaseNotes>Initial version</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
