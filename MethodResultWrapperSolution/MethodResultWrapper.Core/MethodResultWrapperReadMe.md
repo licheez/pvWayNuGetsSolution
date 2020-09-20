@@ -1,4 +1,4 @@
-# Method Result Wrapper Core
+# Method Result Wrapper Core by pvWay
 
 Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications in case of failure.
 
@@ -59,19 +59,19 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
 (3) PersistenceLogger that can be used for persiting rich log rows into a database, a file or any other persistence layer
 by injecting the appropriate LogWriter (see **[pvWay.MsSqlLogWriter.Core nuGet](https://www.nuget.org/packages/MsSqlLogWriter.Core/)**)
 
-The ILoggerService provides both sync and async methods with serveral signatures including
+* The ILoggerService provides both sync and async methods with serveral signatures including
 (1) simple message,
 (2) list of messages,
 (3) MethodResult object (see above)
 (4) Exception
 
-Each log row is also qualified by a Severity level from Debug to Fatal and enables also some interesting meta data like
+* Each log row is also qualified by a Severity level from Debug to Fatal and enables also some interesting meta data like
 (1) UserId,
 (2) CompanyId,
 (3) Topic
 (4) MachineName
 
-The service will also capture MemberName, FilePath and LineNumber
+* The service will also capture MemberName, FilePath and LineNumber
 
 ## Features
 
