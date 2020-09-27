@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace pvWay.Crypto
+namespace pvWay.Crypto.Core
 {
     public interface ICrypto: IAsyncDisposable, IDisposable
     {

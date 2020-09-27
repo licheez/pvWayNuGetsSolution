@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace pvWay.Crypto
+namespace pvWay.Crypto.Core
 {
     public class Crypto: ICrypto
     {   

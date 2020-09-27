@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>pvWay.Crypto</AssemblyName>
-    <RootNamespace>pvWay.Crypto</RootNamespace>
+    <AssemblyName>pvWay.Crypto.Core</AssemblyName>
+    <RootNamespace>pvWay.Crypto.Core</RootNamespace>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -13,6 +13,10 @@
     <PackageReleaseNotes>Initial verson</PackageReleaseNotes>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>Crypto AES Cipher</PackageTags>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution/Crypto</RepositoryUrl>
+    <PackageId>pvWay.Crypto.Core</PackageId>
+    <Product>pvWay.Crypto.Core</Product>
   </PropertyGroup>
 
   <ItemGroup>
