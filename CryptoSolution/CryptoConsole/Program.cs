@@ -11,7 +11,10 @@ namespace CryptoConsole
 
         private static void Main(/*string[] args*/)
         {
-            var crypto = new Crypto(KeyString, InitializationVectorString);
+            var crypto = new Crypto(
+                KeyString, 
+                InitializationVectorString,
+                TimeSpan.FromSeconds(10));
 
             var b64 = crypto.EncryptAsync("test").Result;
             Console.WriteLine(b64);
@@ -32,6 +35,9 @@ namespace CryptoConsole
             Console.WriteLine(mcBack.TheBody);
             Console.WriteLine(mcBack.TheFooter);
 
+            b64 = crypto.EncryptEphemeralAsync(mc, TimeSpan.FromSeconds(15)).Result;
+            mcBack = crypto.DecryptEphemeralAsync<MyClass>(b64).Result;
+            Console.WriteLine(mcBack.TheBody + "is still valid");
         }
 
         private class MyClass
