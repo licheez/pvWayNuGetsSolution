@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>pvWay.Crypto</AssemblyName>
+    <RootNamespace>pvWay.Crypto</RootNamespace>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <Description>Tiny utilily encrypting/decrypting texts/objects to/from base64 strings</Description>
+    <Copyright>(c) pvWay 2020</Copyright>
+    <PackageReleaseNotes>Initial verson</PackageReleaseNotes>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Crypto AES Cipher</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvWayNuGetsSolution\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>
