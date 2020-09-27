@@ -1,5 +1,3 @@
-﻿
-
 ﻿# Crypto Core
 
 Tiny utilily encrypting/decrypting texts/objects to/from base64 strings
