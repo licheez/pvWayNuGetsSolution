@@ -1,4 +1,4 @@
-# Ms Sql MultiPart VarChar for .Net Core
+# Ms Sql MultiPart VarChar for .Net Framework
 
 Persists multi part text values (dictionary string - string) into one single VARCHAR column into 
 an Ms SQL Db (2014 or >=). 
