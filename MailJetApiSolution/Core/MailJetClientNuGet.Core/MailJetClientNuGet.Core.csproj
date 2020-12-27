@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>pvWay.MailJetClientNuGet.Core</AssemblyName>
+    <RootNamespace>pvWay.MailJetClientNuGet.Core</RootNamespace>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Description>Simple interface for posting emails via MailJet templates</Description>
+    <Copyright>Copyright pvWay 2021</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.Core</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.Core</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>MailJet Template Sender API 3.1</PackageTags>
+    <PackageReleaseNotes>Initial</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>
