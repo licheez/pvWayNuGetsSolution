@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MpVarCharReadMe.md" />
+    <None Include="MsSqlMultiPartVarChar.Fw.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>Pierre Van Wallendael</authors>
+    <owners>pvWay</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Fw</projectUrl>
+    <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple interface for posting emails via MailJet templates</description>
+    <releaseNotes>Initial</releaseNotes>
+    <copyright>Copyright pvWay 2021</copyright>
+    <tags>MailJet Template Sender API 3.1</tags>
+  </metadata>
+</package>
