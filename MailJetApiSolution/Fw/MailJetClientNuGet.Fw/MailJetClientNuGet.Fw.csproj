@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,10 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMailJetAddresseeSendResult.cs" />
+    <Compile Include="IMailJetClient.cs" />
+    <Compile Include="IMailJetMessageSendResult.cs" />
+    <Compile Include="IMailJetSendResult.cs" />
+    <Compile Include="MailJetAddresseeSendResult.cs" />
+    <Compile Include="MailJetClient.cs" />
+    <Compile Include="MailJetEmailAddress.cs" />
+    <Compile Include="MailJetMessage.cs" />
+    <Compile Include="MailJetMessageSendResult.cs" />
+    <Compile Include="MailJetSendPayload.cs" />
+    <Compile Include="MailJetSendResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MailJetClientNuGet.Fw.nuspec" />
+    <None Include="packages.config" />
+    <None Include="ReadMe.md" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Fw</projectUrl>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.Fw</projectUrl>
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple interface for posting emails via MailJet templates</description>
