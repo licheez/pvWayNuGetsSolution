@@ -13,8 +13,9 @@
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.Core</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <PackageTags>MailJet Template Sender API 3.1</PackageTags>
-    <PackageReleaseNotes>Initial</PackageReleaseNotes>
+    <PackageTags>MailJet Template Sender API 3.1 Post Email</PackageTags>
+    <PackageReleaseNotes>fix not using template variables</PackageReleaseNotes>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

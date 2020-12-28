@@ -10,7 +10,7 @@ namespace pvWay.MailJetClientNuGet.Core
         public MailJetEmailAddress From { get; }
         public IEnumerable<MailJetEmailAddress> To { get; }
         public int TemplateId { get; }
-        // public bool TemplateLanguage { get; }
+        public bool TemplateLanguage { get; }
         public string Subject { get; }
         public IDictionary<string, string> Variables { get; }
 
@@ -24,7 +24,7 @@ namespace pvWay.MailJetClientNuGet.Core
             From = fromAddress;
             To = new List<MailJetEmailAddress> { toAddress };
             TemplateId = templateId;
-            // TemplateLanguage = templateLanguage;
+            TemplateLanguage = true;
             Subject = subject;
             Variables = variables;
         }
