@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("pvWay.ExcelTranslationProvider.Fw")]
-[assembly: AssemblyDescription("Recursively walk directory gatthering excel files for building a translations dictionary")]
+[assembly: AssemblyDescription("Recursively walks a given directory gathering Excel files for building a translations dictionary")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("pvWay.ExcelTranslationProvider.Fw")]

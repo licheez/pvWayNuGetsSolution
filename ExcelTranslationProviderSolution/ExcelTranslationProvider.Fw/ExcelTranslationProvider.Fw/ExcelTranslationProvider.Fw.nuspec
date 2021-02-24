@@ -7,12 +7,12 @@
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Fw</projectUrl>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ExcelTranslationProviderSolution/ExcelTranslationProvider.Fw/ExcelTranslationProvider.Fw</projectUrl>
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Persists multi part text values (dictionary string - string) into one single VARCHAR column into an Ms SQL Db (2014 or >=). The package contains a cSharp class for storing/retreiving the dictionary to/from the field and the SQL code for creating a scalar function for stored procedure implementation.</description>
+    <description>Recursively walks a given directory gathering Excel files for building a consolidated translations dictionary</description>
     <releaseNotes>Initial load</releaseNotes>
     <copyright>Copyright pvWay 2021</copyright>
-    <tags>iso639 translations resources multi lingual pvWay MsSql</tags>
+    <tags>translations resources multi lingual pvWay Excel</tags>
   </metadata>
 </package>

@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelTranslationProvider.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTranslationProvider.Fw", "ExcelTranslationProvider.Fw\ExcelTranslationProvider.Fw\ExcelTranslationProvider.Fw.csproj", "{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4380C376-10F5-4F3F-8A14-8F508121F632}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fw", "Fw", "{AD972754-7948-40A9-B7A4-71ADFD7A4051}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2} = {4380C376-10F5-4F3F-8A14-8F508121F632}
+		{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584} = {AD972754-7948-40A9-B7A4-71ADFD7A4051}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C30D72FE-EA78-427B-81BC-EB79D9B8A780}
