@@ -53,7 +53,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
                     {
                         using (var xReader = new ExcelReader(_log, excelFileName))
                         {
-                            var nbRows = xReader.GetRowCount(0);
+                            var nbRows = xReader.RowCount;
                             var header = new ExcelHeaderRow(xReader);
                             // start at row one to skip the header
                             for (var r = 1; r < nbRows; r++)
@@ -83,7 +83,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
                 var col = 5;
                 while (true)
                 {
-                    var langCode = er.GetCellText(0, 1, col);
+                    var langCode = er.GetCellText(1, col);
                     if (string.IsNullOrEmpty(langCode)) break;
                     LangMap.Add(langCode, col);
                     col++;
@@ -104,11 +104,11 @@ namespace pvWay.ExcelTranslationProvider.Fw
             {
                 var kParts = new[]
                 {
-                    er.BaseFileName,
-                    er.GetCellText(0, row, 1),
-                    er.GetCellText(0, row, 2),
-                    er.GetCellText(0, row, 3),
-                    er.GetCellText(0, row, 4)
+                    er.TabName,
+                    er.GetCellText(row, 1),
+                    er.GetCellText(row, 2),
+                    er.GetCellText(row, 3),
+                    er.GetCellText(row, 4)
                 };
                 Key = string.Empty;
                 foreach (var kPart in kParts)
@@ -121,7 +121,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
                 Translations = new Dictionary<string, string>();
                 foreach (var kvp in langMap)
                 {
-                    var translation = er.GetCellText(0, row, kvp.Value);
+                    var translation = er.GetCellText(row, kvp.Value);
                     Translations.Add(kvp.Key, translation);
                 }
             }

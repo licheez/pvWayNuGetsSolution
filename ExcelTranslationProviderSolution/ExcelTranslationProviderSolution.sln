@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelTranslationProvider.Core", "ExcelTranslationProvider.Core\ExcelTranslationProvider.Core.csproj", "{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTranslationProvider.Fw", "ExcelTranslationProvider.Fw\ExcelTranslationProvider.Fw\ExcelTranslationProvider.Fw.csproj", "{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4380C376-10F5-4F3F-8A14-8F508121F632}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fw", "Fw", "{AD972754-7948-40A9-B7A4-71ADFD7A4051}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelTranslationProvider.Core", "Core\ExcelTranslationProvider.Core\ExcelTranslationProvider.Core.csproj", "{B921FFE7-02A7-408B-8D6C-8EAAA8269433}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTranslationProvider.Fw", "Fw\ExcelTranslationProvider.Fw\ExcelTranslationProvider.Fw\ExcelTranslationProvider.Fw.csproj", "{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTranslationProviderConsole.Fw", "Fw\ExcelTranslationProviderConsole.Fw\ExcelTranslationProviderConsole.Fw.csproj", "{84E76D7D-21CF-4AAF-8671-4DCA423D26BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,21 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B921FFE7-02A7-408B-8D6C-8EAAA8269433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B921FFE7-02A7-408B-8D6C-8EAAA8269433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B921FFE7-02A7-408B-8D6C-8EAAA8269433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B921FFE7-02A7-408B-8D6C-8EAAA8269433}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E76D7D-21CF-4AAF-8671-4DCA423D26BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E76D7D-21CF-4AAF-8671-4DCA423D26BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E76D7D-21CF-4AAF-8671-4DCA423D26BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E76D7D-21CF-4AAF-8671-4DCA423D26BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0B0BF4EA-F0FA-42E4-B6D5-0D7F84FB52F2} = {4380C376-10F5-4F3F-8A14-8F508121F632}
+		{B921FFE7-02A7-408B-8D6C-8EAAA8269433} = {4380C376-10F5-4F3F-8A14-8F508121F632}
 		{D4A1C9BB-2C6C-4493-9E5C-0EE85CDEC584} = {AD972754-7948-40A9-B7A4-71ADFD7A4051}
+		{84E76D7D-21CF-4AAF-8671-4DCA423D26BD} = {AD972754-7948-40A9-B7A4-71ADFD7A4051}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C30D72FE-EA78-427B-81BC-EB79D9B8A780}

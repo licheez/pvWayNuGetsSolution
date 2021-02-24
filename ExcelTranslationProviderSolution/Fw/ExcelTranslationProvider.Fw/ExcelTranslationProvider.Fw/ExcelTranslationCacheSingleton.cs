@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -9,6 +10,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
     {
         private readonly IExcelTranslationService _ts;
         private readonly TimeSpan _sleepTime;
+        private readonly Action<IExcelTranslationCache> _onLoaded;
         private static volatile IExcelTranslationCache _instance;
         private static readonly object Locker = new object();
         private IDictionary<string, IDictionary<string, string>> _translations;
@@ -16,10 +18,13 @@ namespace pvWay.ExcelTranslationProvider.Fw
 
         private ExcelTranslationCacheSingleton(
             IExcelTranslationService ts,
-            TimeSpan sleepTime)
+            TimeSpan sleepTime,
+            Action<IExcelTranslationCache> onLoaded = null)
         {
             _ts = ts;
             _sleepTime = sleepTime;
+            _onLoaded = onLoaded;
+            _translations = new ConcurrentDictionary<string, IDictionary<string, string>>();
             var worker = new Thread(Updater)
             {
                 Priority = ThreadPriority.Lowest
@@ -38,6 +43,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
                     try
                     {
                         _translations = _ts.Translations;
+                        _onLoaded?.Invoke(this);
                         _cacheDate = lastUpdate;
                     }
                     catch (Exception)
@@ -52,13 +58,15 @@ namespace pvWay.ExcelTranslationProvider.Fw
 
         public static IExcelTranslationCache GetInstance(
             IExcelTranslationService ts,
-            TimeSpan sleepTime)
+            TimeSpan sleepTime,
+            Action<IExcelTranslationCache> onLoaded = null)
         {
             if (_instance != null) return _instance;
             lock (Locker)
             {
                 _instance = new
-                    ExcelTranslationCacheSingleton(ts, sleepTime);
+                    ExcelTranslationCacheSingleton(
+                        ts, sleepTime, onLoaded);
                 // ReSharper disable once NonAtomicCompoundOperator
                 return _instance;
             }
@@ -73,9 +81,12 @@ namespace pvWay.ExcelTranslationProvider.Fw
                 key += keyPart;
             }
 
-            return _translations.ContainsKey(key)
-                ? _translations[key]
-                : new Dictionary<string, string>();
+            if (_translations.ContainsKey(key))
+            {
+                return _translations[key];
+            }
+
+            return new Dictionary<string, string>();
         }
 
         private string GetTranslation(string languageCode, params string[] keys)
