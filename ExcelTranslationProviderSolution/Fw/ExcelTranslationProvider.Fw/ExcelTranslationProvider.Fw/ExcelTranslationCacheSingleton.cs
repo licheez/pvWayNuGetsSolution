@@ -99,6 +99,16 @@ namespace pvWay.ExcelTranslationProvider.Fw
                 : string.Empty;
         }
 
+        public DateTime LastUpdateDateUtc => _cacheDate ?? _ts.LastUpdateDateUtc;
+
+        public IDictionary<string, IDictionary<string, string>> Translations => _translations;
+
+        public void RefreshNow()
+        {
+            _translations = _ts.Translations;
+            _cacheDate = _ts.LastUpdateDateUtc;
+        }
+
         public string GetTranslation(string languageCode, string keysString)
         {
             var keyParts = keysString.Split('.');

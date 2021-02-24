@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Recursively walks a given directory gathering Excel files for building a consolidated translations dictionary</description>
-    <releaseNotes>Initial load</releaseNotes>
+    <releaseNotes>More methods in TranslationCache</releaseNotes>
     <copyright>Copyright pvWay 2021</copyright>
     <tags>translations resources multi lingual pvWay Excel</tags>
   </metadata>

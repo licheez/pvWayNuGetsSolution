@@ -22,7 +22,8 @@ namespace pvWay.ExcelTranslationProvider.Fw
         {
             _log = log;
             var fi = new FileInfo(excelFilePath);
-            _wb = new XSSFWorkbook(fi);
+            var sr = fi.OpenRead();
+            _wb = new XSSFWorkbook(sr);
             _ws = _wb.GetSheetAt(0);
         }
 
