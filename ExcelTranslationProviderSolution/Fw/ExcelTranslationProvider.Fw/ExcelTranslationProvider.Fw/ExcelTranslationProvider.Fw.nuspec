@@ -7,7 +7,7 @@
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ExcelTranslationProviderSolution/ExcelTranslationProvider.Fw/ExcelTranslationProvider.Fw</projectUrl>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ExcelTranslationProviderSolution/Fw/ExcelTranslationProvider.Fw/ExcelTranslationProvider.Fw</projectUrl>
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Recursively walks a given directory gathering Excel files for building a consolidated translations dictionary</description>

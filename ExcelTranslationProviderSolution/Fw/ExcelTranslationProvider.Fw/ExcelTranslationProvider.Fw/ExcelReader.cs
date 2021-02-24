@@ -1,19 +1,20 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using OfficeOpenXml;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+
+//using OfficeOpenXml;
 
 namespace pvWay.ExcelTranslationProvider.Fw
 {
     internal class ExcelReader : IDisposable
     {
         private readonly Action<Exception> _log;
-        private readonly ExcelPackage _excelPackage;
+        private readonly XSSFWorkbook _wb;
+        private readonly ISheet _ws;
 
-        private readonly ExcelWorksheet _ws;
-
-        public int RowCount => _ws.Dimension.Rows;
-        public string TabName => _ws.Name;
+        public int RowCount => _ws.LastRowNum;
+        public string TabName => _ws.SheetName;
 
         public ExcelReader(
             Action<Exception> log,
@@ -21,17 +22,17 @@ namespace pvWay.ExcelTranslationProvider.Fw
         {
             _log = log;
             var fi = new FileInfo(excelFilePath);
-            _excelPackage = new ExcelPackage(fi);
-            var wb = _excelPackage.Workbook;
-            _ws = wb.Worksheets.First();
+            _wb = new XSSFWorkbook(fi);
+            _ws = _wb.GetSheetAt(0);
         }
 
         public string GetCellText(int rowNumber, int columnNumber)
         {
             try
             {
-                var cell = _ws.Cells[rowNumber, columnNumber];
-                var text = cell?.Text;
+                var row = _ws.GetRow(rowNumber);
+                var cell = row.GetCell(columnNumber);
+                var text = cell?.StringCellValue;
                 return text;
             }
             catch (Exception e)
@@ -43,7 +44,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
 
         public void Dispose()
         {
-            _excelPackage?.Dispose();
+            _wb?.Close();
         }
     }
 }

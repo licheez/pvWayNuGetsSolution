@@ -56,9 +56,9 @@ namespace pvWay.ExcelTranslationProvider.Fw
                             var nbRows = xReader.RowCount;
                             var header = new ExcelHeaderRow(xReader);
                             // start at row one to skip the header
-                            for (var r = 1; r < nbRows; r++)
+                            for (var r = 1; r <= nbRows; r++)
                             {
-                                var row = new ExcelDataRow(xReader, header.LangMap, r + 1);
+                                var row = new ExcelDataRow(xReader, header.LangMap, r);
                                 rows.Add(row);
                             }
                         }
@@ -80,10 +80,10 @@ namespace pvWay.ExcelTranslationProvider.Fw
             public ExcelHeaderRow(ExcelReader er)
             {
                 LangMap = new Dictionary<string, int>();
-                var col = 5;
+                var col = 4;
                 while (true)
                 {
-                    var langCode = er.GetCellText(1, col);
+                    var langCode = er.GetCellText(0, col);
                     if (string.IsNullOrEmpty(langCode)) break;
                     LangMap.Add(langCode, col);
                     col++;
@@ -105,10 +105,10 @@ namespace pvWay.ExcelTranslationProvider.Fw
                 var kParts = new[]
                 {
                     er.TabName,
+                    er.GetCellText(row, 0),
                     er.GetCellText(row, 1),
                     er.GetCellText(row, 2),
-                    er.GetCellText(row, 3),
-                    er.GetCellText(row, 4)
+                    er.GetCellText(row, 3)
                 };
                 Key = string.Empty;
                 foreach (var kPart in kParts)
