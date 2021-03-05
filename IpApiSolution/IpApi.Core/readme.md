@@ -66,8 +66,8 @@ Susbscribe here https://ipstack.com/product for getting your free API key
         string RegionName { get; }
         string City { get; }
         string Zip { get; }
-        double Latitude { get; }
-        double Longitude { get; }
+        double? Latitude { get; }
+        double? Longitude { get; }
         ILocation Location { get; } // free plan
         ITimeZone TimeZone { get; } // as from basic plan
         ICurrency Currency { get; } // as from basic plan
@@ -77,14 +77,14 @@ Susbscribe here https://ipstack.com/product for getting your free API key
  
     public interface ILocation
     {
-        int GeoNameId { get; }
+        int? GeoNameId { get; }
         string Capital { get; }
         IEnumerable<ILanguage> Languages { get; }
         string CountryFlagUrl { get; }
         string CountryFlagEmoji { get; }
         string CountryFlagEmojiUnicode { get; }
         string CallingCode { get; }
-        bool EuroMember { get; }
+        bool? EuroMember { get; }
     }
  
     public interface ILanguage
@@ -97,10 +97,10 @@ Susbscribe here https://ipstack.com/product for getting your free API key
     public interface ITimeZone
     {
         string Id { get; }
-        DateTime CurrentTime { get; }
-        int GmtOffset { get; }
+        DateTime? CurrentTime { get; }
+        int? GmtOffset { get; }
         string Code { get; }
-        bool IsDayLightSaving { get; }
+        bool? IsDayLightSaving { get; }
     }
 
 	public interface ICurrency
@@ -120,12 +120,12 @@ Susbscribe here https://ipstack.com/product for getting your free API key
 
     public interface ISecurity
     {
-        bool IsProxy { get; }
+        bool? IsProxy { get; }
         string ProxyType { get; }
-        bool IsCrawler { get; }
+        bool? IsCrawler { get; }
         string CrawlerName { get; }
         string CrawlerType { get; }
-        bool IsTor { get; }
+        bool? IsTor { get; }
         string ThreatLevel { get; }
         string ThreatTypes { get; }
     }

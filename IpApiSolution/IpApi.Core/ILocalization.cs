@@ -13,8 +13,8 @@
         string RegionName { get; }
         string City { get; }
         string Zip { get; }
-        double Latitude { get; }
-        double Longitude { get; }
+        double? Latitude { get; }
+        double? Longitude { get; }
         ILocation Location { get; }
         ITimeZone TimeZone { get; }
         ICurrency Currency { get; }

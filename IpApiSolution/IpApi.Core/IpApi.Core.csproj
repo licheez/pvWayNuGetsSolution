@@ -12,11 +12,11 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageTags>Free ip geo localization IpStack</PackageTags>
-    <PackageReleaseNotes>breaking change: clear dependency with pvWayMethodResult</PackageReleaseNotes>
+    <PackageReleaseNotes>breaking change: all primitives made nullable</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>2.0.0</Version>
+    <Version>3.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

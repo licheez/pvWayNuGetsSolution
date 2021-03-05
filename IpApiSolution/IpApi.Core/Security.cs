@@ -2,12 +2,12 @@
 {
     internal class Security : ISecurity
     {
-        public bool IsProxy { get; }
+        public bool? IsProxy { get; }
         public string ProxyType { get; }
-        public bool IsCrawler { get; }
+        public bool? IsCrawler { get; }
         public string CrawlerName { get; }
         public string CrawlerType { get; }
-        public bool IsTor { get; }
+        public bool? IsTor { get; }
         public string ThreatLevel { get; }
         public string ThreatTypes { get; }
 

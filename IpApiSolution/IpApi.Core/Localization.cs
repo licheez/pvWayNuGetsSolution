@@ -14,8 +14,8 @@
         public string RegionName { get; }
         public string City { get; }
         public string Zip { get; }
-        public double Latitude { get; }
-        public double Longitude { get; }
+        public double? Latitude { get; }
+        public double? Longitude { get; }
         public ILocation Location { get; }
         public ITimeZone TimeZone { get; }
         public ICurrency Currency { get; }
