@@ -9,7 +9,7 @@ namespace ExcelTranslationProviderConsole.Fw
         {
             // instantiate the Translation Service with a folder
             var excelTranslationService = new ExcelTranslationService(
-                (Exception e) => Console.WriteLine(e), // for logging any issue
+                Console.WriteLine, // for logging any issue
                 "..\\..\\MyExcelTranslationsFolder", // the path to the directory
                 "trans_*.xlsx" // the filename skeleton
             );

@@ -11,7 +11,6 @@ namespace pvWay.ExcelTranslationProvider.Core
         private readonly TimeSpan _sleepTime;
         private static volatile IExcelTranslationCache _instance;
         private static readonly object Locker = new object();
-        private IDictionary<string, IDictionary<string, string>> _translations;
         private DateTime? _cacheDate;
 
         private ExcelTranslationCacheSingleton(
@@ -20,6 +19,7 @@ namespace pvWay.ExcelTranslationProvider.Core
         {
             _ts = ts;
             _sleepTime = sleepTime;
+            Translations = ts.ReadTranslations();
             var worker = new Thread(Updater)
             {
                 Priority = ThreadPriority.Lowest
@@ -32,12 +32,12 @@ namespace pvWay.ExcelTranslationProvider.Core
             while (true)
             {
                 var lastUpdate = _ts.LastUpdateDateUtc;
-                    
+
                 if (_cacheDate == null || _cacheDate < lastUpdate)
                 {
                     try
                     {
-                        _translations = _ts.Translations;
+                        Translations = _ts.ReadTranslations();
                         _cacheDate = lastUpdate;
                     }
                     catch (Exception)
@@ -57,9 +57,9 @@ namespace pvWay.ExcelTranslationProvider.Core
             if (_instance != null) return _instance;
             lock (Locker)
             {
+                _instance = new ExcelTranslationCacheSingleton(ts, sleepTime);
                 // ReSharper disable once NonAtomicCompoundOperator
-                return _instance ??= new 
-                    ExcelTranslationCacheSingleton(ts, sleepTime);
+                return _instance;
             }
         }
 
@@ -72,9 +72,12 @@ namespace pvWay.ExcelTranslationProvider.Core
                 key += keyPart;
             }
 
-            return _translations.ContainsKey(key)
-                ? _translations[key]
-                : new Dictionary<string, string>();
+            if (Translations.ContainsKey(key))
+            {
+                return Translations[key];
+            }
+
+            return new Dictionary<string, string>();
         }
 
         private string GetTranslation(string languageCode, params string[] keys)
@@ -82,9 +85,19 @@ namespace pvWay.ExcelTranslationProvider.Core
             var translations = GetTranslations(keys);
             if (translations.ContainsKey(languageCode))
                 return translations[languageCode];
-            return translations.Count > 0 
-                ? translations.Values.First() 
+            return translations.Count > 0
+                ? translations.Values.First()
                 : string.Empty;
+        }
+
+        public DateTime LastUpdateDateUtc => _cacheDate ?? _ts.LastUpdateDateUtc;
+
+        public IDictionary<string, IDictionary<string, string>> Translations { get; private set; }
+
+        public void RefreshNow()
+        {
+            Translations = _ts.ReadTranslations();
+            _cacheDate = _ts.LastUpdateDateUtc;
         }
 
         public string GetTranslation(string languageCode, string keysString)
