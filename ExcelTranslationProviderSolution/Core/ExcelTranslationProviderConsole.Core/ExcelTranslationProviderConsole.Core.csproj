@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\ExcelTranslationProvider.Core\ExcelTranslationProvider.Core.csproj" />
+    <ProjectReference Include="..\ExcelTranslationProvider.Core\ExcelTranslationProvider.Core.csproj" />
   </ItemGroup>
 
 </Project>
