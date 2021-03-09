@@ -23,6 +23,6 @@ namespace pvWay.ExcelTranslationProvider.Fw
         /// up to 4 key parts separated by dots. Example: 'components.buttons.save').
         /// The associated value is dictionary languageCode:string
         /// </summary>
-        IDictionary<string, IDictionary<string, string>> Translations { get; }
+        IDictionary<string, IDictionary<string, string>> ReadTranslations();
     }
 }

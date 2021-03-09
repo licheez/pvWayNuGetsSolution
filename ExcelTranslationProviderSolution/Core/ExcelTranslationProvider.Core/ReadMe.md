@@ -1,4 +1,4 @@
-# Excel Translations Provider for .Net Framework by pvWay
+# Excel Translations Provider for .Net Core by pvWay
 
 ## Summary
 

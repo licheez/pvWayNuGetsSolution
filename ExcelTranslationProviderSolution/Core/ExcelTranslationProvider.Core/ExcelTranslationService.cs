@@ -59,7 +59,9 @@ namespace pvWay.ExcelTranslationProvider.Core
                         rows.Add(row);
                     }
                 }
-                return rows.ToDictionary(k => k.Key, v => v.Translations);
+                return rows.ToDictionary(
+                    k => k.Key, 
+                    v => v.Translations);
             }
             catch (Exception e)
             {
@@ -75,7 +77,6 @@ namespace pvWay.ExcelTranslationProvider.Core
             public ExcelHeaderRow(ExcelReader er)
             {
                 LangMap = new Dictionary<string, int>();
-                //var col = 4;
                 for (var col = 4; col < er.NbHeaderCols; col++)
                 {
                     var langCode = er.GetCellText(0, col);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,21 +9,17 @@ namespace pvWay.ExcelTranslationProvider.Fw
     {
         private readonly IExcelTranslationService _ts;
         private readonly TimeSpan _sleepTime;
-        private readonly Action<IExcelTranslationCache> _onLoaded;
         private static volatile IExcelTranslationCache _instance;
         private static readonly object Locker = new object();
-        private IDictionary<string, IDictionary<string, string>> _translations;
         private DateTime? _cacheDate;
 
         private ExcelTranslationCacheSingleton(
             IExcelTranslationService ts,
-            TimeSpan sleepTime,
-            Action<IExcelTranslationCache> onLoaded = null)
+            TimeSpan sleepTime)
         {
             _ts = ts;
             _sleepTime = sleepTime;
-            _onLoaded = onLoaded;
-            _translations = new ConcurrentDictionary<string, IDictionary<string, string>>();
+            Translations = ts.ReadTranslations();
             var worker = new Thread(Updater)
             {
                 Priority = ThreadPriority.Lowest
@@ -37,13 +32,12 @@ namespace pvWay.ExcelTranslationProvider.Fw
             while (true)
             {
                 var lastUpdate = _ts.LastUpdateDateUtc;
-                    
+
                 if (_cacheDate == null || _cacheDate < lastUpdate)
                 {
                     try
                     {
-                        _translations = _ts.Translations;
-                        _onLoaded?.Invoke(this);
+                        Translations = _ts.ReadTranslations();
                         _cacheDate = lastUpdate;
                     }
                     catch (Exception)
@@ -58,15 +52,12 @@ namespace pvWay.ExcelTranslationProvider.Fw
 
         public static IExcelTranslationCache GetInstance(
             IExcelTranslationService ts,
-            TimeSpan sleepTime,
-            Action<IExcelTranslationCache> onLoaded = null)
+            TimeSpan sleepTime)
         {
             if (_instance != null) return _instance;
             lock (Locker)
             {
-                _instance = new
-                    ExcelTranslationCacheSingleton(
-                        ts, sleepTime, onLoaded);
+                _instance = new ExcelTranslationCacheSingleton(ts, sleepTime);
                 // ReSharper disable once NonAtomicCompoundOperator
                 return _instance;
             }
@@ -81,9 +72,9 @@ namespace pvWay.ExcelTranslationProvider.Fw
                 key += keyPart;
             }
 
-            if (_translations.ContainsKey(key))
+            if (Translations.ContainsKey(key))
             {
-                return _translations[key];
+                return Translations[key];
             }
 
             return new Dictionary<string, string>();
@@ -94,18 +85,18 @@ namespace pvWay.ExcelTranslationProvider.Fw
             var translations = GetTranslations(keys);
             if (translations.ContainsKey(languageCode))
                 return translations[languageCode];
-            return translations.Count > 0 
-                ? translations.Values.First() 
+            return translations.Count > 0
+                ? translations.Values.First()
                 : string.Empty;
         }
 
         public DateTime LastUpdateDateUtc => _cacheDate ?? _ts.LastUpdateDateUtc;
 
-        public IDictionary<string, IDictionary<string, string>> Translations => _translations;
+        public IDictionary<string, IDictionary<string, string>> Translations { get; private set; }
 
         public void RefreshNow()
         {
-            _translations = _ts.Translations;
+            Translations = _ts.ReadTranslations();
             _cacheDate = _ts.LastUpdateDateUtc;
         }
 

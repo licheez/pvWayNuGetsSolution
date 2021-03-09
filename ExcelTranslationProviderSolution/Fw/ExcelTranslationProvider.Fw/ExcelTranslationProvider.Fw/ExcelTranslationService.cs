@@ -40,36 +40,35 @@ namespace pvWay.ExcelTranslationProvider.Fw
             }
         }
 
-        public IDictionary<string, IDictionary<string, string>> Translations
+        public IDictionary<string, IDictionary<string, string>> ReadTranslations()
         {
-            get
+            try
             {
-                try
+                var excelFileNames = _des.GetMatchingFileNames(
+                    _excelTranslationsFolder, _excelTranslationsFileSkeleton);
+                var rows = new List<ExcelDataRow>();
+                foreach (var excelFileName in excelFileNames)
                 {
-                    var excelFileNames = _des.GetMatchingFileNames(
-                        _excelTranslationsFolder, _excelTranslationsFileSkeleton);
-                    var rows = new List<ExcelDataRow>();
-                    foreach (var excelFileName in excelFileNames)
+                    using (var xReader = new ExcelReader(_log, excelFileName))
                     {
-                        using (var xReader = new ExcelReader(_log, excelFileName))
+                        var nbRows = xReader.RowCount;
+                        var header = new ExcelHeaderRow(xReader);
+                        // start at row one to skip the header
+                        for (var r = 1; r < nbRows; r++)
                         {
-                            var nbRows = xReader.RowCount;
-                            var header = new ExcelHeaderRow(xReader);
-                            // start at row one to skip the header
-                            for (var r = 1; r <= nbRows; r++)
-                            {
-                                var row = new ExcelDataRow(xReader, header.LangMap, r);
-                                rows.Add(row);
-                            }
+                            var row = new ExcelDataRow(xReader, header.LangMap, r);
+                            rows.Add(row);
                         }
                     }
-                    return rows.ToDictionary(k => k.Key, v => v.Translations);
                 }
-                catch (Exception e)
-                {
-                    _log(e);
-                    throw;
-                }
+                return rows.ToDictionary(
+                    k => k.Key, 
+                    v => v.Translations);
+            }
+            catch (Exception e)
+            {
+                _log(e);
+                throw;
             }
         }
 
@@ -80,13 +79,10 @@ namespace pvWay.ExcelTranslationProvider.Fw
             public ExcelHeaderRow(ExcelReader er)
             {
                 LangMap = new Dictionary<string, int>();
-                var col = 4;
-                while (true)
+                for (var col = 4; col < er.NbHeaderCols; col++)
                 {
                     var langCode = er.GetCellText(0, col);
-                    if (string.IsNullOrEmpty(langCode)) break;
                     LangMap.Add(langCode, col);
-                    col++;
                 }
             }
         }
@@ -104,7 +100,7 @@ namespace pvWay.ExcelTranslationProvider.Fw
             {
                 var kParts = new[]
                 {
-                    er.TabName,
+                    er.SheetName,
                     er.GetCellText(row, 0),
                     er.GetCellText(row, 1),
                     er.GetCellText(row, 2),
