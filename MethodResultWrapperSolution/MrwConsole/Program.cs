@@ -105,7 +105,7 @@ namespace MrwConsole
 
 namespace MrwConsole
 {
-    interface IUser
+    internal interface IUser
     {
         string FirstName { get; }
     }

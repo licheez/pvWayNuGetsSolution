@@ -243,6 +243,13 @@ namespace pvWay.MsSqlLogWriter.Core
             return cmdText;
         }
 
+        private static string TruncateWhenToLong(string value, int maxLength)
+        {
+            return value.Length > maxLength
+                ? value.Substring(0, maxLength - 3) + "..."
+                : value;
+        }
+
         private void CheckTable()
         {
             using var cn = new SqlConnection(_msSqlConnectionString);

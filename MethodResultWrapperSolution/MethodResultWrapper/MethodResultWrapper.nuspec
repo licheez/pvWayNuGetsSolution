@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,8 +11,8 @@
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</description>
-    <releaseNotes>MutationEnum made bijective</releaseNotes>
-    <copyright>Copyright pvWay 2020</copyright>
+    <releaseNotes>Alignment with Core nuGet</releaseNotes>
+    <copyright>Copyright pvWay 2021</copyright>
     <tags>pvWay MethodResult Logger</tags>
   </metadata>
 </package>

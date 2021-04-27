@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>Pierre Van Wallendael</authors>
+    <owners>pvWay</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/OracleLogWriter.Fw/OracleLogWriter.Fw</projectUrl>
+    <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Exposes two log writer methods (one sync and one async) for persisting rich log rows into an Oracle database. This can be used in conjunction with the MethodResultWrapper.Core nuGet package.</description>
+    <releaseNotes>Initial Version inspired from the MsSql version</releaseNotes>
+    <copyright>Copyright pvWay 2021</copyright>
+    <tags>pvWay MethodResult Logger Oracle</tags>
+  </metadata>
+</package>
