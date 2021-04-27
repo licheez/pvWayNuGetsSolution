@@ -4,17 +4,17 @@ This nuGet exposes two log writer methods (one sync and one async) for persistin
 This can be used in conjunction with the **[pvWay.MethodResultWrapper.Core](https://www.nuget.org/packages/MethodResultWrapper.Core/)** nuGet package for enabling this package to persist
 logs into an Oracle Database
 
-### Pre-conditions for this service to work properly
-
-The connection string provided should allow inserting rows
-into a table that should conform to the following DDL.
-
 ### Singleton
 
 This class is implemented as a Singleton because at instantiation it checks that
 all conditions are met by quering the DDL from the DB.
 It then stores the max lenght of each column so that
 further insertions can be truncated if necessary
+
+### Pre-conditions for this service to work properly
+
+The connection string provided should allow inserting rows
+into a table that should conform to the following DDL.
 
 ### Log table definition example
 ``` sql
@@ -130,42 +130,41 @@ for example using the IDENTITY paradigm
 ### Usage
 
 ```csharp
-using pvWay.MethodResultWrapper.Core;
-using pvWay.MsSqlLogWriter.Core;
+using pvWay.MethodResultWrapper.Model;
+using pvWay.OracleLogWriter.Fw;
 
-namespace MsSqlLogWriterLab.Core
+namespace OracleLogWriterLab.Fw
 {
     internal static class Program
     {
         private static void Main(/*string[] args*/)
         {
-            const string cs = "data source=Localhost;initial catalog=iota700_dev;" +
-                              "integrated security=True;MultipleActiveResultSets=True;";
+            const string cs = "YOUR CONNECTION STRING";
 
             // let's start by creating the LogWriter
             // using all default values for table and columns names
-            var msSqlLogWriter = new MsSqlLogWriter(cs);
-            
+            var oracleLogWriter = OracleLogWriterSingleton.GetInstance(cs);
+
             // let's now instantiate the PersistenceLogger class
             // from the pvWay.MethodResultWrapper.Core nuGet
             // The constructor for this class needs 3 params
             // (1) the dispose method of the logWriter
             // (2) a tuple delegate with named params for the WriteLog method
             // (3) a tuple delegate with named params for the WriteLogAsync method
+
             var persistenceLogger = new PersistenceLogger(
-                msSqlLogWriter.Dispose,
-                p => msSqlLogWriter.WriteLog(
+                oracleLogWriter.Dispose,
+                p => oracleLogWriter.WriteLog(
                     p.userId, p.companyId, p.topic,
                     p.severityCode, p.machineName,
                     p.memberName, p.filePath, p.lineNumber,
                     p.message, p.dateUtc),
-                async p => await msSqlLogWriter.WriteLogAsync(
+                async p => await oracleLogWriter.WriteLogAsync(
                     p.userId, p.companyId, p.topic,
                     p.severityCode, p.machineName,
                     p.memberName, p.filePath, p.lineNumber,
-                    p.message, p.dateUtc
-                    ));
-            
+                    p.message, p.dateUtc));
+
             // set some values for userId, companyId, and topic
             // so that the log columns will have some data
             persistenceLogger.SetUser("UserId", "CompanyId");
@@ -177,7 +176,7 @@ namespace MsSqlLogWriterLab.Core
             // with the appropriate parameters
             persistenceLogger.Log("Hello Log");
 
-            // this last line of code will generate an entry in the Log table
+            // this last line of code will generate an entry in the oracle Log table
         }
     }
 }
