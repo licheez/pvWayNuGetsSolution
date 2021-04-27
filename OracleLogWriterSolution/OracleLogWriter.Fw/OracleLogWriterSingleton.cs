@@ -251,18 +251,19 @@ namespace pvWay.OracleLogWriter.Fw
             var pMessage = $"'{message}'";
 
             // date
-            var pDate = $"TO_TIMESTAMP('{dateUtc:yyyy-MM-dd HH:mm:ss.sss}', 'YYYY-MM-DD HH24:MI:SS.FF')";
+            var locDate = dateUtc.ToLocalTime();
+            var pDate = $"TO_TIMESTAMP('{locDate:yyyy-MM-dd HH:mm:ss.sss}', 'YYYY-MM-DD HH24:MI:SS.FF')";
 
-            var cmdText = $"INSERT INTO [{_tableName}] "
+            var cmdText = $"INSERT INTO {_tableName} "
                           + "( "
-                          + $" [{_userIdColumnName}], "
-                          + $" [{_companyIdColumnName}], "
-                          + $" [{_severityCodeColumnName}], "
-                          + $" [{_machineNameColumnName}], "
-                          + $" [{_topicColumnName}], "
-                          + $" [{_contextColumnName}], "
-                          + $" [{_messageColumnName}], "
-                          + $" [{_createDateColumnName}] "
+                          + $" {_userIdColumnName}, "
+                          + $" {_companyIdColumnName}, "
+                          + $" {_severityCodeColumnName}, "
+                          + $" {_machineNameColumnName}, "
+                          + $" {_topicColumnName}, "
+                          + $" {_contextColumnName}, "
+                          + $" {_messageColumnName}, "
+                          + $" {_createDateColumnName} "
                           + ")"
                           + "VALUES "
                           + "( "
@@ -284,27 +285,6 @@ namespace pvWay.OracleLogWriter.Fw
                 ? value.Substring(0, maxLength - 3) + "..."
                 : value;
         }
-        
-        /* Example
-
-          SELECT COLUMN_NAME,
-                 DATA_TYPE,
-                 DATA_LENGTH,
-                 NULLABLE
-          FROM ALL_TAB_COLS
-          WHERE TABLE_NAME = 'S091_LOG_ENTRY';
-
-          LOG_ID	        NUMBER	        22	    N
-          LOG_SEVERITY_CODE	CHAR    	    4	    N
-          LOG_MACHINE_NAME	VARCHAR2	    200	    N
-          LOG_CLIENT_IP	    VARCHAR2	    80	    Y
-          LOG_CONTEXT	    VARCHAR2	    1024	N
-          LOG_TOPIC	        VARCHAR2	    200	    Y
-          LOG_MESSAGE	    VARCHAR2	    4000	N
-          LOG_USER	        VARCHAR2	    512	    N
-          LOG_CREATE_DATE	TIMESTAMP(6)	11	    N
-
-        */
 
         private void CheckTable()
         {

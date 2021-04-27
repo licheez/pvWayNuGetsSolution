@@ -1,4 +1,4 @@
-# MsSQLLoggerService for .Net Core by pvWay
+# Oracle Log Writer for .Net Framwork by pvWay
 
 This nuGet exposes two log writer methods (one sync and one async) for persisting rich log rows into an Oracle database. 
 This can be used in conjunction with the **[pvWay.MethodResultWrapper.Core](https://www.nuget.org/packages/MethodResultWrapper.Core/)** nuGet package for enabling this package to persist
