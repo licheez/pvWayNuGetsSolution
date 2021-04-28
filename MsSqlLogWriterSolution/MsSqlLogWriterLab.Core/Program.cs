@@ -12,7 +12,7 @@ namespace MsSqlLogWriterLab.Core
 
             // let's start by creating the LogWriter
             // using all default values for table and columns names
-            var msSqlLogWriter = new MsSqlLogWriter(cs);
+            var msSqlLogWriter = MsSqlLogWriterSingleton.GetInstance(cs);
 
             // let's now instantiate the PersistenceLogger class
             // from the pvWay.MethodResultWrapper.Core nuGet

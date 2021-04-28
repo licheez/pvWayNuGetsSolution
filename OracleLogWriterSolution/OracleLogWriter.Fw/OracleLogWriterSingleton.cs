@@ -281,6 +281,7 @@ namespace pvWay.OracleLogWriter.Fw
 
         private static string TruncateWhenToLong(string value, int maxLength)
         {
+            if (string.IsNullOrEmpty(value)) return value;
             return value.Length > maxLength
                 ? value.Substring(0, maxLength - 3) + "..."
                 : value;

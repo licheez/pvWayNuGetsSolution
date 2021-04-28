@@ -50,9 +50,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="nuget5.2.0.exe" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="OracleLogWriter.Fw.nuspec" />
     <None Include="packages.config" />

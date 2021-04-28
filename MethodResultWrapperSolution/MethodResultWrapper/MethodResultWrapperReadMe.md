@@ -1,7 +1,9 @@
-# Method Result Wrapper
+# Method Result Wrapper by pvWay
 
 Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications in case of failure.
-As of version 3.0.0 The package includes the DsoHttpResult&lt;T&gt; object that enables to standardize response from Web API. See interface here after.
+As of version 3.0.0 the package includes the DsoHttpResult&lt;T&gt; object that enables to standardize response from Web API. See interface here after.
+As of version 3.0.4 the pakcage can be used with the Oracle.LogWriter 
+As of version 3.0.5 all methods also have an async overload
 
 ## Interfaces
 
@@ -53,9 +55,25 @@ As of version 3.0.0 The package includes the DsoHttpResult&lt;T&gt; object that 
 
 ### ILoggerService interface
 
-* This nuget package also provides the ILoggerService interface and a ConsoleLogger concrete that supports the MethodResult object
+* The ILoggerService provides both sync and async methods with serveral signatures including
+(1) simple message,
+(2) list of messages,
+(3) MethodResult object (see above)
+(4) Exception
 
-* Remark: feel free to get the MsSqlLoggerService nuget package that implements this interface enabling to persist logs into a table of your choice in a Ms Sql database
+* Each log row is also qualified by a Severity level from Debug to Fatal and enables also some interesting meta data like
+(1) UserId,
+(2) CompanyId,
+(3) Topic
+(4) MachineName
+
+* The service will also capture MemberName, FilePath and LineNumber
+
+* Remark 1 : package pvWay.MsSqlLogWriterFw enables to persist the logs into an MSSql database
+* Remark 2 : package pvWay.OracleLogWriterFw enables to persist the logs into an Oracle database
+
+Happy coding
+
 
 ```csharp
 
@@ -270,6 +288,7 @@ As of version 3.0.0 The package includes the DsoHttpResult&lt;T&gt; object that 
    * a list of notifications (message and severity)
    * an **ErrorMessage** string (list of notifications separated by new lines)
    * a method that allows to throw an exception
+
 * **Constructors**
 
 ```csharp

@@ -1,4 +1,4 @@
-# MsSQLLoggerService for .Net Core by pvWay
+# Ms SQL Log Writer for .Net Core by pvWay
 
 This nuGet exposes two log writer methods (one sync and one async) for persisting rich log rows into an Ms Sql database. 
 This can be used in conjunction with the **[pvWay.MethodResultWrapper.Core](https://www.nuget.org/packages/MethodResultWrapper.Core/)** nuGet package for enabling this package to persist
@@ -145,7 +145,7 @@ namespace MsSqlLogWriterLab.Core
 
             // let's start by creating the LogWriter
             // using all default values for table and columns names
-            var msSqlLogWriter = new MsSqlLogWriter(cs);
+            var msSqlLogWriter = MsSqlLogWriterSingleton.GetInstance(cs);
             
             // let's now instantiate the PersistenceLogger class
             // from the pvWay.MethodResultWrapper.Core nuGet
