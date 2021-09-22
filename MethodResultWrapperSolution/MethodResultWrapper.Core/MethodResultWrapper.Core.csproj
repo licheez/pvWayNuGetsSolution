@@ -13,13 +13,11 @@
     <iconUrl>http://www.pvway.com/images/Logo150x200px.png</iconUrl>
 
     <PackageTags>pvway methodresult logger</PackageTags>
-    <PackageReleaseNotes>loggerWriter injection made possible
-async logging enabled
-muteLogger added</PackageReleaseNotes>
+    <PackageReleaseNotes>it is now possible to add a notification to an existing result</PackageReleaseNotes>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

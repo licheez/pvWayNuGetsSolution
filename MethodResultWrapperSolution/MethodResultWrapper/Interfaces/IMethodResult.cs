@@ -28,6 +28,9 @@ namespace pvWay.MethodResultWrapper.Interfaces
 
         IEnumerable<IMethodResultNotification> Notifications { get; }
 
+        void AddNotification(string message, SeverityEnum severity);
+        void AddNotification(IMethodResultNotification notification);
+
         /// <summary>
         /// Will throw new Exception(ErrorMessage)
         /// </summary>

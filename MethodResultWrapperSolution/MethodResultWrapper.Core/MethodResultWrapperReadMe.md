@@ -1,6 +1,9 @@
 # Method Result Wrapper Core by pvWay
 
-Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications in case of failure.
+Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success 
+or a list of notifications in case of failure.
+
+As of verions 2.0.1 it is now possible to add notifications to an existing result
 
 ## Interfaces
 
@@ -32,12 +35,15 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
 
         IEnumerable<IMethodResultNotification> Notifications { get; }
 
+        void AddNotification(string message, SeverityEnum severity);
+        void AddNotification(IMethodResultNotification notification);
+
         /// <summary>
         /// Will throw new Exception(ErrorMessage)
         /// </summary>
         void Throw();
     }
-    
+
     public interface IMethodResult<out T> : IMethodResult
     {
         T Data { get; }
@@ -72,6 +78,8 @@ by injecting the appropriate LogWriter (see **[pvWay.MsSqlLogWriter.Core nuGet](
 (4) MachineName
 
 * The service will also capture MemberName, FilePath and LineNumber
+
+Happy coding
 
 ## Features
 

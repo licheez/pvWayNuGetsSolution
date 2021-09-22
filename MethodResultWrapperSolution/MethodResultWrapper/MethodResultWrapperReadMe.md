@@ -4,6 +4,7 @@ Provides a generic wrapper that returns whether or not a method succeeded or fai
 As of version 3.0.0 the package includes the DsoHttpResult&lt;T&gt; object that enables to standardize response from Web API. See interface here after.
 As of version 3.0.4 the pakcage can be used with the Oracle.LogWriter 
 As of version 3.0.5 all methods also have an async overload
+As of version 3.0.6 you may add notifications to an existing result
 
 ## Interfaces
 
@@ -35,6 +36,9 @@ As of version 3.0.5 all methods also have an async overload
 
         IEnumerable<IMethodResultNotification> Notifications { get; }
 
+        void AddNotification(string message, SeverityEnum severity);
+        void AddNotification(IMethodResultNotification notification);
+
         /// <summary>
         /// Will throw new Exception(ErrorMessage)
         /// </summary>
@@ -51,6 +55,7 @@ As of version 3.0.5 all methods also have an async overload
         SeverityEnum Severity { get; }
         string Message { get; }
     }
+
 ```
 
 ### ILoggerService interface

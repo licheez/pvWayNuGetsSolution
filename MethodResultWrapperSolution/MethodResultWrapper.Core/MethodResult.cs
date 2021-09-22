@@ -94,12 +94,12 @@ namespace pvWay.MethodResultWrapper.Core
             }
         }
 
-        private void AddNotification(string message, SeverityEnum severity)
+        public void AddNotification(string message, SeverityEnum severity)
         {
             AddNotification(new Notification(severity, message));
         }
 
-        private void AddNotification(IMethodResultNotification notification)
+        public void AddNotification(IMethodResultNotification notification)
         {
             _notifications.Add(notification);
         }
