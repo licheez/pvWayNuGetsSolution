@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace pvWay.Crypto.Fw
 {
-    public interface ICrypto: IAsyncDisposable, IDisposable
+    public interface ICrypto: IDisposable
     {
         Task<string> EncryptAsync(string text);
         Task<string> EncryptAsync<T>(T data) where T: class;
