@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>Pierre Van Wallendael</authors>
+    <owners>pvWay</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution/CryptoFw</projectUrl>
+    <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Tiny utility encrypting/decrypting texts/objects to/from base64 strings with/without limited lifetime (token)</description>
+    <releaseNotes>initial version for dotNet framework</releaseNotes>
+    <copyright>Copyright pvWay 2022</copyright>
+    <tags>Crypto AES Cipher Ephemeral Token</tags>
+  </metadata>
+</package>
