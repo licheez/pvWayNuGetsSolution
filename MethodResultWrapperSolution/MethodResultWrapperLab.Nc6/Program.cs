@@ -30,3 +30,6 @@ catch (Exception e)
 {
     await pw.LogAsync(e);
 }
+
+var res = MethodResult<string>.Null;
+Console.WriteLine(res.Data == null);

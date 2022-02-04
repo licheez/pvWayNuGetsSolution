@@ -5,17 +5,40 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>pvWay.MethodResultWrapper.nc6</RootNamespace>
+    <AssemblyName>pvWay.MethodResultWrapper.nc6</AssemblyName>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
+    <Copyright>Copyright pvWay 2022</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Nc6</PackageProjectUrl>
+    <PackageIcon>Logo150x200px.png</PackageIcon>
+    <PackageReadmeFile>MethodResultWrapperReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Nc6</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>pvway methodresult logger</PackageTags>
+    <PackageReleaseNotes>initial version for dotNet Core 6</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="MethodResultWrapperReadMe.md" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="MethodResultWrapperReadMe.md">
       <PackagePath>/</PackagePath>
       <Pack>true</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Logo150x200px.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MethodResultWrapperReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
