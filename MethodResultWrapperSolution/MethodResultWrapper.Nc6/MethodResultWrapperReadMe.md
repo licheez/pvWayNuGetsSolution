@@ -79,8 +79,6 @@ by injecting the appropriate LogWriter (see **[pvWay.MsSqlLogWriter.Core nuGet](
 
 * The service will also capture MemberName, FilePath and LineNumber
 
-Happy coding
-
 ## Features
 
 ### MethodResult plain class (see MethodResult &lt;T&gt; generic class below)
@@ -341,34 +339,122 @@ public class MethodResult<T> : MethodResult, IMethodResult<T>
 ```csharp
 using pvWay.MethodResultWrapper.nc6;
 
-var cw = new ConsoleLogWriter();
-var pw = new PersistenceLogger(
-    () => cw.Dispose(),
-    p =>
-        cw.WriteLog(
-            p.userId, p.companyId, p.topic,
-            p.severityCode,
-            p.machineName, p.memberName,
-            p.filePath, p.lineNumber,
-            p.message, p.dateUtc),
-    async p =>
-        await cw.WriteLogAsync(
-            p.userId, p.companyId, p.topic,
-            p.severityCode,
-            p.machineName, p.memberName,
-            p.filePath, p.lineNumber,
-            p.message, p.dateUtc));
+namespace MethodResultWrapperDemo.Nc6;
 
-pw.SetTopic("the topic");
-pw.SetUser("the user", "the company");
-await pw.LogAsync("test");
+internal static class Program
+{
+    private static async Task Main( /*string[] args*/)
+    {
+        var ls = new ConsoleLogger();
+        var userStore = new UserStore();
 
-try
-{
-    throw new Exception("test");
+        var getFirstName = await GetUserFirstNameAsync(
+            ls, userStore, "pierre@pvWay.com");
+        if (getFirstName.Failure)
+        {
+            Console.WriteLine("oops... something went wrong");
+            Console.WriteLine(getFirstName.ErrorMessage);
+        }
+        else
+        {
+            var firstName = getFirstName.Data;
+            Console.WriteLine("everything went fine");
+            Console.WriteLine($"user first name is {firstName}");
+        }
+    }
+
+    private static async Task<IMethodResult<string>> GetUserFirstNameAsync(
+        ILoggerService ls, IUserStore userStore,
+        string userName)
+    {
+        // let's call the GetUser Method and see its result
+        // the method returns a IMethodResult<IUser?> object
+        var getUser = await GetUserAsync(ls, userStore, userName);
+        if (getUser.Failure)
+        {
+            // something bad happened
+            // let's log this and return a
+            // MethodResult object that will carry
+            // the notifications collected by the getUser method
+            await ls.LogAsync(getUser);
+            return new MethodResult<string>(getUser);
+        }
+
+        // the user was found
+        // let's get the user object from the getUser.Data
+        var user = getUser.Data; // this returns an IUser
+
+        var firstName = user!.FirstName;
+
+        // let's call the MethodResult success constructor
+        // by passing the expected data type object (here 
+        // a string)
+        return new MethodResult<string>(firstName);
+    }
+
+    private static async Task<IMethodResult<IUser>> GetUserAsync(
+        ILoggerService ls, IUserStore userStore,
+        string userName)
+    {
+        try
+        {
+            var user = await userStore.GetUserAsync(userName);
+            if (user != null)
+            {
+                // the user was found
+                // let's call the MethodResult success constructor
+                // by passing the expected data type object (here 
+                // a IUser object)
+                return new MethodResult<IUser>(user);
+            }
+
+            // the user was not found...
+            // this is a Business (non technical error)
+            // let's construct a failure MethodResult object
+            // with the Error (business error) severity
+            var err = new MethodResult<IUser>(
+                $"User {userName} not found", SeverityEnum.Error);
+
+            // let's log this (business) error
+            await ls.LogAsync(err);
+
+            // let's return the MethodResult to the caller
+            return err;
+        }
+        catch (Exception e)
+        {
+            // something raised an exception...
+            // for example the data base might not be up
+            // let's log this fatal error
+            await ls.LogAsync(e);
+            // let's construct and return a failure MethodResult
+            // with the Fatal (technical error) severity
+            // and the exception.
+            return new MethodResult<IUser>(e);
+        }
+    }
 }
-catch (Exception e)
+
+
+
+internal interface IUser
 {
-    await pw.LogAsync(e);
+    string FirstName { get; }
 }
-```
+
+internal interface IUserStore
+{
+    Task<IUser?> GetUserAsync(string userName);
+}
+
+internal class UserStore : IUserStore
+{
+    public Task<IUser?> GetUserAsync(string userName)
+    {
+        Console.WriteLine($"searching for user with username {userName}");
+        throw new Exception();
+        // return null;
+    }
+}```
+
+Happy coding !

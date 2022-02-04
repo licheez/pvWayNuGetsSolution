@@ -11,13 +11,15 @@
     <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
     <Copyright>Copyright pvWay 2022</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Nc6</PackageProjectUrl>
-    <PackageIcon>Logo150x200px.png</PackageIcon>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>MethodResultWrapperReadMe.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MethodResultWrapperSolution/MethodResultWrapper.Nc6</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>pvway methodresult logger</PackageTags>
     <PackageReleaseNotes>initial version for dotNet Core 6</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AssemblyVersion></AssemblyVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\Logo150x200px.png">
+    <None Include="..\..\pvwayLogoTextLess256.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
