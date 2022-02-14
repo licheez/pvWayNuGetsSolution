@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>pvWay.MsSqlBackup.nc6</AssemblyName>
+    <RootNamespace>pvWay.MsSqlBackup.nc6</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>Backup any Ms Sql database to a local folder, a network folder or an Azure Storage Container and execute maintenance plans</Description>
+    <Copyright>pvWay Ltd 2022</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution/nc6/MsSqlBackup.nc6</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution</RepositoryUrl>
+    <PackageTags>pvWay Ms Sql Backup Azure Container Blob</PackageTags>
+    <PackageReleaseNotes>initial version</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>readMe.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.10.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

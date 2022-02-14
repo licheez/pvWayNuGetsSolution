@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30225.117
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetCore", "dotNetCore", "{1BB0F1CA-3787-40B7-877C-953B02110AA9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetC3", "dotNetC3", "{1BB0F1CA-3787-40B7-877C-953B02110AA9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetFramework", "dotNetFramework", "{A0111621-8464-4B74-8073-3C9BD9B725A1}"
 EndProject
@@ -17,7 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlBackupLab.Core", "nc\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlBackupConsumer", "nf\MsSqlBackupConsumer\MsSqlBackupConsumer.csproj", "{B33EA158-5425-4397-89CD-17B3EA7BD460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlBackupConsumer.Core", "nc\MsSqlBackupConsumer.Core\MsSqlBackupConsumer.Core.csproj", "{DE83F238-3D1D-44DC-92EF-D070CBF9799B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlBackupConsumer.Core", "nc\MsSqlBackupConsumer.Core\MsSqlBackupConsumer.Core.csproj", "{DE83F238-3D1D-44DC-92EF-D070CBF9799B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetC6", "dotNetC6", "{453F8D24-D28F-422A-BA79-5B2B4417852D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlBackup.nc6", "nc6\MsSqlBackup.nc6\MsSqlBackup.nc6.csproj", "{AED620CB-E94A-4F3C-8D0C-152596109B6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,10 @@ Global
 		{DE83F238-3D1D-44DC-92EF-D070CBF9799B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE83F238-3D1D-44DC-92EF-D070CBF9799B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE83F238-3D1D-44DC-92EF-D070CBF9799B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED620CB-E94A-4F3C-8D0C-152596109B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED620CB-E94A-4F3C-8D0C-152596109B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED620CB-E94A-4F3C-8D0C-152596109B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED620CB-E94A-4F3C-8D0C-152596109B6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +68,7 @@ Global
 		{A9040977-338D-4ED4-BCA7-7866B5FD056A} = {1BB0F1CA-3787-40B7-877C-953B02110AA9}
 		{B33EA158-5425-4397-89CD-17B3EA7BD460} = {A0111621-8464-4B74-8073-3C9BD9B725A1}
 		{DE83F238-3D1D-44DC-92EF-D070CBF9799B} = {1BB0F1CA-3787-40B7-877C-953B02110AA9}
+		{AED620CB-E94A-4F3C-8D0C-152596109B6C} = {453F8D24-D28F-422A-BA79-5B2B4417852D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CEA6681-8519-4C97-8745-F95820FBE7D6}
