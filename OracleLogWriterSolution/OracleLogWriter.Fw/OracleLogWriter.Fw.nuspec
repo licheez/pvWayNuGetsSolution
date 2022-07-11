@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,8 +11,8 @@
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Exposes two log writer methods (one sync and one async) for persisting rich log rows into an Oracle database. This can be used in conjunction with the MethodResultWrapper.Core nuGet package.</description>
-    <releaseNotes>Checking for null</releaseNotes>
-    <copyright>Copyright pvWay 2021</copyright>
+    <releaseNotes>Now also supporting VARCHAR for SeverityCode</releaseNotes>
+    <copyright>Copyright pvWay 2022</copyright>
     <tags>pvWay MethodResult Logger Oracle</tags>
   </metadata>
 </package>

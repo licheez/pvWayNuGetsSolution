@@ -23,7 +23,7 @@ into a table that should conform to the following DDL.
 	    LOG_ID			    INT             NOT NULL,   -- Oracle Identity
 	    LOG_USER_ID		    VARCHAR2(36)    NULL,
         LOG_COMPANY_ID	    VARCHAR2(36)    NULL, 
-	    LOG_SEVERITY_CODE	CHAR(1)         NOT NULL,   -- [D]Debug... [F] Fatal (see SeverityEnum)
+	    LOG_SEVERITY_CODE	CHAR(1)         NOT NULL,   -- v >= 1.0.3 also supports VARCHAR [D]Debug... [F] Fatal (see SeverityEnum)
 	    LOG_MACHINE_NAME	VARCHAR2(50)    NOT NULL,   -- Environment.MachineName
 	    LOG_TOPIC			VARCHAR2(50)    NULL,       -- enables to group log items for a given Topic
 	    LOG_CONTEXT		    VARCHAR2(512)   NOT NULL,   -- concats membername, filepath, line number...
@@ -64,6 +64,7 @@ for example using the IDENTITY paradigm
 * The SeverityCode column persists the MethodResultWrapper.SeverityEnum code
 * This column should be non nullable
 * This column should be of type char (one char is enough)
+* since version 1.0.3 this column can also be of type varchar
 
 ``` csharp
    // Exemple of Sevirity enum and corresponding codes

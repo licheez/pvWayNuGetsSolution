@@ -328,7 +328,7 @@ namespace pvWay.OracleLogWriter.Fw
                     true, out _userIdLength);
                 CheckColumn(errors, dic, _companyIdColumnName, "VARCHAR",
                     true, out _companyIdLength);
-                CheckColumn(errors, dic, _severityCodeColumnName, "CHAR",
+                CheckColumn(errors, dic, _severityCodeColumnName, "CHAR,VARCHAR",
                     false, out _);
                 CheckColumn(errors, dic, _machineNameColumnName, "VARCHAR",
                     false, out _machineNameLength);
@@ -355,11 +355,20 @@ namespace pvWay.OracleLogWriter.Fw
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="errors"></param>
+        /// <param name="dic"></param>
+        /// <param name="columnName"></param>
+        /// <param name="expectedTypes">comma separated list of expected types</param>
+        /// <param name="isNullable"></param>
+        /// <param name="length"></param>
         private static void CheckColumn(
             ICollection<string> errors,
             IDictionary<string, ColumnInfo> dic,
             string columnName,
-            string expectedType,
+            string expectedTypes,
             bool isNullable,
             out int length)
         {
@@ -372,10 +381,12 @@ namespace pvWay.OracleLogWriter.Fw
             var info = dic[columnName];
 
             var type = info.Type.ToUpper();
-            expectedType = expectedType.ToUpper();
-            if (!type.StartsWith(expectedType))
+
+            var xTypes = expectedTypes.ToUpper().Split(',');
+            var typeOk = xTypes.Any(xType => type.StartsWith(xType));
+            if (!typeOk)
             {
-                errors.Add($"{columnName} expected type is {expectedType} but actual type is {type}");
+                errors.Add($"{columnName} expected type is {expectedTypes} but actual type is {type}");
                 return;
             }
 
