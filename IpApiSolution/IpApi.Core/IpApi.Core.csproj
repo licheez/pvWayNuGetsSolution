@@ -8,15 +8,16 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
     <Description>Provides geolocalization info for a given ip. This service is based on IpStack API.</Description>
-    <Copyright>pvWay 2020</Copyright>
+    <Copyright>pvWay 2022</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageTags>Free ip geo localization IpStack</PackageTags>
-    <PackageReleaseNotes>breaking change: all primitives made nullable</PackageReleaseNotes>
+    <PackageReleaseNotes>upgrade Newtonsoft.Json to v13.0.1</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +28,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

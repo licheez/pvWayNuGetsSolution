@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>pvWay.IpApi.nc6</AssemblyName>
+    <RootNamespace>pvWay.IpApi.nc6</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay)</Company>
+    <Description>Provides geolocalization info for a given ip. This service is based on IpStack API.</Description>
+    <Copyright>pvWay 2022</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.nc6</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/IpApiSolution/IpApi.nc6</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Free ip geo localization IpStack</PackageTags>
+    <PackageReleaseNotes>initial nc6 version</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readme.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpApi.Core", "IpApi.Core\IpApi.Core.csproj", "{F275D42C-140E-49D7-8673-1DA182B750FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpApi.Core", "IpApi.Core\IpApi.Core.csproj", "{F275D42C-140E-49D7-8673-1DA182B750FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpApiLab", "IpApiLab\IpApiLab.csproj", "{2E8BE695-1BE3-427F-95EE-DF77F7F9D8D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpApiLab", "IpApiLab\IpApiLab.csproj", "{2E8BE695-1BE3-427F-95EE-DF77F7F9D8D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpApi.nc6", "IpApi.nc6\IpApi.nc6.csproj", "{0D52E1E9-59D7-42E7-BBEE-AC4BAEA135B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpApiLabNc6", "IpApiLabNc6\IpApiLabNc6.csproj", "{8BAF850D-CF52-4D85-88B8-4FCB1EF6A8EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{2E8BE695-1BE3-427F-95EE-DF77F7F9D8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E8BE695-1BE3-427F-95EE-DF77F7F9D8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E8BE695-1BE3-427F-95EE-DF77F7F9D8D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D52E1E9-59D7-42E7-BBEE-AC4BAEA135B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D52E1E9-59D7-42E7-BBEE-AC4BAEA135B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D52E1E9-59D7-42E7-BBEE-AC4BAEA135B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D52E1E9-59D7-42E7-BBEE-AC4BAEA135B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BAF850D-CF52-4D85-88B8-4FCB1EF6A8EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BAF850D-CF52-4D85-88B8-4FCB1EF6A8EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BAF850D-CF52-4D85-88B8-4FCB1EF6A8EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BAF850D-CF52-4D85-88B8-4FCB1EF6A8EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
