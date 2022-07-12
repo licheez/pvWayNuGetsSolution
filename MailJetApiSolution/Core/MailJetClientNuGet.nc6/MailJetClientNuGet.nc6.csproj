@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>pvWay.MailJetClientNuGet.nc6</AssemblyName>
+    <RootNamespace>pvWay.MailJetClientNuGet.nc6</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Description>Simple interface for posting emails via MailJet templates</Description>
+    <Copyright>Copyright pvWay 2022</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.nc6</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.nc6</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>MailJet Template Sender API 3.1 Post Email</PackageTags>
+    <PackageReleaseNotes>initial dotNet core 6 version</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png" Link="pvwayLogoTextLess256.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>
