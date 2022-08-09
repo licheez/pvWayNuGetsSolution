@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetFramework", "dotNetFramework", "{CFD92E61-9159-40F0-B7C4-94AF6E32466F}"
 EndProject
@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViesApi.Core", "dotNetCore\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViesApiConsumer.Core", "dotNetCore\ViesApiConsumer.Core\ViesApiConsumer.Core.csproj", "{0195B3B3-46D9-4A80-9350-7A6A0131185E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViesApiLab.Core", "dotNetCore\ViesApiLab.Core\ViesApiLab.Core.csproj", "{E1E99757-40F2-487A-96D1-DF34B5E6A059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViesApiLab.Core", "dotNetCore\ViesApiLab.Core\ViesApiLab.Core.csproj", "{E1E99757-40F2-487A-96D1-DF34B5E6A059}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNetNc6", "dotNetNc6", "{391A636D-5DC8-4553-9219-3CCCDEB876E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViesApiNc6", "dotNetNc6\ViesApiNc6\ViesApiNc6.csproj", "{4586B331-45B8-4F4A-AB7B-A067E8EF5C7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{E1E99757-40F2-487A-96D1-DF34B5E6A059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1E99757-40F2-487A-96D1-DF34B5E6A059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1E99757-40F2-487A-96D1-DF34B5E6A059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4586B331-45B8-4F4A-AB7B-A067E8EF5C7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4586B331-45B8-4F4A-AB7B-A067E8EF5C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4586B331-45B8-4F4A-AB7B-A067E8EF5C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4586B331-45B8-4F4A-AB7B-A067E8EF5C7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +47,7 @@ Global
 		{DC3C3FA6-8864-4CA3-9120-AE0443FA07DF} = {7093DBCF-7664-4B7E-BD3C-AFC1B2EB6282}
 		{0195B3B3-46D9-4A80-9350-7A6A0131185E} = {7093DBCF-7664-4B7E-BD3C-AFC1B2EB6282}
 		{E1E99757-40F2-487A-96D1-DF34B5E6A059} = {7093DBCF-7664-4B7E-BD3C-AFC1B2EB6282}
+		{4586B331-45B8-4F4A-AB7B-A067E8EF5C7E} = {391A636D-5DC8-4553-9219-3CCCDEB876E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BFB08A2-D336-4648-B26C-74322D5DEC6F}
