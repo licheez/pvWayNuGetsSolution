@@ -1,4 +1,4 @@
-﻿# Vies API for dotNet Core by pvWay
+﻿# Vies API for dotNet Core 6 by pvWay
 
 Tiny async service that checks a VAT number against the European Vat Number database and returns whether or not the number is valid and - when available - the name and the address of the registered company
 
@@ -53,33 +53,26 @@ Tiny async service that checks a VAT number against the European Vat Number data
 
 ## Usage
 ```csharp
-using System;
-using pvWay.MethodResultWrapper.Core;
-using pvWay.ViesApi.Core;
+using pvWay.ViesApi.nc6;
 
-namespace ViesApiConsumer.Core
+Console.WriteLine("ViesApiLab Nc6");
+Console.WriteLine("--------------");
+
+var viesService = new ViesService();
+var checkVat = await viesService
+    .CheckVatAsync("BE", "0459 415 853");
+if (checkVat.Failure)
 {
-    internal static class Program
-    {
-        private static void Main(/*string[] args*/)
-        {
-            var viesService = new ViesService();
-            var checkVat = viesService.CheckVatAsync("BE", "0459415853").Result;
-            if (checkVat.Failure)
-            {
-                Console.WriteLine(checkVat.Exception);
-            }
-            else
-            {
-                var viesRes = checkVat.Data;
-                Console.WriteLine(viesRes.Valid);
-                Console.WriteLine(viesRes.CountryCode);
-                Console.WriteLine(viesRes.VatNumber);
-                Console.WriteLine(viesRes.Name);
-                Console.WriteLine(viesRes.Address);
-            }
-        }
-    }
+    Console.WriteLine(checkVat.Exception);
+}
+else
+{
+    var viesRes = checkVat.Data!;
+    Console.WriteLine(viesRes.Valid);
+    Console.WriteLine(viesRes.CountryCode);
+    Console.WriteLine(viesRes.VatNumber);
+    Console.WriteLine(viesRes.Name);
+    Console.WriteLine(viesRes.Address);
 }
 ```
 Happy Coding
