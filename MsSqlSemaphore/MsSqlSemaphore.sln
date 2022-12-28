@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetC6", "DotNetC6", "{E4AE5A27-298D-4777-AE30-2EE3B2DFADC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlSemaphoreNc6", "DotNetC6\MsSqlSemaphoreNc6\MsSqlSemaphoreNc6.csproj", "{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B} = {E4AE5A27-298D-4777-AE30-2EE3B2DFADC8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F447186E-6D42-4D8B-A63A-38D5BD5E1AA2}
+	EndGlobalSection
+EndGlobal

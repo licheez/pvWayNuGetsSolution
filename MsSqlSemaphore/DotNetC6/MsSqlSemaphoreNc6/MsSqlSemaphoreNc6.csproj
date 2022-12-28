@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>pvWay.MsSqlSemaphore.nc6</AssemblyName>
+    <RootNamespace>pvWay.MsSqlSemaphore.nc6</RootNamespace>
+    <ApplicationIcon>pvWayLogoTextLess.ico</ApplicationIcon>
+    <Title>Ms Sql Semaphore Service</Title>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>A tiny SQL based semaphore service based on Ms SQL database</Description>
+    <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageTags>pvWay Ms Sql Semaphore</PackageTags>
+    <PackageReleaseNotes>Initial</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="pvWayLogoTextLess.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
