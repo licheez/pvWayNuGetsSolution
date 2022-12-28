@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetC6", "DotNetC6", "{E4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlSemaphoreNc6", "DotNetC6\MsSqlSemaphoreNc6\MsSqlSemaphoreNc6.csproj", "{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "DotNetC6\TestConsole\TestConsole.csproj", "{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "DotNetC6\TestConsole\TestConsole.csproj", "{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

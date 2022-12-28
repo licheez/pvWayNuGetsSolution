@@ -8,7 +8,7 @@ using pvWay.MsSqlSemaphore.nc6.Model;
 
 namespace pvWay.MsSqlSemaphore.nc6.Services;
 
-public class SemaphoreService: ISemaphoreService
+public class SemaphoreService : ISemaphoreService
 {
     private readonly string _connectionString;
     private readonly string _schemaName;
@@ -16,33 +16,30 @@ public class SemaphoreService: ISemaphoreService
     private readonly Action<Exception> _logException;
     private readonly Action<string>? _logInfo;
 
-    public string SemaphoreName { get; }
-
     public SemaphoreService(
         string connectionString,
         string schemaName,
         string tableName,
-        string semaphoreName,
         Action<Exception> logException,
         Action<string>? logInfo = null)
     {
         _connectionString = connectionString;
         _schemaName = schemaName;
         _tableName = tableName;
-        SemaphoreName = DaoHelper.TruncateThenEscape(semaphoreName, 50);
         _logInfo = logInfo;
         _logException = logException;
     }
 
     public async Task<DbSemaphoreStatusEnum> AcquireSemaphoreAsync(
-        string owner, TimeSpan timeout)
+        string name, string owner, TimeSpan timeout)
     {
+        name = DaoHelper.TruncateThenEscape(name, 50);
         await using var cn = new SqlConnection(_connectionString);
 
         try
         {
             owner = DaoHelper.TruncateThenEscape(owner, 128);
-            LogInfo($"{owner} is acquiring {SemaphoreName}");
+            LogInfo($"{owner} is acquiring {name}");
 
             var utcNow = DateTime.UtcNow;
             var sqlNow = DaoHelper.GetTimestamp(utcNow);
@@ -54,7 +51,7 @@ public class SemaphoreService: ISemaphoreService
                 " [CreateDateUtc], " +
                 " [UpdateDateUtc] " +
                 ") VALUES (" +
-                $"'{SemaphoreName}', " +
+                $"'{name}', " +
                 $"'{owner}', " +
                 $"{sqlNow}, " +
                 $"{sqlNow}" +
@@ -68,7 +65,7 @@ public class SemaphoreService: ISemaphoreService
             try
             {
                 await insertCmd.ExecuteNonQueryAsync();
-                LogInfo($"{owner} acquired {SemaphoreName}");
+                LogInfo($"{owner} acquired {name}");
                 return DbSemaphoreStatusEnum.Acquired;
             }
             catch (Exception)
@@ -76,11 +73,11 @@ public class SemaphoreService: ISemaphoreService
                 // INSERT FAILED
                 try
                 {
-                    LogInfo($"{SemaphoreName} was not acquired");
-                    var fSemaphore = await GetSemaphoreAsync(cn);
+                    LogInfo($"{name} was not acquired");
+                    var fSemaphore = await GetSemaphoreAsync(cn, name);
                     if (fSemaphore == null)
                     {
-                        LogInfo($"{SemaphoreName} was released in the mean time");
+                        LogInfo($"{name} was released in the mean time");
                         // the semaphore was released (deleted) in the mean time
                         return DbSemaphoreStatusEnum.ReleasedInTheMeanTime;
                     }
@@ -91,14 +88,14 @@ public class SemaphoreService: ISemaphoreService
                     // consider the semaphore is still valid
                     if (timeElapsed <= timeout)
                     {
-                        LogInfo($"{SemaphoreName} is still in use by {fSemaphore.Owner}");
+                        LogInfo($"{name} is still in use by {fSemaphore.Owner}");
                         return DbSemaphoreStatusEnum.OwnedSomeoneElse;
                     }
 
                     // the elapsed time is greater than the timeout limit
                     // force the release of the semaphore
-                    LogInfo($"{SemaphoreName} force released");
-                    await ReleaseSemaphoreAsync(cn);
+                    LogInfo($"{name} force released");
+                    await ReleaseSemaphoreAsync(cn, name);
                     return DbSemaphoreStatusEnum.ForcedReleased;
                 }
                 catch (Exception e)
@@ -117,13 +114,14 @@ public class SemaphoreService: ISemaphoreService
         }
     }
 
-    public async Task TouchSemaphoreAsync()
+    public async Task TouchSemaphoreAsync(string name)
     {
+        name = DaoHelper.TruncateThenEscape(name, 50);
         await using var cn = new SqlConnection(_connectionString);
         var sqlNow = DaoHelper.GetTimestamp(DateTime.UtcNow);
         var updateText = $"UPDATE [{_schemaName}].[{_tableName}] " +
                          $"SET [UpdateDateUtc] = {sqlNow} " +
-                         $"WHERE [Name] = '{SemaphoreName}'";
+                         $"WHERE [Name] = '{name}'";
 
         try
         {
@@ -131,9 +129,9 @@ public class SemaphoreService: ISemaphoreService
             var updateCmd = cn.CreateCommand();
             updateCmd.CommandType = CommandType.Text;
             updateCmd.CommandText = updateText;
-            
+
             await updateCmd.ExecuteNonQueryAsync();
-            LogInfo($"{SemaphoreName} touched");
+            LogInfo($"{name} touched");
         }
         catch (Exception e)
         {
@@ -144,15 +142,16 @@ public class SemaphoreService: ISemaphoreService
         }
     }
 
-    public async Task ReleaseSemaphoreAsync()
+    public async Task ReleaseSemaphoreAsync(string name)
     {
+        name = DaoHelper.TruncateThenEscape(name, 50);
         await using var cn = new SqlConnection(_connectionString);
 
         try
         {
             await cn.OpenAsync();
-            await ReleaseSemaphoreAsync(cn);
-            LogInfo($"{SemaphoreName} released");
+            await ReleaseSemaphoreAsync(cn, name);
+            LogInfo($"{name} released");
         }
         catch (Exception e)
         {
@@ -162,14 +161,15 @@ public class SemaphoreService: ISemaphoreService
         }
     }
 
-    public async Task<IDbSemaphore?> GetSemaphoreAsync()
+    public async Task<IDbSemaphore?> GetSemaphoreAsync(string name)
     {
+        name = DaoHelper.TruncateThenEscape(name, 50);
         await using var cn = new SqlConnection(_connectionString);
 
         try
         {
             await cn.OpenAsync();
-            return await GetSemaphoreAsync(cn);
+            return await GetSemaphoreAsync(cn, name);
         }
         catch (Exception e)
         {
@@ -179,14 +179,15 @@ public class SemaphoreService: ISemaphoreService
         }
     }
 
-    private async Task<IDbSemaphore?> GetSemaphoreAsync(SqlConnection cn)
+    private async Task<IDbSemaphore?> GetSemaphoreAsync(
+        SqlConnection cn, string name)
     {
         var selectText =
             "SELECT " +
             " [Owner], " +
             " [UpdateDateUtc] " +
             $"FROM [{_schemaName}].[{_tableName}] " +
-            $"WHERE [Name] = '{SemaphoreName}'";
+            $"WHERE [Name] = '{name}'";
 
         var selectCmd = cn.CreateCommand();
         selectCmd.CommandType = CommandType.Text;
@@ -194,7 +195,7 @@ public class SemaphoreService: ISemaphoreService
 
         try
         {
-            var reader =  await selectCmd.ExecuteReaderAsync();
+            var reader = await selectCmd.ExecuteReaderAsync();
             var rowFound = await reader.ReadAsync();
             if (!rowFound) return null;
             var owner = reader.GetString(0);
@@ -210,10 +211,11 @@ public class SemaphoreService: ISemaphoreService
         }
     }
 
-    private async Task ReleaseSemaphoreAsync(SqlConnection cn)
-     {
+    private async Task ReleaseSemaphoreAsync(
+        SqlConnection cn, string name)
+    {
         var deleteText = $"DELETE [{_schemaName}].[{_tableName}] " +
-                         $"WHERE [Name] = '{SemaphoreName}'";
+                          $"WHERE [Name] = '{name}'";
         var deleteCmd = cn.CreateCommand();
         deleteCmd.CommandType = CommandType.Text;
         deleteCmd.CommandText = deleteText;

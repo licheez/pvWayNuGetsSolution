@@ -5,10 +5,9 @@ namespace pvWay.MsSqlSemaphore.nc6.Interfaces.Services;
 
 public interface ISemaphoreService
 {
-    string SemaphoreName { get; }
     Task<DbSemaphoreStatusEnum> AcquireSemaphoreAsync(
-        string owner, TimeSpan timeout);
-    Task TouchSemaphoreAsync();
-    Task ReleaseSemaphoreAsync();
-    Task<IDbSemaphore?> GetSemaphoreAsync();
+        string name, string owner, TimeSpan timeout);
+    Task TouchSemaphoreAsync(string name);
+    Task ReleaseSemaphoreAsync(string name);
+    Task<IDbSemaphore?> GetSemaphoreAsync(string name);
 }
