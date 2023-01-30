@@ -1,7 +1,4 @@
-﻿using pvWay.MsSqlSemaphore.nc6.Interfaces.Enums;
-using pvWay.MsSqlSemaphore.nc6.Interfaces.Model;
-
-namespace pvWay.MsSqlSemaphore.nc6.Interfaces.Services;
+﻿namespace pvWay.MsSqlSemaphore.nc6.abstractions;
 
 public interface ISemaphoreService
 {

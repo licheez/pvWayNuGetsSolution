@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>pvWay.MsSqlSemaphore.nc6.abstractions</AssemblyName>
+    <RootNamespace>pvWay.MsSqlSemaphore.nc6.abstractions</RootNamespace>
+    <ApplicationIcon>pvWayLogoTextLess.ico</ApplicationIcon>
+    <Title>Ms Sql Semaphore Service Abstractions</Title>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>Abstraction layer for a tiny SQL based semaphore service based on Ms SQL database</Description>
+    <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlSemaphore/DotNetC6/MsSqlSemaphoreNc6Abstractions</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>pvWay Ms Sql Semaphore</PackageTags>
+    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="pvWayLogoTextLess.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png" Link="pvwayLogoTextLess256.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>

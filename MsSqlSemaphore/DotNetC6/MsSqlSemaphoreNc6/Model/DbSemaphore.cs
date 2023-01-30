@@ -1,4 +1,4 @@
-﻿using pvWay.MsSqlSemaphore.nc6.Interfaces.Model;
+﻿using pvWay.MsSqlSemaphore.nc6.abstractions;
 
 namespace pvWay.MsSqlSemaphore.nc6.Model;
 

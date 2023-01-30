@@ -1,4 +1,4 @@
-﻿namespace pvWay.MsSqlSemaphore.nc6.Interfaces.Enums;
+﻿namespace pvWay.MsSqlSemaphore.nc6.abstractions;
 
 public enum DbSemaphoreStatusEnum
 {

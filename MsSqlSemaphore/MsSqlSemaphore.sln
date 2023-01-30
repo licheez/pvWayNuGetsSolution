@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlSemaphoreNc6", "DotNet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "DotNetC6\TestConsole\TestConsole.csproj", "{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlSemaphoreNc6Abstractions", "MsSqlSemaphoreNc6Abstractions\MsSqlSemaphoreNc6Abstractions.csproj", "{DAD55BE1-64B3-4F26-9FBD-353CAE831936}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD55BE1-64B3-4F26-9FBD-353CAE831936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD55BE1-64B3-4F26-9FBD-353CAE831936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD55BE1-64B3-4F26-9FBD-353CAE831936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD55BE1-64B3-4F26-9FBD-353CAE831936}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0F079B54-3AFC-4825-AD8A-7B2F6DC7E90B} = {E4AE5A27-298D-4777-AE30-2EE3B2DFADC8}
 		{AF5D1DD2-C9A6-48D2-9977-5EBCFE1E92FB} = {E4AE5A27-298D-4777-AE30-2EE3B2DFADC8}
+		{DAD55BE1-64B3-4F26-9FBD-353CAE831936} = {E4AE5A27-298D-4777-AE30-2EE3B2DFADC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F447186E-6D42-4D8B-A63A-38D5BD5E1AA2}

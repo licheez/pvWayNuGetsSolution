@@ -1,4 +1,4 @@
-﻿namespace pvWay.MsSqlSemaphore.nc6.Interfaces.Model;
+﻿namespace pvWay.MsSqlSemaphore.nc6.abstractions;
 
 public interface IDbSemaphore
 {

@@ -1,9 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using pvWay.MsSqlSemaphore.nc6.abstractions;
 using pvWay.MsSqlSemaphore.nc6.Helpers;
-using pvWay.MsSqlSemaphore.nc6.Interfaces.Enums;
-using pvWay.MsSqlSemaphore.nc6.Interfaces.Model;
-using pvWay.MsSqlSemaphore.nc6.Interfaces.Services;
 using pvWay.MsSqlSemaphore.nc6.Model;
 
 namespace pvWay.MsSqlSemaphore.nc6.Services;

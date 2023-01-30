@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MsSqlSemaphoreNc6Abstractions\MsSqlSemaphoreNc6Abstractions.csproj" />
     <ProjectReference Include="..\MsSqlSemaphoreNc6\MsSqlSemaphoreNc6.csproj" />
   </ItemGroup>
 
