@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,8 +11,8 @@
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Recursively walks a given directory gathering Excel files for building a consolidated translations dictionary</description>
-    <releaseNotes>Using a more recent ExcelReader. Now also working on 4.6.1</releaseNotes>
-    <copyright>Copyright pvWay 2021</copyright>
+    <releaseNotes>This versions is for dotNet framework 4.8.2</releaseNotes>
+    <copyright>Copyright pvWay 2023</copyright>
     <tags>translations resources multi-lingual pvWay Excel</tags>
   </metadata>
 </package>

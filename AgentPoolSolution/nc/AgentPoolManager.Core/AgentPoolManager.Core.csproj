@@ -6,7 +6,7 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <Description>Manages a pool of asynchronous methods (agents) that keep repeating at a given interval until they are requested to stop</Description>
-    <Copyright>pvWay ltd 2020</Copyright>
+    <Copyright>pvWay ltd 2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReleaseNotes>Initial</PackageReleaseNotes>
@@ -14,6 +14,7 @@
     <PackageTags>pvWay agent pool scheduler</PackageTags>
     <PackageId>pvWay.AgentPoolManager.Core</PackageId>
     <Product>pvWay.AgentPoolManager.Core</Product>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

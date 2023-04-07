@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MethodResultWrapper.Nc6", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MethodResultWrapperLab.Nc6", "MethodResultWrapperLab.Nc6\MethodResultWrapperLab.Nc6.csproj", "{AB4255D2-8A75-407F-B274-C70E35CD41E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodResultWrapperDemo.Nc6", "MethodResultWrapperDemo.Nc6\MethodResultWrapperDemo.Nc6.csproj", "{04BDD8E0-73BD-4B3A-898A-350D71150E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MethodResultWrapperDemo.Nc6", "MethodResultWrapperDemo.Nc6\MethodResultWrapperDemo.Nc6.csproj", "{04BDD8E0-73BD-4B3A-898A-350D71150E91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

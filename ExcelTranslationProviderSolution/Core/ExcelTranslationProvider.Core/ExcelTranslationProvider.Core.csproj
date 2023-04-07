@@ -5,13 +5,17 @@
     <AssemblyName>pvWay.ExcelTranslationProvider.Core</AssemblyName>
     <RootNamespace>pvWay.ExcelTranslationProvider.Core</RootNamespace>
     <Description>Recursively walks a given directory gathering Excel files for building a consolidated translations dictionary</Description>
-    <Copyright>Copyright pvWay 2021</Copyright>
+    <Copyright>Copyright pvWay 2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ExcelTranslationProviderSolution/Core/ExcelTranslationProvider.Core</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/ExcelTranslationProviderSolution/Core/ExcelTranslationProvider.Core</RepositoryUrl>
     <PackageTags>translations resources multi lingual pvWay Excel</PackageTags>
     <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <Version></Version>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +26,13 @@
     <None Include="..\..\..\pvwayLogoTextLess256.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

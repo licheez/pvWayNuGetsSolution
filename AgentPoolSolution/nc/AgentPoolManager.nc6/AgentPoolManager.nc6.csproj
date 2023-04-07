@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>pvWay.agentPoolManager.nc6</AssemblyName>
+    <RootNamespace>pvWay.agentPoolManager.nc6</RootNamespace>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay</Company>
+    <Description>Manages a pool of asynchronous methods (agents) that keep repeating at a given interval until they are requested to stop</Description>
+    <Copyright>pvWay ltd 2023</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</RepositoryUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>readMe.md</PackageReadmeFile>
+    <PackageTags>pvWay agent pool scheduler</PackageTags>
+    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\pvwayLogoTextLess256.png" Link="pvwayLogoTextLess256.png">
+      <PackagePath></PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

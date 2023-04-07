@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Exposes two log writer methods (one sync and one async) for persisting rich log rows into an MsSql database. This can be used in conjunction with the MethodResultWrapper nuGet package.</description>
     <releaseNotes>Initial Version</releaseNotes>
-    <copyright>Copyright pvWay 2021</copyright>
+    <copyright>Copyright pvWay 2023</copyright>
     <tags>pvWay MethodResult Logger MsSql</tags>
   </metadata>
 </package>

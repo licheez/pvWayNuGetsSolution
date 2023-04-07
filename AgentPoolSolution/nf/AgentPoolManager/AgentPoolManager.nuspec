@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 <metadata>
     <id>$id$</id>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <title>Agent Pool Manager</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -13,7 +13,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Manages a pool of asynchronous methods (agents) that keep repeating at a given interval until they are requested to stop</summary>
     <description>Manages a pool of asynchronous methods (agents) that keep repeating at a given interval until they are requested to stop</description>
-    <releaseNotes>Initial</releaseNotes>
+    <releaseNotes>fw48</releaseNotes>
     <copyright>Copyright pvWay Ltd 2020</copyright>
     <tags>pvWay agent pool scheduler</tags>
   </metadata>
