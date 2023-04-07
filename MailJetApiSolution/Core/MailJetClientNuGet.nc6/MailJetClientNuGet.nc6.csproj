@@ -6,18 +6,18 @@
     <Nullable>enable</Nullable>
     <AssemblyName>pvWay.MailJetClientNuGet.nc6</AssemblyName>
     <RootNamespace>pvWay.MailJetClientNuGet.nc6</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
     <Description>Simple interface for posting emails via MailJet templates</Description>
-    <Copyright>Copyright pvWay 2022</Copyright>
+    <Copyright>Copyright pvWay 2023</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.nc6</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.nc6</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>MailJet Template Sender API 3.1 Post Email</PackageTags>
-    <PackageReleaseNotes>initial dotNet core 6 version</PackageReleaseNotes>
+    <PackageReleaseNotes>upgrade newtonsoft version</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

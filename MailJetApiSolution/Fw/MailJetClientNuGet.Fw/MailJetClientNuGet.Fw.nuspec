@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple interface for posting emails via MailJet templates</description>
-    <releaseNotes>upgrade Newtonsoft.Json to version 13.0.1</releaseNotes>
+    <releaseNotes>upgrade Newtonsoft.Json</releaseNotes>
     <copyright>Copyright pvWay 2022</copyright>
     <tags>MailJet Template Sender API 3.1 Post Email</tags>
   </metadata>

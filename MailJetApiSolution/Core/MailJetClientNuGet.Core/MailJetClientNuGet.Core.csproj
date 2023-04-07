@@ -7,15 +7,15 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
     <Description>Simple interface for posting emails via MailJet templates</Description>
-    <Copyright>Copyright pvWay 2022</Copyright>
+    <Copyright>Copyright pvWay 2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.Core</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MailJetApiSolution/Fw/MailJetClientNuGet.Core</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>MailJet Template Sender API 3.1 Post Email</PackageTags>
-    <PackageReleaseNotes>upgrade Newtonsoft.Json to version 13.0.1</PackageReleaseNotes>
-    <Version>1.0.2</Version>
+    <PackageReleaseNotes>upgrade Newtonsoft.Json version</PackageReleaseNotes>
+    <Version>1.0.3</Version>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
   </PropertyGroup>
 
@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
