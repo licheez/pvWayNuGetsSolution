@@ -97,7 +97,7 @@ namespace MsSqlLogWriter.nc6
         }
 
         public void WriteLog(
-            string userId, string companyId, string topic,
+            string? userId, string? companyId, string? topic,
             string severityCode, string machineName,
             string memberName, string filePath, int lineNumber,
             string message, DateTime dateUtc)
@@ -130,7 +130,7 @@ namespace MsSqlLogWriter.nc6
         }
 
         public async Task WriteLogAsync(
-            string userId, string companyId, string topic,
+            string? userId, string? companyId, string? topic,
             string severityCode, string machineName,
             string memberName, string filePath, int lineNumber,
             string message, DateTime dateUtc)
@@ -163,7 +163,7 @@ namespace MsSqlLogWriter.nc6
         }
         
         private string GetCommandText(
-            string userId, string companyId, string topic,
+            string? userId, string? companyId, string? topic,
             string severityCode, string machineName,
             string memberName, string filePath, int lineNumber,
             string message, DateTime dateUtc)
