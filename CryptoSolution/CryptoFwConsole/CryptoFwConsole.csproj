@@ -49,11 +49,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CryptoFw\CryptoFw.csproj">
-      <Project>{f4914b21-d6b8-4252-9061-54391fc50908}</Project>
-      <Name>CryptoFw</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

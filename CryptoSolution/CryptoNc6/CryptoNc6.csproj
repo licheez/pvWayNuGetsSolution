@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>pvWay.Crypto.nc6</RootNamespace>
+    <AssemblyName>pvWay.Crypto.nc6</AssemblyName>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>Tiny utility encrypting/decrypting texts/objects to/from base64 strings with/without limited lifetime (token)</Description>
+    <Copyright>(c) pvWay 2023</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution.nc6</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>readMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution.nc6</RepositoryUrl>
+    <PackageTags>Crypto AES Cipher Ephemeral Token</PackageTags>
+    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
