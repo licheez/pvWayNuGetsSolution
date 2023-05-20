@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>$title$</title>
     <authors>Pierre Van Wallendael</authors>
     <owners>pvWay</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://www.pvway.com/images/pvwayLogoTextLess256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Persists multi part text values (dictionary string - string) into one single VARCHAR column into an Ms SQL Db (2014 or >=). The package contains a cSharp class for storing/retreiving the dictionary to/from the field and the SQL code for creating a scalar function for stored procedure implementation.</description>
-    <releaseNotes>Initial load</releaseNotes>
+    <releaseNotes>upgrade to dotNet framework 4.8</releaseNotes>
     <copyright>Copyright pvWay 2021</copyright>
     <tags>iso639 translations resources multi lingual pvWay MsSql</tags>
   </metadata>
