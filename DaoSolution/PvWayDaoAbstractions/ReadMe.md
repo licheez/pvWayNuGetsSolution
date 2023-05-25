@@ -81,4 +81,4 @@ public interface IDaoStoredProcExecutor : IDaoTextCommandExecutor
 }
 ```
 
-Enjoy
+Enjoy it:=)

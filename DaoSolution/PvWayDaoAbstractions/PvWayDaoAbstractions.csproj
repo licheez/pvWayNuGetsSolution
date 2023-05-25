@@ -10,10 +10,22 @@
     <Description>Abstractions for tiny DAO services</Description>
     <Copyright>pvWay Ltd 2023</Copyright>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <RepositoryType>github</RepositoryType>
+    <PackageTags>DAO SQL Abstraction</PackageTags>
+    <PackageReleaseNotes>Initial version</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
