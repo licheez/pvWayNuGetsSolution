@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWayDaoAbstractions", "PvWayDaoAbstractions\PvWayDaoAbstractions.csproj", "{12731945-EE4B-4AFB-B463-81D2688C04E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PvWayDaoAbstractions", "PvWayDaoAbstractions\PvWayDaoAbstractions.csproj", "{12731945-EE4B-4AFB-B463-81D2688C04E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWayMsSqlDao", "PvWayMsSqlDao\PvWayMsSqlDao.csproj", "{09F06CD5-D2C5-48C2-8350-5AA78FEA14E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PvWayMsSqlDao", "PvWayMsSqlDao\PvWayMsSqlDao.csproj", "{09F06CD5-D2C5-48C2-8350-5AA78FEA14E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWayPgSqlDao", "PvWayPgSqlDao\PvWayPgSqlDao.csproj", "{801CDECD-FBB4-4CD3-925E-7CAFE2B9B5D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{09F06CD5-D2C5-48C2-8350-5AA78FEA14E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09F06CD5-D2C5-48C2-8350-5AA78FEA14E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09F06CD5-D2C5-48C2-8350-5AA78FEA14E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801CDECD-FBB4-4CD3-925E-7CAFE2B9B5D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801CDECD-FBB4-4CD3-925E-7CAFE2B9B5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801CDECD-FBB4-4CD3-925E-7CAFE2B9B5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801CDECD-FBB4-4CD3-925E-7CAFE2B9B5D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

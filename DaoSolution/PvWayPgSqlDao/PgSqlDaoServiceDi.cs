@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PvWayDaoAbstractions;
 
-namespace PvWayMsSqlDao;
+namespace PvWayPgSqlDao;
 
-public static class MsSqlDaoServiceDi
+public static class PgSqlDaoServiceDi
 {
     // ReSharper disable once UnusedMember.Global
-    public static void AddPvWayMsSqlDaoService(
+    public static void AddPvWayPgSqlDaoService(
         this IServiceCollection services,
         Func<Exception, Task> logAsync,
         string connectionString)
     {
-        services.AddTransient<IDaoService>(_ => 
-            new MsSqlDaoService(logAsync, connectionString));
+        services.AddTransient<IDaoService>(_ =>
+            new PgSqlDaoService(logAsync, connectionString));
     }
+
 }

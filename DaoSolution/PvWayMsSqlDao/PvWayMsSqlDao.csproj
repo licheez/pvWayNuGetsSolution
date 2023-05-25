@@ -4,7 +4,27 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>PvWayMsSqlDao</Title>
+    <Company>pvWay Ltd</Company>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Description>Tiny DAO utility with a subset of command execution</Description>
+    <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/DaoSolution</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/DaoSolution</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageReleaseNotes>initial version</PackageReleaseNotes>
+    <PackageTags>DAO MsSQL Command</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
@@ -13,6 +33,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PvWayDaoAbstractions\PvWayDaoAbstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
   </ItemGroup>
 
 </Project>

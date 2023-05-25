@@ -4,19 +4,20 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Title>PvWayDaoAbstractions</Title>
+    <Title>PvWayPostgreSqlDao</Title>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
-    <Description>Abstractions for tiny DAO services</Description>
+    <Product>PvWayPostgreSqlDao</Product>
+    <Description>Tiny DAO utility with a subset of command execution</Description>
     <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/DaoSolution</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/DaoSolution</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <PackageTags>DAO SQL Abstraction</PackageTags>
+    <PackageTags>DAO PostgreSQL Command</PackageTags>
     <PackageReleaseNotes>Initial version</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/DaoSolution</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/DaoSolution</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,9 +28,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Npgsql" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PvWayDaoAbstractions\PvWayDaoAbstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="ReadMe.md">
-      <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
     </None>
   </ItemGroup>
 
