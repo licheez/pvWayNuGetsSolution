@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>PvWayDaoAbstractions</Title>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>Abstractions for tiny DAO services</Description>
+    <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
