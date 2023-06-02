@@ -1,6 +1,7 @@
 ﻿using PvWay.LoggerService.Abstractions.nc6;
 using PvWay.LoggerService.MsSqlLogWriter.nc6;
 using PvWay.LoggerService.nc6;
+using PvWay.LoggerService.PgSqlLogWriter.nc6;
 
 Console.WriteLine("Hello, LoggerService");
 Console.WriteLine("--------------------");
@@ -22,6 +23,21 @@ const string msSqlCs = "Data Source=localhost;" +
                        "TrustServerCertificate=True;";
 
 var msSqlLogger = MsSqlLogWriter.FactorLoggerService(
-    async () => await Task.FromResult(msSqlCs));
+    async () =>
+        await Task.FromResult(msSqlCs));
+Console.WriteLine("logging using MsSql");
 await msSqlLogger.LogAsync("some debug");
+Console.WriteLine("done");
 
+const string pgSqlCs = "Server=localhost;" +
+                       "Database=postgres;" +
+                       "User Id=sa;" +
+                       "Password=S0mePwd_;";
+
+var pgSqlLogger = PgSqlLogWriter.FactorLoggerService(
+     async () => 
+         await Task.FromResult(pgSqlCs));
+await pgSqlLogger.LogAsync("some debug");
+Console.WriteLine("logging using PostgreSQL");
+await msSqlLogger.LogAsync("some debug");
+Console.WriteLine("done");

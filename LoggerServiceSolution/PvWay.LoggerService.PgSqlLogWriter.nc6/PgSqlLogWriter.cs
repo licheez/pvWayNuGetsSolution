@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using Npgsql;
 using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
 
 namespace PvWay.LoggerService.PgSqlLogWriter.nc6;
 
-public class PgSqlLogWriterSingleton: ILogWriter
+public class PgSqlLogWriter: ILogWriter
 {
     private static volatile ILogWriter? _instance;
     private static readonly object Locker = new();
@@ -36,7 +37,7 @@ public class PgSqlLogWriterSingleton: ILogWriter
 
     private readonly string _createDateColumnName;
 
-    private PgSqlLogWriterSingleton(
+    private PgSqlLogWriter(
         Func<Task<string>> getConnectionStringAsync,
         string tableName,
         string schemaName,
@@ -64,11 +65,29 @@ public class PgSqlLogWriterSingleton: ILogWriter
         CheckTable().Wait();
     }
 
-    // ReSharper disable once UnusedMember.Global
-    public static ILogWriter GetInstance(
+    /// <summary>
+    /// This will check that the table is present
+    /// into the provided Db and check that the table
+    /// complies (column types and length).
+    /// Checking the table only occurs once. i.e. The first
+    /// time the FactorLoggerService is called.
+    /// </summary>
+    /// <param name="getConnectionStringAsync"></param>
+    /// <param name="tableName"></param>
+    /// <param name="schemaName"></param>
+    /// <param name="userIdColumnName"></param>
+    /// <param name="companyIdColumnName"></param>
+    /// <param name="machineNameColumnName"></param>
+    /// <param name="severityCodeColumnName"></param>
+    /// <param name="contextColumnName"></param>
+    /// <param name="topicColumnName"></param>
+    /// <param name="messageColumnName"></param>
+    /// <param name="createDateColumnName"></param>
+    /// <returns>A transient LoggerService</returns>
+    public static ILoggerService FactorLoggerService(
         Func<Task<string>> getConnectionStringAsync,
-        string tableName = "ApplicationLog",
-        string schemaName = "dbo",
+        string tableName = "AppLog",
+        string schemaName = "public",
         string userIdColumnName = "UserId",
         string companyIdColumnName = "CompanyId",
         string machineNameColumnName = "MachineName",
@@ -78,29 +97,62 @@ public class PgSqlLogWriterSingleton: ILogWriter
         string messageColumnName = "Message",
         string createDateColumnName = "CreateDateUtc")
     {
-        if (_instance != null) return _instance;
-        lock (Locker)
+        if (_instance == null)
         {
-            if (_instance != null) return _instance;
-            _instance = new PgSqlLogWriterSingleton(
-                getConnectionStringAsync,
-                tableName,
-                schemaName,
-                userIdColumnName,
-                companyIdColumnName,
-                machineNameColumnName,
-                severityCodeColumnName,
-                contextColumnName,
-                topicColumnName,
-                messageColumnName,
-                createDateColumnName);
+            lock (Locker)
+            {
+                if (_instance == null)
+                {
+                    _instance = new PgSqlLogWriter(
+                        getConnectionStringAsync,
+                        tableName,
+                        schemaName,
+                        userIdColumnName,
+                        companyIdColumnName,
+                        machineNameColumnName,
+                        severityCodeColumnName,
+                        contextColumnName,
+                        topicColumnName,
+                        messageColumnName,
+                        createDateColumnName);
+                }
+            }
         }
-        return _instance;
+
+        async Task WriteLogAsync(
+            (string? userId, string? companyId, string? topic,
+                SeverityEnum severity, string machineName,
+                string memberName, string filePath, int lineNumber,
+                string message, DateTime dateUtc) log)
+        {
+            await _instance!.WriteLogAsync(
+                log.userId, log.companyId, log.topic,
+                log.severity, log.machineName,
+                log.memberName, log.filePath, log.lineNumber,
+                log.message, log.dateUtc);
+        }
+
+        void WriteLog(
+            (string? userId, string? companyId, string? topic,
+                SeverityEnum severity, string machineName,
+                string memberName, string filePath, int lineNumber,
+                string message, DateTime dateUtc) log)
+        {
+            _instance!.WriteLogAsync(
+                log.userId, log.companyId, log.topic,
+                log.severity, log.machineName,
+                log.memberName, log.filePath, log.lineNumber,
+                log.message, log.dateUtc);
+        }
+
+        return new PersistenceLogger(
+            () => _instance.Dispose(),
+            WriteLog, WriteLogAsync);
     }
 
     private async Task CheckTable()
     {
-        Console.WriteLine("Checking Table compliance)");
+        Console.WriteLine($"checking {_schemaName}.{_tableName}");
         var cs = await _getConnectionStringAsync();
         await using var cn = new NpgsqlConnection(cs);
         await cn.OpenAsync();

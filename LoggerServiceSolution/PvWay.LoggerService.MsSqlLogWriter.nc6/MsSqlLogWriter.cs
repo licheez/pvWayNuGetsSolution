@@ -118,7 +118,7 @@ namespace PvWay.LoggerService.MsSqlLogWriter.nc6
                 }
             }
 
-            async Task MsSqlWriteLogAsync(
+            async Task WriteLogAsync(
                 (string? userId, string? companyId, string? topic,
                     SeverityEnum severity, string machineName,
                     string memberName, string filePath, int lineNumber,
@@ -131,7 +131,7 @@ namespace PvWay.LoggerService.MsSqlLogWriter.nc6
                     log.message, log.dateUtc);
             }
 
-            void MsSqlWriteLog(
+            void WriteLog(
                 (string? userId, string? companyId, string? topic,
                     SeverityEnum severity, string machineName,
                     string memberName, string filePath, int lineNumber,
@@ -146,7 +146,7 @@ namespace PvWay.LoggerService.MsSqlLogWriter.nc6
 
             return new PersistenceLogger(
                 () => _instance.Dispose(),
-                MsSqlWriteLog, MsSqlWriteLogAsync);
+                WriteLog, WriteLogAsync);
         }
 
         public void WriteLog(
