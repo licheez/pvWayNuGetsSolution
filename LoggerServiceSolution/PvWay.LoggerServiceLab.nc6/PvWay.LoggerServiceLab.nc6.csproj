@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PvWay.LoggerService.MsSqlLogWriter.nc6\PvWay.LoggerService.MsSqlLogWriter.nc6.csproj" />
+    <ProjectReference Include="..\PvWay.LoggerService.nc6\PvWay.LoggerService.nc6.csproj" />
+    <ProjectReference Include="..\PvWay.LoggerService.PgSqlLogWriter.nc6\PvWay.LoggerService.PgSqlLogWriter.nc6.csproj" />
+  </ItemGroup>
+
+</Project>
