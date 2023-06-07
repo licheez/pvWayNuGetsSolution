@@ -23,6 +23,14 @@ namespace PvWay.LoggerService.Abstractions.nc6
         void SetTopic(string? topic);
 
         // TOPIC-LESS METHODS
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="severity">defaulting to Debug</param>
+        /// <param name="memberName">automatically passes the CallerMemberName</param>
+        /// <param name="filePath"></param>
+        /// <param name="lineNumber"></param>
         void Log(
             string message,
             SeverityEnum severity = SeverityEnum.Debug,

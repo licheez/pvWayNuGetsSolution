@@ -4,7 +4,26 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>PostgreSQL implementation of the pvWay.LoggerService.Abstractions.nc6 that persists logs into a table in a PostgreSQL database</Description>
+    <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <PackageReadmeFile>pvWay.LoggerService.PgSqlLogWriter.md</PackageReadmeFile>
+    <RepositoryType>GiHub</RepositoryType>
+    <PackageTags>log postgre SQL database trace audit persist</PackageTags>
+    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="7.0.4" />
@@ -13,6 +32,13 @@
   <ItemGroup>
     <ProjectReference Include="..\PvWay.LoggerService.Abstractions.nc6\PvWay.LoggerService.Abstractions.nc6.csproj" />
     <ProjectReference Include="..\PvWay.LoggerService.nc6\PvWay.LoggerService.nc6.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="pvWay.LoggerService.PgSqlLogWriter.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

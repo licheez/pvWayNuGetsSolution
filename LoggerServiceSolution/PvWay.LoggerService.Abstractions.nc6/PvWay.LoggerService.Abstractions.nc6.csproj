@@ -4,6 +4,34 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>pvWay LoggerService Abstractions dotNet Core 6</Title>
+    <Authors>Pierre Van Wallendael</Authors>
+    <Company>pvWay Ltd</Company>
+    <Description>Simple logger service interfaces and enums</Description>
+    <Copyright>pvWay Ltd 2023</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
+    <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Logger Abstraction Trace</PackageTags>
+    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>pvWayLoggerServiceAbstractions.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\pvwayLogoTextLess256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="pvWayLoggerServiceAbstractions.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

@@ -35,9 +35,8 @@ const string pgSqlCs = "Server=localhost;" +
                        "Password=S0mePwd_;";
 
 var pgSqlLogger = PgSqlLogWriter.FactorLoggerService(
-     async () => 
+     async () =>
          await Task.FromResult(pgSqlCs));
-await pgSqlLogger.LogAsync("some debug");
 Console.WriteLine("logging using PostgreSQL");
-await msSqlLogger.LogAsync("some debug");
+await pgSqlLogger.LogAsync("some debug");
 Console.WriteLine("done");
