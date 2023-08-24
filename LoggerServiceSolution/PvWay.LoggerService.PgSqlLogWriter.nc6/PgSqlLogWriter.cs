@@ -190,7 +190,7 @@ public class PgSqlLogWriter: ILogWriter
                 true, out _userIdLength);
             CheckColumn(errors, dic, _companyIdColumnName, "character varying",
                 true, out _companyIdLength);
-            CheckColumn(errors, dic, _severityCodeColumnName, "\"char\"",
+            CheckColumn(errors, dic, _severityCodeColumnName, "character",
                 false, out _);
             CheckColumn(errors, dic, _machineNameColumnName, "character varying",
                 false, out _machineNameLength);
@@ -204,7 +204,7 @@ public class PgSqlLogWriter: ILogWriter
             {
                 errors.Add($"column {_messageColumnName} should be text");
             }
-            CheckColumn(errors, dic, _createDateColumnName, "timestamp without time zone",
+            CheckColumn(errors, dic, _createDateColumnName, "timestamp with time zone",
                 false, out _);
         }
 
@@ -410,17 +410,14 @@ public class PgSqlLogWriter: ILogWriter
         return val.Replace("'", "''");
     }
 
-#pragma warning disable CA1816
     public void Dispose()
-#pragma warning restore CA1816
     {
-        // nop
+        GC.SuppressFinalize(this);
     }
 
-#pragma warning disable CA1816
     public ValueTask DisposeAsync()
-#pragma warning restore CA1816
     {
+        GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
 }

@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS public."AppLog"
     "Id" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     "UserId" character varying(36) COLLATE pg_catalog."default",
     "CompanyId" character varying(36) COLLATE pg_catalog."default",
-    "SeverityCode" "char" NOT NULL,
+    "SeverityCode" character (1) COLLATE pg_catalog."default" NOT NULL,
     "MachineName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Topic" character varying(50) COLLATE pg_catalog."default",
     "Context" character varying(256) COLLATE pg_catalog."default" NOT NULL,
     "Message" text COLLATE pg_catalog."default" NOT NULL,
-    "CreateDateUtc" timestamp without time zone NOT NULL,
+    "CreateDateUtc" timestamp with time zone NOT NULL,
     CONSTRAINT "ApplicationLog_pkey" PRIMARY KEY ("Id")
 )
 
@@ -56,14 +56,14 @@ CREATE INDEX IF NOT EXISTS "ApplicationLog_IX_Topic"
 
 The Id column is not required and will not be populted by the service. 
 However it might be convenient to have a numeric primary column.
-If you define this column make sure the database will fill it accordingly by for example using the IDENTITY keyword
+If you define this column make sure the database will fill it accordingly by for example using the IDENTITY syntax
 
 #### UserId
 
 * You can provide your own column name for this column
 * The UserId column persists the identification of the connected user if any
 * This column should be nullable
-* This column should be of type character varying
+* This column should be of type *character varying*
 * The logger will truncate any info exceding the max column length
 
 #### CompanyId
@@ -71,7 +71,7 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The CompanyId column persists the identification of the company of the connected user if any
 * This column should be nullable
-* This column should be of type character varying
+* This column should be of type *character varying*
 * The logger will truncate any info exceding the max column length
 
 #### SeverityCode
@@ -79,7 +79,7 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The SeverityCode column persists the SeverityEnum code
 * This column should be non nullable
-* This column should be of type char (one char is enough)
+* This column should be of type *characater* (one char is enough)
 
 ``` csharp
    // Exemple of Sevirity enum and corresponding codes
@@ -102,7 +102,7 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The MachineName column persists Environment.MachineName
 * This column should be non nullable
-* This column should be of type character varying
+* This column should be of type *character varying*
 * The logger will truncate any info exceding the max column length
 
 #### Topic
@@ -111,7 +111,7 @@ If you define this column make sure the database will fill it accordingly by for
 
 * You can provide your own column name for this column
 * This column should be nullable
-* This column should be of type character varying
+* This column should be of type *character varying*
 * The logger will truncate any info exceding the max column length
 
 #### Context
@@ -121,7 +121,7 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The Context column persists method name, filepath and code line number
 * This column should be non nullable
-* This column should be of type character varying
+* This column should be of type *character varying*
 * The logger will truncate any info exceding the max column length
  
 #### Message
@@ -131,7 +131,7 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The Message column persists the message info
 * This column should be non nullable.
-* This column should be of type text
+* This column should be of type *text*
 
 #### CreateDateUtc
 
@@ -140,7 +140,7 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The Message column persists the UTC date.
 * This column should be non nullable.
-* This column should be of type timestamp without time zone
+* This column should be of type *timestamp with time zone*
 
 ### Usage
 

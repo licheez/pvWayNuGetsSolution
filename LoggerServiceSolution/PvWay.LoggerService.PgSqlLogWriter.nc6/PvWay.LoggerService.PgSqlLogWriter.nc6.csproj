@@ -14,8 +14,9 @@
     <PackageReadmeFile>pvWay.LoggerService.PgSqlLogWriter.md</PackageReadmeFile>
     <RepositoryType>GiHub</RepositoryType>
     <PackageTags>log postgre SQL database trace audit persist</PackageTags>
-    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageReleaseNotes>breaking changes: some column types were modify to comply with EntityFramework</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -16,18 +16,18 @@ await ls.LogAsync("some Error", SeverityEnum.Error);
 await ls.LogAsync("some Fatal", SeverityEnum.Fatal);
 await ls.LogAsync("it's ok", SeverityEnum.Ok);
 
-const string msSqlCs = "Data Source=localhost;" +
-                       "Initial Catalog=iota800_dev;" +
-                       "integrated security=True;" +
-                       "MultipleActiveResultSets=True;" +
-                       "TrustServerCertificate=True;";
+//const string msSqlCs = "Data Source=localhost;" +
+//                       "Initial Catalog=iota800_dev;" +
+//                       "integrated security=True;" +
+//                       "MultipleActiveResultSets=True;" +
+//                       "TrustServerCertificate=True;";
 
-var msSqlLogger = MsSqlLogWriter.FactorLoggerService(
-    async () =>
-        await Task.FromResult(msSqlCs));
-Console.WriteLine("logging using MsSql");
-await msSqlLogger.LogAsync("some debug");
-Console.WriteLine("done");
+//var msSqlLogger = MsSqlLogWriter.FactorLoggerService(
+//    async () =>
+//        await Task.FromResult(msSqlCs));
+//Console.WriteLine("logging using MsSql");
+//await msSqlLogger.LogAsync("some debug");
+//Console.WriteLine("done");
 
 const string pgSqlCs = "Server=localhost;" +
                        "Database=postgres;" +

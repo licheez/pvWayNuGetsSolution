@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="PvWay.LoggerService.MsSqlLogWriter.nc6" Version="1.0.0" />
     <PackageReference Include="PvWay.LoggerService.nc6" Version="1.0.0" />
-    <PackageReference Include="PvWay.LoggerService.PgSqlLogWriter.nc6" Version="1.0.0" />
+    <PackageReference Include="PvWay.LoggerService.PgSqlLogWriter.nc6" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
