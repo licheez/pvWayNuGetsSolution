@@ -5,10 +5,9 @@ using PvWay.LoggerService.Abstractions.nc6;
 using PvWay.LoggerService.nc6;
 
 namespace PvWay.LoggerService.PgSqlLogWriter.nc6;
-
-public class PgSqlLogWriter: ILogWriter
+internal class PgSqlLogWriter: IPvWayPostgreLogWriter
 {
-    private static volatile ILogWriter? _instance;
+    private static volatile IPvWayPostgreLogWriter? _instance;
     private static readonly object Locker = new();
 
     private readonly Func<Task<string>> _getConnectionStringAsync;
@@ -83,8 +82,63 @@ public class PgSqlLogWriter: ILogWriter
     /// <param name="topicColumnName"></param>
     /// <param name="messageColumnName"></param>
     /// <param name="createDateColumnName"></param>
+    /// <returns>A transient ILogWriter</returns>
+    public static IPvWayPostgreLogWriter FactorLogWriter(
+        Func<Task<string>> getConnectionStringAsync,
+        string tableName = "AppLog",
+        string schemaName = "public",
+        string userIdColumnName = "UserId",
+        string companyIdColumnName = "CompanyId",
+        string machineNameColumnName = "MachineName",
+        string severityCodeColumnName = "SeverityCode",
+        string contextColumnName = "Context",
+        string topicColumnName = "Topic",
+        string messageColumnName = "Message",
+        string createDateColumnName = "CreateDateUtc")
+    {
+        if (_instance != null) return _instance;
+
+        lock (Locker)
+        {
+            if (_instance == null)
+            {
+                _instance = new PgSqlLogWriter(
+                    getConnectionStringAsync,
+                    tableName,
+                    schemaName,
+                    userIdColumnName,
+                    companyIdColumnName,
+                    machineNameColumnName,
+                    severityCodeColumnName,
+                    contextColumnName,
+                    topicColumnName,
+                    messageColumnName,
+                    createDateColumnName);
+            }
+        }
+        return _instance;
+    }
+
+    /// <summary>
+    /// This will check that the table is present
+    /// into the provided Db and check that the table
+    /// complies (column types and length).
+    /// Checking the table only occurs once. i.e. The first
+    /// time the FactorLoggerService is called.
+    /// </summary>
+    /// <param name="getConnectionStringAsync"></param>
+    /// <param name="tableName"></param>
+    /// <param name="schemaName"></param>
+    /// <param name="userIdColumnName"></param>
+    /// <param name="companyIdColumnName"></param>
+    /// <param name="machineNameColumnName"></param>
+    /// <param name="severityCodeColumnName"></param>
+    /// <param name="contextColumnName"></param>
+    /// <param name="topicColumnName"></param>
+    /// <param name="messageColumnName"></param>
+    /// <param name="createDateColumnName"></param>
     /// <returns>A transient LoggerService</returns>
-    public static ILoggerService FactorLoggerService(
+    public static IPvWayPostgreLoggerService FactorLoggerService(
         Func<Task<string>> getConnectionStringAsync,
         string tableName = "AppLog",
         string schemaName = "public",
@@ -119,13 +173,33 @@ public class PgSqlLogWriter: ILogWriter
             }
         }
 
+        var lw = FactorLogWriter(
+            getConnectionStringAsync,
+            tableName,
+            schemaName,
+            userIdColumnName,
+            companyIdColumnName,
+            machineNameColumnName,
+            severityCodeColumnName,
+            contextColumnName,
+            topicColumnName,
+            messageColumnName,
+            createDateColumnName);
+
+        var pl = new PersistenceLogger(
+            () => lw.Dispose(),
+            WriteLog, WriteLogAsync);
+
+        var ls = new PgPersistenceLogger(pl);
+        return ls;
+
         async Task WriteLogAsync(
             (string? userId, string? companyId, string? topic,
                 SeverityEnum severity, string machineName,
                 string memberName, string filePath, int lineNumber,
                 string message, DateTime dateUtc) log)
         {
-            await _instance!.WriteLogAsync(
+            await lw.WriteLogAsync(
                 log.userId, log.companyId, log.topic,
                 log.severity, log.machineName,
                 log.memberName, log.filePath, log.lineNumber,
@@ -138,16 +212,12 @@ public class PgSqlLogWriter: ILogWriter
                 string memberName, string filePath, int lineNumber,
                 string message, DateTime dateUtc) log)
         {
-            _instance!.WriteLogAsync(
+            lw.WriteLog(
                 log.userId, log.companyId, log.topic,
                 log.severity, log.machineName,
                 log.memberName, log.filePath, log.lineNumber,
                 log.message, log.dateUtc);
         }
-
-        return new PersistenceLogger(
-            () => _instance.Dispose(),
-            WriteLog, WriteLogAsync);
     }
 
     private async Task CheckTable()
@@ -420,4 +490,5 @@ public class PgSqlLogWriter: ILogWriter
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
+
 }

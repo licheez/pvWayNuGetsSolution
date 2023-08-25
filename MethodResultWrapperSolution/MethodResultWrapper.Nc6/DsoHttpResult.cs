@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using PvWay.LoggerService.Abstractions.nc6;
 
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable MemberCanBePrivate.Global

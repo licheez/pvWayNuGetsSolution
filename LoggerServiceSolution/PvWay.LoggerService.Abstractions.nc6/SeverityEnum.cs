@@ -1,4 +1,6 @@
-﻿namespace PvWay.LoggerService.Abstractions.nc6;
+﻿using Microsoft.Extensions.Logging;
+
+namespace PvWay.LoggerService.Abstractions.nc6;
 
 public enum SeverityEnum
 {
@@ -45,6 +47,52 @@ public static class EnumSeverity
             Error => SeverityEnum.Error,
             Fatal => SeverityEnum.Fatal,
             _ => throw new ArgumentOutOfRangeException(nameof(code), code, null)
+        };
+    }
+
+    public static string GetMsLogLevelAbbrev(LogLevel lgLevel)
+    {
+        return lgLevel switch
+        {
+            LogLevel.Trace => "trac:",
+            // ReSharper disable once StringLiteralTypo
+            LogLevel.Debug => "debg:",
+            LogLevel.Information => "info:",
+            LogLevel.Warning => "warn:",
+            LogLevel.Error => "fail:",
+            // ReSharper disable once StringLiteralTypo
+            LogLevel.Critical => "crit:",
+            LogLevel.None => "",
+            _ => throw new ArgumentOutOfRangeException(nameof(lgLevel), lgLevel, null)
+        };
+    }
+
+    public static LogLevel GetMsLogLevel(SeverityEnum severity)
+    {
+        return severity switch
+        {
+            SeverityEnum.Ok => LogLevel.None,
+            SeverityEnum.Debug => LogLevel.Debug,
+            SeverityEnum.Info => LogLevel.Information,
+            SeverityEnum.Warning => LogLevel.Warning,
+            SeverityEnum.Error => LogLevel.Error,
+            SeverityEnum.Fatal => LogLevel.Critical,
+            _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
+        };
+    }
+
+    public static SeverityEnum GetSeverity(LogLevel level)
+    {
+        return level switch
+        {
+            LogLevel.Trace => SeverityEnum.Debug,
+            LogLevel.Debug => SeverityEnum.Debug,
+            LogLevel.Information => SeverityEnum.Info,
+            LogLevel.Warning => SeverityEnum.Warning,
+            LogLevel.Error => SeverityEnum.Error,
+            LogLevel.Critical => SeverityEnum.Fatal,
+            LogLevel.None => SeverityEnum.Ok,
+            _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
         };
     }
 }

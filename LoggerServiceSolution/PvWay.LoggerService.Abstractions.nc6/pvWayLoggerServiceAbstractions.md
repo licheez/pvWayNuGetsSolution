@@ -68,6 +68,21 @@ Task LogAsync(
     [CallerFilePath] string filePath = "",
     [CallerLineNumber] int lineNumber = -1);
 
+void Log(
+    IMethodResult result,
+    string? topic,
+    [CallerMemberName] string memberName = "",
+    [CallerFilePath] string filePath = "",
+    [CallerLineNumber] int lineNumber = -1);
+
+Task LogAsync(
+    IMethodResult result,
+    string? topic,
+    [CallerMemberName] string memberName = "",
+    [CallerFilePath] string filePath = "",
+    [CallerLineNumber] int lineNumber = -1);
+
+
 ```
 
 ## Usage
@@ -102,13 +117,23 @@ catch (Exception e)
 ```
 
 ## See Also
+
 The following nuGet packages implement the LoggerService
 
-* * PvWay.LoggerService.nc6
+* [pvWay.LoggerService.nc6](https://www.nuget.org/packages/PvWay.LoggerService.nc6/)
   * ConsoleLogger: Colorful console implementation
   * MuteLogger: Silent logger for uTesting
   * MicrosoftLogger: uses the Microsoft.Extensions.Logger
+  * MicrosoftConsoleLogger: uses the Ms AddConsole extension
+  * MultiChannelLogger: writes to multiple logs in one shot
 
-* PvWay.MsSqlLogWriter.nc6: Implementation for Ms SQL Database
+* [pvWay.MsSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.MsSqlLogWriter.nc6) Implementation for Ms SQL Database
 
-* PvWay.PgSqlLogWriter.nc6: Implementation for PostgreSQL Database
+
+* [pvWay.PgSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.PgSqlLogWriter.nc6) Implementation for PostgreSQL Database
+
+
+Take also a look to the [MethodResultWrapper](https://www.nuget.org/packages/pvWay.MethodResultWrapper.Core/) nuGet
+
+
+

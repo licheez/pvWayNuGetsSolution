@@ -1,6 +1,5 @@
 ﻿using PvWay.LoggerService.Abstractions.nc6;
 using PvWay.LoggerService.nc6;
-using PvWay.LoggerService.PgSqlLogWriter.nc6;
 
 Console.WriteLine("Hello, LoggerService");
 Console.WriteLine("--------------------");
@@ -28,14 +27,25 @@ await ls.LogAsync("it's ok", SeverityEnum.Ok);
 //await msSqlLogger.LogAsync("some debug");
 //Console.WriteLine("done");
 
-const string pgSqlCs = "Server=localhost;" +
-                       "Database=postgres;" +
-                       "User Id=sa;" +
-                       "Password=S0mePwd_;";
+//var services = new ServiceCollection();
 
-var pgSqlLogger = PgSqlLogWriter.FactorLoggerService(
-    async () =>
-        await Task.FromResult(pgSqlCs));
-Console.WriteLine("logging using PostgreSQL");
-await pgSqlLogger.LogAsync("some debug");
-Console.WriteLine("done");
+//const string pgSqlCs = "Server=localhost;" +
+//                       "Database=postgres;" +
+//                       "User Id=sa;" +
+//                       "Password=S0mePwd_;";
+
+//services.AddPvWayPgLogServices(
+//    ServiceLifetime.Transient,
+//    async () =>
+//    await Task.FromResult(pgSqlCs));
+
+//var sp = services.BuildServiceProvider();
+
+//var pgLs = sp.GetService<PgSqlLogWriter>();
+
+//var pgSqlLogger = PgSqlLogWriter.FactorLoggerService(
+//    async () =>
+//        await Task.FromResult(pgSqlCs));
+//Console.WriteLine("logging using PostgreSQL");
+//await pgSqlLogger.LogAsync("some debug");
+//Console.WriteLine("done");

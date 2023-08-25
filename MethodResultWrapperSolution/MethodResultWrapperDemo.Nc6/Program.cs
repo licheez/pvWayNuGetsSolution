@@ -1,4 +1,6 @@
-﻿using pvWay.MethodResultWrapper.nc6;
+﻿using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
+using pvWay.MethodResultWrapper.nc6;
 
 namespace MethodResultWrapperDemo.Nc6;
 
@@ -6,7 +8,7 @@ internal static class Program
 {
     private static async Task Main( /*string[] args*/)
     {
-        var ls = new ConsoleLogger();
+        var ls  = PvWayLoggerService.CreateConsoleLoggerService();
         var userStore = new UserStore();
 
         var getFirstName = await GetUserFirstNameAsync(

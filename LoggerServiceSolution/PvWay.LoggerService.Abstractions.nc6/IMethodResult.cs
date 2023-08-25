@@ -1,4 +1,4 @@
-﻿namespace pvWay.MethodResultWrapper.nc6;
+﻿namespace PvWay.LoggerService.Abstractions.nc6;
 
 public interface IMethodResult
 {

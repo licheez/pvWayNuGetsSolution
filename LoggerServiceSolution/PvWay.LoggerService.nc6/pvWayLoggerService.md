@@ -1,15 +1,13 @@
 # pvWay Logger Service for dotNet core 6
 
-## Dependendies
-* pvWay.LoggerService.Abstractions.nc6
-* Microsoft.Extensions.Logging.Abstraction
-
 ## Description
 This nuget provides several very intuitive LoggerService implementations of the *PvWay.LoggerService.Abstractions.nc6* ILoggerService interface :
 * ConsoleLogger
 * MuteLogger
 * Microsoft Logger
 * PersistenceLogger
+* Ms Console Logger
+* Multichannel Logger
 
 ### ConsoleLogger
 * This colorful implementation uses Console.WriteLine outputting logs to the standard out.
@@ -75,47 +73,81 @@ Task LogAsync(
     [CallerFilePath] string filePath = "",
     [CallerLineNumber] int lineNumber = -1);
 
+void Log(
+    IMethodResult result,
+    string? topic,
+    [CallerMemberName] string memberName = "",
+    [CallerFilePath] string filePath = "",
+    [CallerLineNumber] int lineNumber = -1);
+
+Task LogAsync(
+    IMethodResult result,
+    string? topic,
+    [CallerMemberName] string memberName = "",
+    [CallerFilePath] string filePath = "",
+    [CallerLineNumber] int lineNumber = -1);
+
 ```
 
 ## Usage
 
 ``` csharp
-using PvWay.LoggerService.Abstractions.nc6;
+using Microsoft.Extensions.DependencyInjection;
 using PvWay.LoggerService.nc6;
 
-// ConsoleLogger is an implementation of 
-// the logger service that output colorful
-// messages to the standard out
-var ls = new ConsoleLogger();
+namespace PvWay.LoggerServiceLab.nc6;
 
-// sync logging a simple debug message to the console
-// --------------------------------------------------
-ls.Log("simple debug message);
-
-// async logging a warning message to the console
-// ----------------------------------------------
-async ls.LogAsync("this is a warning", SeverityEnum.Warning);
-
-// logging an exception to the console
-// -----------------------------------
-try 
+public class ConsoleLoggerDemo
 {
-    var x = y / 0;
-}
-catch (Exception e) 
-{
-    ls.Log(e);}
+    public async Task<double> HowToUseTheConsoleLogger(
+        double x)
+    {
+        Console.WriteLine("Hello, ConsoleLoggerService");
+        Console.WriteLine("---------------------------");
+        Console.WriteLine();
+
+        var consoleLs = PvWayLoggerService.CreateConsoleLoggerService();
+
+        try
+        {
+            // dividing by zero throws an exception
+            return x / 0;
+        }
+        catch (Exception e)
+        {
+            await consoleLs.LogAsync(e);
+            throw;
+        }
+    }
+
+    public async Task AndWithDependencyInjection()
+    {
+        var services = new ServiceCollection();
+
+        // provisions the different loggerServices
+        // ConsoleLogger, MuteLogger, MsConsoleLogger...
+        services.AddPvWayLoggerServices(ServiceLifetime.Transient);
+
+        var sp = services.BuildServiceProvider();
+
+        // Retrieve the ConsoleLogger
+        var consoleLs = sp.GetService<IPvWayConsoleLoggerService>()!;
+
+        // Use it
+        await consoleLs.LogAsync("Not that complex after all");
+    }
+
 }
 ```
 
 ## See Also
-The following nuGet packages implement the LoggerService
 
-* * PvWay.LoggerService.nc6
-  * ConsoleLogger: Colorful console implementation
-  * MuteLogger: Silent logger for uTesting
-  * MicrosoftLogger: uses the Microsoft.Extensions.Logger
+* [pvWay.MsSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.MsSqlLogWriter.nc6) Implementation for Ms SQL Database
 
-* PvWay.MsSqlLogWriter.nc6: Implementation for Ms SQL Database
 
-* PvWay.PgSqlLogWriter.nc6: Implementation for PostgreSQL Database
+* [pvWay.PgSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.PgSqlLogWriter.nc6) Implementation for PostgreSQL Database
+
+
+Take also a look to the [MethodResultWrapper](https://www.nuget.org/packages/pvWay.MethodResultWrapper.Core/) nuGet
+
+

@@ -5,11 +5,12 @@ or a list of notifications in case of failure.
 
 ## Interfaces
 
+Interfaces are defined in the [LoggerService.Abstractions](https://www.nuget.org/packages/PvWay.LoggerService.Abstractions.nc6/) nuGet
+
 ### MethodResult interfaces
 
-```csharp
-namespace MethodResultWrapper.Nc6;
 
+```csharp
 public interface IMethodResult
 {
     /// <summary>
@@ -59,13 +60,9 @@ public interface IMethodResultNotification
 
 ### ILoggerService interface
 
-* This nuget package also provides the ILoggerService interface with 3 built in implementations. 
-(1) ConsoleLogger that writes logs onto the Console,
-(2) MuteLogger that can be used for unit testing and
-(3) PersistenceLogger that can be used for persiting rich log rows into a database, a file or any other persistence layer
-by injecting the appropriate LogWriter (see **[pvWay.MsSqlLogWriter.Core nuGet](https://www.nuget.org/packages/MsSqlLogWriter.Core/)**)
+The [LoggerService.Abstractions](https://www.nuget.org/packages/PvWay.LoggerService.Abstractions.nc6/) nuGet also provides the ILoggerService interface.
 
-* The ILoggerService provides both sync and async methods with serveral signatures including
+This interface provides both sync and async methods with serveral signatures including
 (1) simple message,
 (2) list of messages,
 (3) MethodResult object (see above)
@@ -94,8 +91,6 @@ by injecting the appropriate LogWriter (see **[pvWay.MsSqlLogWriter.Core nuGet](
 * **Constructors**
 
 ```csharp
-        
-namespace MethodResultWrapper.Nc6;
 
 public class MethodResult : IMethodResult
 {
@@ -337,6 +332,8 @@ public class MethodResult<T> : MethodResult, IMethodResult<T>
 
 ## Usage
 ```csharp
+using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
 using pvWay.MethodResultWrapper.nc6;
 
 namespace MethodResultWrapperDemo.Nc6;
@@ -345,7 +342,7 @@ internal static class Program
 {
     private static async Task Main( /*string[] args*/)
     {
-        var ls = new ConsoleLogger();
+        var ls  = PvWayLoggerService.CreateConsoleLoggerService();
         var userStore = new UserStore();
 
         var getFirstName = await GetUserFirstNameAsync(
@@ -455,6 +452,7 @@ internal class UserStore : IUserStore
         throw new Exception();
         // return null;
     }
+}
 }```
 
 Happy coding !

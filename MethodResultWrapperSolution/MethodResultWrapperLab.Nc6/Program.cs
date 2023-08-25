@@ -1,26 +1,12 @@
-﻿using pvWay.MethodResultWrapper.nc6;
+﻿using PvWay.LoggerService.nc6;
+using pvWay.MethodResultWrapper.nc6;
 
-var cw = new ConsoleLogWriter();
-var pw = new PersistenceLogger(
-    () => cw.Dispose(),
-    p =>
-        cw.WriteLog(
-            p.userId, p.companyId, p.topic,
-            p.severityCode,
-            p.machineName, p.memberName,
-            p.filePath, p.lineNumber,
-            p.message, p.dateUtc),
-    async p =>
-        await cw.WriteLogAsync(
-            p.userId, p.companyId, p.topic,
-            p.severityCode,
-            p.machineName, p.memberName,
-            p.filePath, p.lineNumber,
-            p.message, p.dateUtc));
+var cLog = PvWayLoggerService.CreateConsoleLoggerService();
 
-pw.SetTopic("the topic");
-pw.SetUser("the user", "the company");
-await pw.LogAsync("test");
+
+cLog.SetTopic("the topic");
+cLog.SetUser("the user", "the company");
+await cLog.LogAsync("test");
 
 try
 {
@@ -28,7 +14,7 @@ try
 }
 catch (Exception e)
 {
-    await pw.LogAsync(e);
+    await cLog.LogAsync(e);
 }
 
 var res = MethodResult<string>.Null;

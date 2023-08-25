@@ -2,26 +2,23 @@
 
 namespace PvWay.LoggerService.nc6;
 
-internal class ConsoleLogWriter: ILogWriter
+internal class ConsoleLogWriter : ILogWriter
 {
-#pragma warning disable CA1816
     public void Dispose()
-#pragma warning restore CA1816
     {
-        // nop
+        GC.SuppressFinalize(this);
     }
-#pragma warning disable CA1816
 
     public ValueTask DisposeAsync()
-#pragma warning restore CA1816
     {
+        GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
 
     public async Task WriteLogAsync(
-        string? userId, string? companyId, string? topic, 
+        string? userId, string? companyId, string? topic,
         SeverityEnum severity, string machineName,
-        string memberName, string filePath, int lineNumber, 
+        string memberName, string filePath, int lineNumber,
         string message, DateTime dateUtc)
     {
         await Task.Run(() =>
@@ -33,9 +30,9 @@ internal class ConsoleLogWriter: ILogWriter
     }
 
     public void WriteLog(
-        string? userId, string? companyId, string? topic, 
-        SeverityEnum severity, string machineName, 
-        string memberName, string filePath, int lineNumber, 
+        string? userId, string? companyId, string? topic,
+        SeverityEnum severity, string machineName,
+        string memberName, string filePath, int lineNumber,
         string message, DateTime dateUtc)
     {
         var curColor = Console.ForegroundColor;
@@ -50,19 +47,27 @@ internal class ConsoleLogWriter: ILogWriter
             _ => throw new ArgumentOutOfRangeException(
                 nameof(severity), severity, "invalid severity")
         };
-        Console.ForegroundColor = msgColor;
+
+        var logLevel = EnumSeverity.GetMsLogLevel(severity);
+        var abbrev = EnumSeverity.GetMsLogLevelAbbrev(logLevel);
+
         var line =
-            $"severity: '{severity}'{Environment.NewLine}" +
-            $"machineName: '{machineName}'{Environment.NewLine}" +
-            $"memberName: '{memberName}'{Environment.NewLine}" +
-            $"filePath: '{filePath}'{Environment.NewLine}" +
-            $"lineNumber: '{lineNumber}'{Environment.NewLine}" +
-            $"topic: '{topic}'{Environment.NewLine}" +
-            $"message:'{message}'{Environment.NewLine}" +
-            $"user: '{userId}'{Environment.NewLine}" +
-            $"company: '{companyId}'{Environment.NewLine}" +
-            $"dateUtc : '{dateUtc}'{Environment.NewLine}" +
-            $"{Environment.NewLine}";
+            $"{abbrev}{dateUtc} " +
+            $"{machineName}.{memberName}.{lineNumber}" +
+            $"{Environment.NewLine}    '{message}'";
+
+        if (!string.IsNullOrEmpty(topic))
+            line += $"{Environment.NewLine}    topic: '{topic}'";
+        
+        if (!string.IsNullOrEmpty(userId))
+            line += $"{Environment.NewLine}    user: '{userId}'";
+
+        if (!string.IsNullOrEmpty(companyId))
+            line += $"{Environment.NewLine}    company: '{companyId}'";
+
+        line += Environment.NewLine;
+
+        Console.ForegroundColor = msgColor;
         Console.WriteLine(line);
         Console.ForegroundColor = curColor;
     }

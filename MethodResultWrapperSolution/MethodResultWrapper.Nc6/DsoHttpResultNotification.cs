@@ -1,6 +1,8 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using PvWay.LoggerService.Abstractions.nc6;
+
 namespace pvWay.MethodResultWrapper.nc6;
 
 public class DsoHttpResultNotification

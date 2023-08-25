@@ -1,10 +1,9 @@
-﻿namespace PvWay.LoggerService.nc6
+﻿namespace PvWay.LoggerService.nc6;
+
+public class ConsoleLogger : Logger, IPvWayConsoleLoggerService
 {
-    public class ConsoleLogger : Logger
+    internal ConsoleLogger() :
+        base(new ConsoleLogWriter())
     {
-        public ConsoleLogger() :
-            base(new ConsoleLogWriter())
-        {
-        }
     }
 }

@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PvWay.LoggerService.MsSqlLogWriter.nc6\PvWay.LoggerService.MsSqlLogWriter.nc6.csproj" />
     <ProjectReference Include="..\PvWay.LoggerService.nc6\PvWay.LoggerService.nc6.csproj" />
     <ProjectReference Include="..\PvWay.LoggerService.PgSqlLogWriter.nc6\PvWay.LoggerService.PgSqlLogWriter.nc6.csproj" />

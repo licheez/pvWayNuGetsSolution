@@ -1,10 +1,9 @@
-﻿namespace PvWay.LoggerService.nc6
+﻿namespace PvWay.LoggerService.nc6;
+
+internal class MuteLogger : Logger, IPvWayMuteLoggerService
 {
-    public class MuteLogger : Logger
+    public MuteLogger() : 
+        base(new MuteLogWriter())
     {
-        public MuteLogger() : 
-            base(new MuteLogWriter())
-        {
-        }
     }
 }
