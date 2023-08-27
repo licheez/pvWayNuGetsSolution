@@ -5,7 +5,7 @@ Console.WriteLine("Hello, LoggerService");
 Console.WriteLine("--------------------");
 Console.WriteLine();
 
-var ls = new ConsoleLogger();
+var ls = PvWayLoggerService.CreateConsoleLoggerService();
 
 await ls.LogAsync("some Debug");
 await ls.LogAsync("some Info", SeverityEnum.Info);

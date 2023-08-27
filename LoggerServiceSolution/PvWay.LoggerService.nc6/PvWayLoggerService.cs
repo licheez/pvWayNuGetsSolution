@@ -35,27 +35,67 @@ public static class PvWayLoggerService
         return new MultiChannelLogger(loggerServices);
     }
 
+    public static ILoggerService CreatePersistenceLoggerService(
+        Action dispose,
+        Action<(
+            string? userId,
+            string? companyId,
+            string? topic,
+            SeverityEnum severity,
+            string machineName,
+            string memberName,
+            string filePath,
+            int lineNumber,
+            string message,
+            DateTime dateUtc)> writeLog,
+        Func<(
+            string? userId,
+            string? companyId,
+            string? topic,
+            SeverityEnum severity,
+            string machineName,
+            string memberName,
+            string filePath,
+            int lineNumber,
+            string message,
+            DateTime dateUtc), Task> writeLogAsync)
+    {
+        return new PersistenceLogger(dispose, writeLog, writeLogAsync);
+    }
+
+    public static IPvWayUTestLoggerService CreateUTestingLoggerService()
+    {
+        var logWriter = new UTestLogWriter();
+        return new UTestLogger(logWriter);
+    }
+
     public static void AddPvWayLoggerServices(
         this ServiceCollection services,
         ServiceLifetime lifetime)
     {
         var consoleLoggerSd = new ServiceDescriptor(
             typeof(IPvWayConsoleLoggerService),
-            _ => new ConsoleLogger(),
+            _ => CreateConsoleLoggerService(),
             lifetime);
         services.Add(consoleLoggerSd);
 
         var muteLoggerSd = new ServiceDescriptor(
             typeof(IPvWayMuteLoggerService),
-            _ => new MuteLogger(),
+            _ => CreateMuteLoggerService(),
             lifetime);
         services.Add(muteLoggerSd);
 
         var msConsoleLoggerSd = new ServiceDescriptor(
             typeof(IPvWayMsConsoleLoggerService),
-            _ => new MsConsoleLogger(),
+            _ => CreateMsConsoleLoggerService(),
             lifetime);
         services.Add(msConsoleLoggerSd);
+
+        var uTestLoggerSd = new ServiceDescriptor(
+            typeof(IPvWayUTestLoggerService),
+            _ => CreateUTestingLoggerService(),
+            lifetime);
+        services.Add(uTestLoggerSd);
     }
 
     public static void AddPvWayMsLoggerServices(

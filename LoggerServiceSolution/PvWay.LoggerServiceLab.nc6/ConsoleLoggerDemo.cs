@@ -1,32 +1,27 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PvWay.LoggerService.Abstractions.nc6;
 using PvWay.LoggerService.nc6;
 
 namespace PvWay.LoggerServiceLab.nc6;
 
-public class ConsoleLoggerDemo
+public static class ConsoleLoggerDemo
 {
-    public async Task<double> HowToUseTheConsoleLogger(
-        double x)
+    public static async Task FactorAndLogAsync()
     {
-        Console.WriteLine("Hello, ConsoleLoggerService");
-        Console.WriteLine("---------------------------");
-        Console.WriteLine();
-
         var consoleLs = PvWayLoggerService.CreateConsoleLoggerService();
 
-        try
-        {
-            // dividing by zero throws an exception
-            return x / 0;
-        }
-        catch (Exception e)
-        {
-            await consoleLs.LogAsync(e);
-            throw;
-        }
+        var e = new Exception("Some exception");
+        await consoleLs.LogAsync(e);
+
+        await consoleLs.LogAsync("This is ok", SeverityEnum.Ok);
+        await consoleLs.LogAsync("This is debug");
+        await consoleLs.LogAsync("This is an info", SeverityEnum.Info);
+        await consoleLs.LogAsync("This is a warning", SeverityEnum.Warning);
+        await consoleLs.LogAsync("This is an error", SeverityEnum.Error);
+        await consoleLs.LogAsync("This is a fatal", SeverityEnum.Fatal);
     }
 
-    public async Task AndWithDependencyInjection()
+    public static async Task InjectAndLogAsync()
     {
         var services = new ServiceCollection();
 

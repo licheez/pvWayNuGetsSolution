@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PvWay.LoggerService.PgSqlLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PvWay.LoggerServiceLab.nc6", "PvWay.LoggerServiceLab.nc6\PvWay.LoggerServiceLab.nc6.csproj", "{BB76D1A7-E179-4EC0-9B6B-DAE12A65303A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.LoggerServiceConsumer.nc6", "PvWay.LoggerServiceConsumer.nc6\PvWay.LoggerServiceConsumer.nc6.csproj", "{C8EB3441-E269-45F8-95F1-2BE1EE6350A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PvWay.LoggerServiceConsumer.nc6", "PvWay.LoggerServiceConsumer.nc6\PvWay.LoggerServiceConsumer.nc6.csproj", "{C8EB3441-E269-45F8-95F1-2BE1EE6350A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.LoggerService.MethodResultWrapper.nc6", "PvWay.LoggerService.MethodResultWrapper.nc6\PvWay.LoggerService.MethodResultWrapper.nc6.csproj", "{913321E9-42A1-4042-AAA4-AC4C455D31CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.LoggerServiceLab.Tests.nc6", "PvWay.LoggerServiceLab.Tests.nc6\PvWay.LoggerServiceLab.Tests.nc6.csproj", "{2DDDF048-E649-4566-A31A-04C01D162C23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{C8EB3441-E269-45F8-95F1-2BE1EE6350A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8EB3441-E269-45F8-95F1-2BE1EE6350A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8EB3441-E269-45F8-95F1-2BE1EE6350A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913321E9-42A1-4042-AAA4-AC4C455D31CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913321E9-42A1-4042-AAA4-AC4C455D31CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913321E9-42A1-4042-AAA4-AC4C455D31CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913321E9-42A1-4042-AAA4-AC4C455D31CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DDDF048-E649-4566-A31A-04C01D162C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DDDF048-E649-4566-A31A-04C01D162C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DDDF048-E649-4566-A31A-04C01D162C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DDDF048-E649-4566-A31A-04C01D162C23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

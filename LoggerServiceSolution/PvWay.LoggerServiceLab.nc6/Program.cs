@@ -1,72 +1,38 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using PvWay.LoggerService.Abstractions.nc6;
-using PvWay.LoggerService.nc6;
-using PvWay.LoggerService.PgSqlLogWriter.nc6;
+﻿using PvWay.LoggerService.nc6;
+using PvWay.LoggerServiceLab.nc6;
 
 Console.WriteLine("Hello, LoggerService");
 Console.WriteLine("--------------------");
 Console.WriteLine();
 
-var msLog = LoggerFactory
-    .Create(builder => builder.AddConsole())
-    .CreateLogger("Program");
-var msLs = PvWayLoggerService.CreateMsLoggerService(msLog);
-var e = new Exception("this is the exception from the MsLoggerService");
-msLs.Log(e);
-Console.WriteLine();
+Console.WriteLine("testing the ConsoleLogger");
+await ConsoleLoggerDemo.FactorAndLogAsync();
+await ConsoleLoggerDemo.InjectAndLogAsync();
 
-var msConsoleLs = PvWayLoggerService.CreateMsConsoleLoggerService();
-msConsoleLs.Log("I'm The Ms Console Logger", SeverityEnum.Ok);
-msConsoleLs.Log("I'm The Ms Console Logger");
-msConsoleLs.Log("I'm The Ms Console Logger", SeverityEnum.Info);
-msConsoleLs.Log("I'm The Ms Console Logger", SeverityEnum.Warning);
-msConsoleLs.Log("I'm The Ms Console Logger", SeverityEnum.Error);
-msConsoleLs.Log("I'm The Ms Console Logger", SeverityEnum.Fatal);
-Console.WriteLine();
+Console.WriteLine("testing the MuteLogger");
+await MuteLoggerDemo.FactorAndLogAsync();
+await MuteLoggerDemo.InjectAndLogAsync();
 
-var muteLs = PvWayLoggerService.CreateMuteLoggerService();
-muteLs.Log("The sound of silence");
-Console.WriteLine();
+Console.WriteLine("testing the MsLogger");
+await MsLoggerDemo.FactorAndLogAsync();
+await MsLoggerDemo.InjectAndLogAsync();
 
-var consoleLs = PvWayLoggerService.CreateConsoleLoggerService();
+Console.WriteLine("testing the MsConsoleLogger");
+await MsConsoleLoggerDemo.FactorAndLog();
+await MsConsoleLoggerDemo.InjectAndLog();
 
-await consoleLs.LogAsync("some Debug");
-await consoleLs.LogAsync("some Info", SeverityEnum.Info);
-await consoleLs.LogAsync("some Warning", SeverityEnum.Warning);
-await consoleLs.LogAsync("some Error", SeverityEnum.Error);
-await consoleLs.LogAsync("some Fatal", SeverityEnum.Fatal);
-await consoleLs.LogAsync("it's Ok", SeverityEnum.Ok);
+Console.WriteLine("testing the MsSqlLogger");
+await MsSqlLoggerDemo.FactorAndLogAsync();
+await MsSqlLoggerDemo.InjectAndLog();
 
-//const string msSqlCs = "Data Source=localhost;" +
-//                       "Initial Catalog=iota800_dev;" +
-//                       "integrated security=True;" +
-//                       "MultipleActiveResultSets=True;" +
-//                       "TrustServerCertificate=True;";
+Console.WriteLine("testing the PgSqlLogger");
+await PqSqlLoggerDemo.FactorAndLogAsync();
+await PqSqlLoggerDemo.InjectAndLogAsync();
 
-//var msSqlLogger = MsSqlLogWriter.FactorLoggerService(
-//    async () =>
-//        await Task.FromResult(msSqlCs));
-//Console.WriteLine("logging using MsSql");
-//await msSqlLogger.LogAsync("some debug");
-//Console.WriteLine("done");
+Console.WriteLine("testing the MethodResultWrapper");
+var ls = PvWayLoggerService.CreateConsoleLoggerService();
+var userStore = new UserStore();
+var mrDemo = new MethodResultWrapperDemo(ls, userStore);
+await mrDemo.GetUserFirstNameAsync("pierre");
 
-const string pgSqlCs = "Server=localhost;" +
-                       "Database=postgres;" +
-                       "User Id=sa;" +
-                       "Password=S0mePwd_;";
-
-
-var services = new ServiceCollection();
-
-services.AddPvWayPgLogServices(
-    ServiceLifetime.Transient,
-    async () =>
-        await Task.FromResult(pgSqlCs));
-var sp = services.BuildServiceProvider();
-
-var pgSqlLoggerService = sp.GetService<IPvWayPostgreLoggerService>()!;
-
-Console.WriteLine("logging using PostgreSQL");
-await pgSqlLoggerService.LogAsync("some debug");
 Console.WriteLine("done");

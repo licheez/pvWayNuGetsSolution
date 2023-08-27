@@ -2,7 +2,7 @@
 
 namespace PvWay.LoggerService.nc6;
 
-public class PersistenceLogger : Logger
+internal class PersistenceLogger : Logger
 {
     public PersistenceLogger(
         Action dispose,

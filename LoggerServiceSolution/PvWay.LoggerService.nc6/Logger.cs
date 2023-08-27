@@ -3,7 +3,7 @@ using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.nc6;
 
-public abstract class Logger : ILoggerService
+internal abstract class Logger : ILoggerService
 {
     private readonly ILogWriter _logWriter;
     private string? _userId;

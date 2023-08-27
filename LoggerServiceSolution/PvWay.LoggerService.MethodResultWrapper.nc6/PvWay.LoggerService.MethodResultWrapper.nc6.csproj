@@ -4,19 +4,18 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
-    <Description>PostgreSQL implementation of the pvWay.LoggerService.Abstractions.nc6 that persists logs into a table in a PostgreSQL database</Description>
     <Copyright>pvWay Ltd 2023</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
-    <PackageReadmeFile>pvWay.LoggerService.PgSqlLogWriter.md</PackageReadmeFile>
-    <RepositoryType>GiHub</RepositoryType>
-    <PackageTags>log postgre SQL database trace audit persist</PackageTags>
-    <PackageReleaseNotes>breaking changes: some column types were modify to comply with EntityFramework</PackageReleaseNotes>
+    <PackageReadmeFile>MethodResultWrapperReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>method result wrapper</PackageTags>
+    <PackageReleaseNotes>initial</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,13 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Npgsql" Version="7.0.4" />
     <PackageReference Include="PvWay.LoggerService.nc6" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="pvWay.LoggerService.PgSqlLogWriter.md">
+    <None Update="MethodResultWrapperReadMe.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

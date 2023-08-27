@@ -6,9 +6,9 @@ using PvWay.LoggerService.nc6;
 
 namespace PvWay.LoggerService.MsSqlLogWriter.nc6;
 
-public class MsSqlLogWriter : ILogWriter
+internal class MsSqlLogWriter : IPvWayMsSqlLogWriter
 {
-    private static volatile ILogWriter? _instance;
+    private static volatile IPvWayMsSqlLogWriter? _instance;
     private static readonly object Locker = new();
 
     private readonly Func<Task<string>> _getConnectionStringAsync;
@@ -83,7 +83,7 @@ public class MsSqlLogWriter : ILogWriter
     /// <param name="messageColumnName"></param>
     /// <param name="createDateColumnName"></param>
     /// <returns>A transient LoggerService</returns>
-    public static ILoggerService FactorLoggerService(
+    public static IPvWayMsSqlLogWriter FactorLogWriter(
         Func<Task<string>> getConnectionStringAsync,
         string tableName = "AppLog",
         string schemaName = "dbo",
@@ -96,27 +96,62 @@ public class MsSqlLogWriter : ILogWriter
         string messageColumnName = "Message",
         string createDateColumnName = "CreateDateUtc")
     {
-        if (_instance == null)
+        if (_instance != null) return _instance;
+
+        lock (Locker)
         {
-            lock (Locker)
+            if (_instance == null)
             {
-                if (_instance == null)
-                {
-                    _instance = new MsSqlLogWriter(
-                        getConnectionStringAsync,
-                        tableName,
-                        schemaName,
-                        userIdColumnName,
-                        companyIdColumnName,
-                        machineNameColumnName,
-                        severityCodeColumnName,
-                        contextColumnName,
-                        topicColumnName,
-                        messageColumnName,
-                        createDateColumnName);
-                }
+                _instance = new MsSqlLogWriter(
+                    getConnectionStringAsync,
+                    tableName,
+                    schemaName,
+                    userIdColumnName,
+                    companyIdColumnName,
+                    machineNameColumnName,
+                    severityCodeColumnName,
+                    contextColumnName,
+                    topicColumnName,
+                    messageColumnName,
+                    createDateColumnName);
             }
         }
+        return _instance;
+    }
+
+    public static IPvWayMsSqlLoggerService FactorLoggerService(
+        Func<Task<string>> getConnectionStringAsync,
+        string tableName = "AppLog",
+        string schemaName = "dbo",
+        string userIdColumnName = "UserId",
+        string companyIdColumnName = "CompanyId",
+        string machineNameColumnName = "MachineName",
+        string severityCodeColumnName = "SeverityCode",
+        string contextColumnName = "Context",
+        string topicColumnName = "Topic",
+        string messageColumnName = "Message",
+        string createDateColumnName = "CreateDateUtc")
+    {
+        var lw = FactorLogWriter(
+            getConnectionStringAsync,
+            tableName,
+            schemaName,
+            userIdColumnName,
+            companyIdColumnName,
+            machineNameColumnName,
+            severityCodeColumnName,
+            contextColumnName,
+            topicColumnName,
+            messageColumnName,
+            createDateColumnName);
+
+        var pl = PvWayLoggerService
+            .CreatePersistenceLoggerService(
+            () => lw.Dispose(),
+            WriteLog, WriteLogAsync);
+
+        var ls = new MsSqlPersistenceLogger(pl);
+        return ls;
 
         async Task WriteLogAsync(
             (string? userId, string? companyId, string? topic,
@@ -143,10 +178,6 @@ public class MsSqlLogWriter : ILogWriter
                 log.memberName, log.filePath, log.lineNumber,
                 log.message, log.dateUtc);
         }
-
-        return new PersistenceLogger(
-            () => _instance.Dispose(),
-            WriteLog, WriteLogAsync);
     }
 
     public void WriteLog(
@@ -156,8 +187,8 @@ public class MsSqlLogWriter : ILogWriter
         string message, DateTime dateUtc)
     {
         WriteLogAsync(
-            userId, companyId, topic, 
-            severity, machineName, 
+            userId, companyId, topic,
+            severity, machineName,
             memberName, filePath, lineNumber,
             message, dateUtc).Wait();
     }
@@ -407,17 +438,14 @@ public class MsSqlLogWriter : ILogWriter
         errors.Add($"{columnName} should {neg}be nullable");
     }
 
-#pragma warning disable CA1816
     public void Dispose()
-#pragma warning restore CA1816
     {
-        // nop
+        GC.SuppressFinalize(this);
     }
 
-#pragma warning disable CA1816
     public ValueTask DisposeAsync()
-#pragma warning restore CA1816
     {
+        GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
 }

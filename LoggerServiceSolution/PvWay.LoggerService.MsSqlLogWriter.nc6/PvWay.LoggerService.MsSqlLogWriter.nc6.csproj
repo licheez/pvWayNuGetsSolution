@@ -14,8 +14,9 @@
     <PackageReadmeFile>pvWay.LoggerService.MsSqlLogWriter.md</PackageReadmeFile>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>log MsSQL Microsoft database trace audit persist</PackageTags>
-    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependency injection</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,12 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="PvWay.LoggerService.nc6" Version="2.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\PvWay.LoggerService.Abstractions.nc6\PvWay.LoggerService.Abstractions.nc6.csproj" />
-    <ProjectReference Include="..\PvWay.LoggerService.nc6\PvWay.LoggerService.nc6.csproj" />
   </ItemGroup>
 
   <ItemGroup>

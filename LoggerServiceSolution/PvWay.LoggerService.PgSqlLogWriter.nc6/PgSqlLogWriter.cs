@@ -151,28 +151,6 @@ internal class PgSqlLogWriter: IPvWayPostgreLogWriter
         string messageColumnName = "Message",
         string createDateColumnName = "CreateDateUtc")
     {
-        if (_instance == null)
-        {
-            lock (Locker)
-            {
-                if (_instance == null)
-                {
-                    _instance = new PgSqlLogWriter(
-                        getConnectionStringAsync,
-                        tableName,
-                        schemaName,
-                        userIdColumnName,
-                        companyIdColumnName,
-                        machineNameColumnName,
-                        severityCodeColumnName,
-                        contextColumnName,
-                        topicColumnName,
-                        messageColumnName,
-                        createDateColumnName);
-                }
-            }
-        }
-
         var lw = FactorLogWriter(
             getConnectionStringAsync,
             tableName,
@@ -186,7 +164,8 @@ internal class PgSqlLogWriter: IPvWayPostgreLogWriter
             messageColumnName,
             createDateColumnName);
 
-        var pl = new PersistenceLogger(
+        var pl = PvWayLoggerService
+            .CreatePersistenceLoggerService(
             () => lw.Dispose(),
             WriteLog, WriteLogAsync);
 
