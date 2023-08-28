@@ -18,7 +18,7 @@ This nuget provides several very intuitive LoggerService implementations of the 
 * Multichannel Logger
     * Will output log to a collection of loggers
 * UnitTest Logger
-    * Allowas you to perform asserts on logs content
+    * Allows you to perform asserts on logs content
 
 
 ## ILoggerService Methods

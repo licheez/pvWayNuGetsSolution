@@ -13,7 +13,7 @@
     <PackageReadmeFile>pvWayLoggerService.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>Log Console Trace Audit Debug</PackageTags>
+    <PackageTags>Log Console Trace Audit Debug Unit Testing</PackageTags>
     <PackageReleaseNotes>More Loggers, Dependency Injection, uTestingLogger</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>2.0.1</Version>

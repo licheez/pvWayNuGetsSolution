@@ -13,9 +13,10 @@
     <PackageReadmeFile>MethodResultWrapperReadMe.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>method result wrapper</PackageTags>
-    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageTags>method result wrapper error flow managment</PackageTags>
+    <PackageReleaseNotes>new documentation</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
