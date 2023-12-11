@@ -9,6 +9,7 @@ using PvWay.LoggerService.Abstractions.nc8;
 [assembly: InternalsVisibleTo("PvWay.LoggerService.SeriConsole.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.MsSql.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.PgSql.nc8")]
+[assembly: InternalsVisibleTo("PvWay.LoggerService.UTest.nc8")]
 namespace PvWay.LoggerService.nc8;
 
 internal interface ILoggerServiceConfig
