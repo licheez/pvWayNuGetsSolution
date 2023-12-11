@@ -1,12 +1,12 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
+using Npgsql;
 using PvWay.LoggerService.Abstractions.nc8;
 
-namespace PvWay.LoggerService.MsSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8;
 
-internal sealed class MsSqlLogWriter : IMsSqlLogWriter
+internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 {
     private readonly IConnectionStringProvider _csp;
     
@@ -34,7 +34,7 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
 
     private readonly string _createDateColumnName;
 
-    public MsSqlLogWriter(
+    public PgSqlLogWriter(
         IConnectionStringProvider csp,
         ISqlLogWriterConfig config)
     {
@@ -78,9 +78,9 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
             memberName, filePath, lineNumber,
             message, dateUtc);
         var cs = await _csp.GetConnectionStringAsync();
-        await using var cn = new SqlConnection(cs);
+        await using var cn = new NpgsqlConnection(cs);
         await cn.OpenAsync();
-        var cmd = new SqlCommand(cmdText, cn)
+        var cmd = new NpgsqlCommand(cmdText, cn)
         {
             CommandType = CommandType.Text
         };
@@ -101,10 +101,10 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
     }
 
     private string GetCommandText(
-        string? userId, string? companyId, string? topic,
-        SeverityEnu severity, string machineName,
-        string memberName, string filePath, int lineNumber,
-        string message, DateTime dateUtc)
+    string? userId, string? companyId, string? topic,
+    SeverityEnu severity, string machineName,
+    string memberName, string filePath, int lineNumber,
+    string message, DateTime dateUtc)
     {
         // userId
         string pUserId;
@@ -143,8 +143,8 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         }
 
         // severityCode
-        var severityCode = EnumSeverity.GetCode(severity);
         string pSeverityCode;
+        var severityCode = EnumSeverity.GetCode(severity);
         if (string.IsNullOrEmpty(severityCode))
         {
             pSeverityCode = "'D'";
@@ -177,16 +177,16 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         // date
         var pDate = $"'{dateUtc:yyyy-MM-dd HH:mm:ss.sss}'";
 
-        var cmdText = $"INSERT INTO [{_schemaName}].[{_tableName}] "
+        var cmdText = $"INSERT INTO {_schemaName}.\"{_tableName}\" "
                       + "( "
-                      + $" [{_userIdColumnName}], "
-                      + $" [{_companyIdColumnName}], "
-                      + $" [{_severityCodeColumnName}], "
-                      + $" [{_machineNameColumnName}], "
-                      + $" [{_topicColumnName}], "
-                      + $" [{_contextColumnName}], "
-                      + $" [{_messageColumnName}], "
-                      + $" [{_createDateColumnName}] "
+                      + $" \"{_userIdColumnName}\", "
+                      + $" \"{_companyIdColumnName}\", "
+                      + $" \"{_severityCodeColumnName}\", "
+                      + $" \"{_machineNameColumnName}\", "
+                      + $" \"{_topicColumnName}\", "
+                      + $" \"{_contextColumnName}\", "
+                      + $" \"{_messageColumnName}\", "
+                      + $" \"{_createDateColumnName}\" "
                       + ")"
                       + "VALUES "
                       + "( "
@@ -215,16 +215,16 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
     {
         Console.WriteLine($"checking {_schemaName}.{_tableName}");
         var cs = await _csp.GetConnectionStringAsync();
-        await using var cn = new SqlConnection(cs);
-
+        await using var cn = new NpgsqlConnection(cs);
         await cn.OpenAsync();
-        var cmdText = "SELECT [column_name], " +
-                      "       [data_type], " +
-                      "       [is_nullable], " +
-                      "       [character_maximum_length] "
-                      + "FROM [information_schema].[columns] "
-                      + $"WHERE [table_schema] = '{_schemaName}' " +
-                      $"AND   [table_name] = '{_tableName}'";
+
+        var cmdText = "SELECT \"column_name\", " +
+                      "       \"data_type\", " +
+                      "       \"is_nullable\", " +
+                      "       \"character_maximum_length\" "
+                      + "FROM \"information_schema\".\"columns\" "
+                      + $"WHERE \"table_schema\" = '{_schemaName}' " +
+                      $"AND \"table_name\" = '{_tableName}'";
 
         var cmd = cn.CreateCommand();
         cmd.CommandText = cmdText;
@@ -232,7 +232,7 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
 
         var dic = new Dictionary<string, ColumnInfo>();
         var reader = await cmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
+        while ((await reader.ReadAsync()))
         {
             var ci = new ColumnInfo(reader);
             dic.Add(ci.ColumnName, ci);
@@ -247,25 +247,25 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         }
         else
         {
-            CheckColumn(errors, dic, _userIdColumnName, "varchar",
+            CheckColumn(errors, dic, _userIdColumnName, "character varying",
                 true, out _userIdLength);
-            CheckColumn(errors, dic, _companyIdColumnName, "varchar",
+            CheckColumn(errors, dic, _companyIdColumnName, "character varying",
                 true, out _companyIdLength);
-            CheckColumn(errors, dic, _severityCodeColumnName, "char",
+            CheckColumn(errors, dic, _severityCodeColumnName, "character",
                 false, out _);
-            CheckColumn(errors, dic, _machineNameColumnName, "varchar",
+            CheckColumn(errors, dic, _machineNameColumnName, "character varying",
                 false, out _machineNameLength);
-            CheckColumn(errors, dic, _topicColumnName, "varchar",
+            CheckColumn(errors, dic, _topicColumnName, "character varying",
                 true, out _topicLength);
-            CheckColumn(errors, dic, _contextColumnName, "varchar",
+            CheckColumn(errors, dic, _contextColumnName, "character varying",
                 false, out _contextLength);
-            CheckColumn(errors, dic, _messageColumnName, "nvarchar",
+            CheckColumn(errors, dic, _messageColumnName, "text",
                 false, out var len);
-            if (len != -1)
+            if (len != 0)
             {
-                errors.Add($"column {_messageColumnName} should be nvarchar(MAX)");
+                errors.Add($"column {_messageColumnName} should be text");
             }
-            CheckColumn(errors, dic, _createDateColumnName, "datetime",
+            CheckColumn(errors, dic, _createDateColumnName, "timestamp with time zone",
                 false, out _);
         }
 
@@ -280,7 +280,7 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         }
 
         var errorMessage = sb.ToString();
-        throw new MsSqlLogWriterException(errorMessage);
+        throw new PgSqlLogWriterException(errorMessage);
     }
 
     private static void CheckColumn(

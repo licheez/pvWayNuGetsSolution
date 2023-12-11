@@ -1,11 +1,11 @@
 using Microsoft.Extensions.Configuration;
 using PvWay.LoggerService.Abstractions.nc8;
 
-namespace PvWay.LoggerService.MsSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8;
 
-public class MsSqlLogWriterConfig(IConfiguration? config) : ISqlLogWriterConfig
+public class PgSqlLogWriterConfig(IConfiguration? config) : ISqlLogWriterConfig
 {
-    public string SchemaName { get; } = config?["schemaName"] ?? "dbo";
+    public string SchemaName { get; } = config?["schemaName"] ?? "public";
     public string TableName { get; } = config?["tableName"] ?? "Log";
     public string UserIdColumnName { get; } = config?["userIdColumnName"] ?? "UserId";
     public string CompanyIdColumnName { get; } = config?["companyIdColumnName"] ?? "CompanyId";

@@ -1,6 +1,6 @@
-namespace PvWay.LoggerService.MsSql.nc8;
+namespace PvWay.LoggerService.Abstractions.nc8;
 
-internal interface IMsSqlLogWriterConfig
+public interface ISqlLogWriterConfig
 {
     string SchemaName { get; }
     string TableName { get; }
