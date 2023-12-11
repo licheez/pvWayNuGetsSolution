@@ -38,6 +38,7 @@ internal sealed class ConsoleLogWriter : ILogWriter
         var curColor = System.Console.ForegroundColor;
         var msgColor = severity switch
         {
+            SeverityEnu.Trace => ConsoleColor.Gray,
             SeverityEnu.Debug => ConsoleColor.White,
             SeverityEnu.Info => ConsoleColor.DarkCyan,
             SeverityEnu.Warning => ConsoleColor.DarkYellow,

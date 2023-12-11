@@ -9,6 +9,8 @@ internal sealed class SeriLogConsoleWriter: ILogWriter
 {
     private readonly ILogger _sLogger = new LoggerConfiguration()
         .WriteTo.Console()
+        // filtering message is done by WriteLog method
+        .MinimumLevel.Is(LogEventLevel.Verbose)
         .Enrich.FromLogContext()
         .CreateLogger();
     
@@ -56,8 +58,8 @@ internal sealed class SeriLogConsoleWriter: ILogWriter
             "{Message} from {MachineName} in {MemberName} " +
             "({FilePath}) line {LineNumber} at {DateUtc}" +
             "{UserId}{CompanyId}{Topic}",
-            machineName,
-            message, memberName, filePath, 
+            message, machineName,
+            memberName, filePath, 
             lineNumber, dateUtcStr,
             userIdStr, companyIdStr, topicStr);
     }
@@ -66,7 +68,8 @@ internal sealed class SeriLogConsoleWriter: ILogWriter
     {
         return severity switch
         {
-            SeverityEnu.Ok => LogEventLevel.Debug,
+            SeverityEnu.Ok => LogEventLevel.Verbose,
+            SeverityEnu.Trace => LogEventLevel.Verbose,
             SeverityEnu.Debug => LogEventLevel.Debug,
             SeverityEnu.Info => LogEventLevel.Information,
             SeverityEnu.Warning => LogEventLevel.Warning,

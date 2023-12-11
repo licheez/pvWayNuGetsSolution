@@ -46,7 +46,18 @@ internal abstract class LoggerService(
 
     public void Dispose()
     {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    protected virtual void Dispose(bool disposing)
+    {
         logWriter.Dispose();
+    }
+
+    ~LoggerService()
+    {
+        Dispose(false);
     }
 
     public ValueTask DisposeAsync()
@@ -301,6 +312,7 @@ internal abstract class LoggerService(
         switch (logLevel)
         {
             case LogLevel.Trace:
+                return SeverityEnu.Trace;
             case LogLevel.Debug:
                 return SeverityEnu.Debug;
             case LogLevel.Information:

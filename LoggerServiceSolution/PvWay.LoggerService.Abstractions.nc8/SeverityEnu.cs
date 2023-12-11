@@ -5,6 +5,7 @@ namespace PvWay.LoggerService.Abstractions.nc8;
 public enum SeverityEnu
 {
     Ok,
+    Trace,
     Debug,
     Info,
     Warning,
@@ -15,6 +16,7 @@ public enum SeverityEnu
 public static class EnumSeverity
 {
     private const string Ok = "O";
+    private const string Trace = "T";
     private const string Debug = "D";
     private const string Info = "I";
     private const string Warning = "W";
@@ -26,6 +28,7 @@ public static class EnumSeverity
         return value switch
         {
             SeverityEnu.Ok => Ok,
+            SeverityEnu.Trace => Trace,
             SeverityEnu.Debug => Debug,
             SeverityEnu.Info => Info,
             SeverityEnu.Warning => Warning,
@@ -41,6 +44,7 @@ public static class EnumSeverity
         {
             null => SeverityEnu.Ok,
             Ok => SeverityEnu.Ok,
+            Trace => SeverityEnu.Trace,
             Debug => SeverityEnu.Debug,
             Info => SeverityEnu.Info,
             Warning => SeverityEnu.Warning,
@@ -72,6 +76,7 @@ public static class EnumSeverity
         return severity switch
         {
             SeverityEnu.Ok => LogLevel.None,
+            SeverityEnu.Trace => LogLevel.Trace,
             SeverityEnu.Debug => LogLevel.Debug,
             SeverityEnu.Info => LogLevel.Information,
             SeverityEnu.Warning => LogLevel.Warning,
@@ -85,7 +90,7 @@ public static class EnumSeverity
     {
         return level switch
         {
-            LogLevel.Trace => SeverityEnu.Debug,
+            LogLevel.Trace => SeverityEnu.Trace,
             LogLevel.Debug => SeverityEnu.Debug,
             LogLevel.Information => SeverityEnu.Info,
             LogLevel.Warning => SeverityEnu.Warning,
