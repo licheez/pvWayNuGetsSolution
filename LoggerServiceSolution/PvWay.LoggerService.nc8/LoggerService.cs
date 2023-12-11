@@ -1,15 +1,47 @@
 using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc8;
 
 [assembly: InternalsVisibleTo("PvWay.LoggerService.Console.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.SeriConsole.nc8")]
+[assembly: InternalsVisibleTo("PvWay.LoggerService.MsSql.nc8")]
 namespace PvWay.LoggerService.nc8;
+
+internal interface ILoggerServiceConfig
+{
+    SeverityEnu MinLevel { get; }
+}
+
+internal class LoggerServiceConfig : ILoggerServiceConfig
+{
+    public SeverityEnu MinLevel { get; }
+
+    public LoggerServiceConfig(IConfiguration? config)
+    {
+        var minLevelCode = config?["minLogLevel"]??"T";
+        MinLevel = minLevelCode.ToLower() switch
+        {
+            "trace" or "t" or "verbose" or "v" => SeverityEnu.Trace,
+            "debug" or "d" => SeverityEnu.Debug,
+            "info" or "information" or "i" => SeverityEnu.Info,
+            "warning" or "w" => SeverityEnu.Warning,
+            "error" or "e" => SeverityEnu.Error,
+            "fatal" or "f" or "critic" or "critical" or "c" => SeverityEnu.Fatal,
+            _ => SeverityEnu.Trace
+        };
+    }
+
+    public LoggerServiceConfig(SeverityEnu minLogLevel)
+    {
+        MinLevel = minLogLevel;
+    }
+}
 
 internal abstract class LoggerService(
     ILogWriter logWriter,
-    SeverityEnu minLevel = SeverityEnu.Info) : 
+    ILoggerServiceConfig config) : 
     ILoggerService
 {
     private string? _userId;
@@ -36,7 +68,7 @@ internal abstract class LoggerService(
     public bool IsEnabled(LogLevel logLevel)
     {
         var severity = GetSeverity(logLevel);
-        return severity >= minLevel;
+        return severity >= config.MinLevel;
     }
 
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull
@@ -277,7 +309,7 @@ internal abstract class LoggerService(
         string filePath = "",
         int lineNumber = -1)
     {
-        if (severity < minLevel) 
+        if (severity < config.MinLevel) 
             return;
         
         logWriter.WriteLog(
@@ -296,7 +328,7 @@ internal abstract class LoggerService(
         string filePath = "",
         int lineNumber = -1)
     {
-        if (severity < minLevel)
+        if (severity < config.MinLevel)
             return Task.CompletedTask;
         
         return logWriter.WriteLogAsync(

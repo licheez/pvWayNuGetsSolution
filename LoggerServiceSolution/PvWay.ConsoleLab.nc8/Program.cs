@@ -7,8 +7,7 @@ Console.WriteLine("Hello, ConsoleLoggerService");
 Console.WriteLine();
 
 var services = new ServiceCollection();
-services.AddPvWayConsoleLoggerService(
-    ServiceLifetime.Transient, SeverityEnu.Trace);
+services.AddPvWayConsoleLoggerService();
 var sp = services.BuildServiceProvider();
 var ls = sp.GetService<ILoggerService>()!;
 
