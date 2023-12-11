@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc8;
 
 [assembly: InternalsVisibleTo("PvWay.LoggerService.Console.nc8")]
+[assembly: InternalsVisibleTo("PvWay.LoggerService.Mute.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.SeriConsole.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.MsSql.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.PgSql.nc8")]

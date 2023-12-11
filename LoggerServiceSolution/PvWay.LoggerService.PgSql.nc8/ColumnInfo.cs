@@ -20,7 +20,7 @@ internal class ColumnInfo
         var iLength = dr.GetOrdinal("character_maximum_length");
 
         Length = dr.IsDBNull(iLength)
-            ? (int?)null : dr.GetInt32(iLength);
+            ? null : dr.GetInt32(iLength);
 
         var iIsNullable = dr.GetOrdinal("is_nullable");
         IsNullable = dr.GetString(iIsNullable) == "YES";
