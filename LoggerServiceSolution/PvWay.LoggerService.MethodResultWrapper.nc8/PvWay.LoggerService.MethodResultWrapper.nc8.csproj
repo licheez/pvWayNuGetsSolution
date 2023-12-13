@@ -4,10 +4,34 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay Ltd</Company>
+        <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
+        <Copyright>pvWay Ltd 2024</Copyright>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>method result wrapper error flow managment</PackageTags>
+        <PackageReleaseNotes>initial dotNet core 8</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PvWay.LoggerService.Abstractions.nc8\PvWay.LoggerService.Abstractions.nc8.csproj" />
+      <PackageReference Include="PvWay.LoggerService.Abstractions.nc8" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="readme.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="pvwayLogoTextLess256.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -1,21 +1,21 @@
 # pvWay LoggerService abstractions for dotNet Core 8
 
 ## Description
-This nuget provides the interfaces and enums definitions for the PvWayLoggerService. This will enable you to abstract the LoggerService (and the LogWriter)
+This nuget provides the interfaces and enums definitions for the PvWayLoggerService. 
+This will enable you to abstract the LoggerService (and the LogWriter)
 
 ## Severity enum
-
-For the sake of simplicity not all Microsoft LogLevels are implemented.
 
 ``` csharp
 public enum SeverityEnu
 {
     Ok,         // "O"
+    Trace,      // "T"
     Debug,      // "D"
     Info,       // "I"
     Warning,    // "W"
     Error,      // "E"
-    Fatal,      // "F"
+    Fatal       // "F"
 }
 ```
 
@@ -88,52 +88,25 @@ Task LogAsync(
 ## Usage
 
 ``` csharp
-using PvWay.LoggerService.Abstractions.nc6;
-using PvWay.LoggerService.nc6;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using PvWay.LoggerService.Abstractions.nc8;
+using PvWay.LoggerService.Console.nc8;
 
-// ConsoleLogger is an implementation of 
-// the logger service that output colorful
-// messages to the standard out
-var ls = new ConsoleLogger();
+Console.WriteLine("Hello, ConsoleLoggerService");
+Console.WriteLine();
 
-// sync logging a simple debug message to the console
-// --------------------------------------------------
-ls.Log("simple debug message);
+var services = new ServiceCollection();
+services.AddPvWayConsoleLoggerService();
+var sp = services.BuildServiceProvider();
+var ls = sp.GetService<ILoggerService>()!;
 
-// async logging a warning message to the console
-// ----------------------------------------------
-async ls.LogAsync("this is a warning", SeverityEnu.Warning);
+ls.Log("This is a trace test log message", SeverityEnu.Trace);
+ls.Log("This is a debug test log message");
+ls.Log("This is an info test log message", SeverityEnu.Info);
+ls.Log("This is a warning test log message", SeverityEnu.Warning);
+ls.Log("This is an error test log message", SeverityEnu.Error);
+ls.Log("This is a fatal test log message", SeverityEnu.Fatal);
 
-// logging an exception to the console
-// -----------------------------------
-try 
-{
-    var x = y / 0;
-}
-catch (Exception e) 
-{
-    ls.Log(e);}
-}
+ls.Log(LogLevel.Trace, "MsLog trace");
 ```
-
-## See Also
-
-The following nuGet packages implement the LoggerService
-
-* [pvWay.LoggerService.nc6](https://www.nuget.org/packages/PvWay.LoggerService.nc6/)
-  * ConsoleLogger: Colorful console implementation
-  * MuteLogger: Silent logger for uTesting
-  * MicrosoftLogger: uses the Microsoft.Extensions.Logger
-  * MicrosoftConsoleLogger: uses the Ms AddConsole extension
-  * MultiChannelLogger: writes to multiple logs in one shot
-
-* [pvWay.MsSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.MsSqlLogWriter.nc6) Implementation for Ms SQL Database
-
-
-* [pvWay.PgSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.PgSqlLogWriter.nc6) Implementation for PostgreSQL Database
-
-
-Take also a look to the [MethodResultWrapper](https://www.nuget.org/packages/pvWay.MethodResultWrapper.Core/) nuGet
-
-
-

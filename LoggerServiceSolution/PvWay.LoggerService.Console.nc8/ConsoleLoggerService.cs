@@ -9,3 +9,8 @@ internal sealed class ConsoleLoggerService(
         new ConsoleLogWriter(), config), 
     IConsoleLoggerService;
 
+internal sealed class ConsoleLoggerService<T>(
+    ILoggerServiceConfig config) :
+    LoggerService<T>(new ConsoleLogWriter(), config),
+    IConsoleLoggerService<T>;
+

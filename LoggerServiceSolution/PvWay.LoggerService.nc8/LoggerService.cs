@@ -367,3 +367,7 @@ internal abstract class LoggerService(
 
     
 }
+
+internal abstract class LoggerService<T>(
+    ILogWriter logWriter, ILoggerServiceConfig config) 
+    : LoggerService(logWriter, config), ILoggerService<T>;

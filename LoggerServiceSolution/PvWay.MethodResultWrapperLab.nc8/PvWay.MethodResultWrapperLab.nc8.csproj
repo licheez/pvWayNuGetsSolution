@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PvWay.LoggerService.Console.nc8\PvWay.LoggerService.Console.nc8.csproj" />
-      <ProjectReference Include="..\PvWay.MethodResultWrapperLab.nc8\PvWay.MethodResultWrapperLab.nc8.csproj" />
+      <ProjectReference Include="..\PvWay.LoggerService.MethodResultWrapper.nc8\PvWay.LoggerService.MethodResultWrapper.nc8.csproj" />
+      <ProjectReference Include="..\PvWay.LoggerService.SeriConsole.nc8\PvWay.LoggerService.SeriConsole.nc8.csproj" />
     </ItemGroup>
 
     <ItemGroup>

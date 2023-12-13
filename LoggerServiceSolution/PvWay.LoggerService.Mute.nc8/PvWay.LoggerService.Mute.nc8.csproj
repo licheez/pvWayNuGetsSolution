@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PvWay.LoggerService.Abstractions.nc8\PvWay.LoggerService.Abstractions.nc8.csproj" />
       <ProjectReference Include="..\PvWay.LoggerService.nc8\PvWay.LoggerService.nc8.csproj" />
     </ItemGroup>
 

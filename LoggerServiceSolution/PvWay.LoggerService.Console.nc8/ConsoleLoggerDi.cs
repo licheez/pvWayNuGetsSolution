@@ -15,6 +15,14 @@ public static class ConsoleLoggerDi
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
         
+        services.AddSingleton<
+            ILoggerServiceFactory<IConsoleLoggerService>,
+            ConsoleLoggerServiceFactory>();
+
+        services.AddSingleton(
+            typeof(IConsoleLoggerService<>),
+            typeof(ConsoleLoggerService<>));
+
         var sd = new ServiceDescriptor(
             typeof(ILoggerService), 
             typeof(ConsoleLoggerService),
