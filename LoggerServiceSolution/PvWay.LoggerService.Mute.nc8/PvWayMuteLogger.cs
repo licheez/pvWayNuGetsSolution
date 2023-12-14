@@ -5,8 +5,20 @@ using PvWay.LoggerService.nc8;
 
 namespace PvWay.LoggerService.Mute.nc8;
 
-public static class MuteLoggerDi
+public static class PvWayMuteLogger
 {
+    public static IMuteLoggerService Create(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new MuteLoggerService(new LoggerServiceConfig(minLogLevel));
+    }
+
+    public static IMuteLoggerService<T> Create<T>(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new MuteLoggerService<T>(new LoggerServiceConfig(minLogLevel));
+    }
+    
     public static void AddPvWayMuteLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,

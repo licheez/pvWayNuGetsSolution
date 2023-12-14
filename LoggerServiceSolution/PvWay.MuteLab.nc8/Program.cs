@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc8;
 using PvWay.LoggerService.Mute.nc8;
 
-Console.WriteLine("Hello, ConsoleLoggerService");
+Console.WriteLine("Hello, MuteLoggerService");
 Console.WriteLine();
 
 var services = new ServiceCollection();

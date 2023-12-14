@@ -4,10 +4,35 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay Ltd</Company>
+        <Description>Implements the ILoggerService as a silent (mute) logger. This can be handy for unit testing.</Description>
+        <Copyright>pvWay ltd</Copyright>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>Logging Logger Mute Testing</PackageTags>
+        <PackageReleaseNotes>initial version for dotNet core 8</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PvWay.LoggerService.nc8\PvWay.LoggerService.nc8.csproj" />
+      <None Update="pvwayLogoTextLess256.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="readme.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="PvWay.LoggerService.nc8" Version="1.0.1" />
     </ItemGroup>
 
 </Project>

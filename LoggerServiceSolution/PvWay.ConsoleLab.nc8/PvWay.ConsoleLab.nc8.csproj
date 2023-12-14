@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PvWay.LoggerService.Console.nc8\PvWay.LoggerService.Console.nc8.csproj" />
-      <ProjectReference Include="..\PvWay.MethodResultWrapperLab.nc8\PvWay.MethodResultWrapperLab.nc8.csproj" />
     </ItemGroup>
 
     <ItemGroup>
