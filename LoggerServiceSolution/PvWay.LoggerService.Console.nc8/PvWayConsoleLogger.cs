@@ -5,8 +5,20 @@ using PvWay.LoggerService.nc8;
 
 namespace PvWay.LoggerService.Console.nc8;
 
-public static class ConsoleLoggerDi
+public static class PvWayConsoleLogger
 {
+    public static IConsoleLoggerService Create(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerService(minLogLevel);
+    }
+
+    public static IConsoleLoggerService<T> Create<T>(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerService<T>(minLogLevel);
+    }
+    
     public static void AddPvWayConsoleLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
