@@ -14,10 +14,10 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>Logger</PackageTags>
-        <PackageReleaseNotes>initial version for dotNet 8</PackageReleaseNotes>
+        <PackageReleaseNotes>adding IPgSqlLoggerService interface</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,6 +31,10 @@
             <PackagePath>\</PackagePath>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="pvwayLogoTextLess256.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -39,6 +43,7 @@
         <Content Include="bin\Release\net8.0\PvWay.LoggerService.Abstractions.nc8.pdb"/>
         <Content Include="bin\Release\net8.0\readme.md"/>
         <Content Include="bin\Release\PvWay.LoggerService.Abstractions.nc8.1.0.0.nupkg"/>
+        <Content Include="bin\Release\PvWay.LoggerService.Abstractions.nc8.1.0.1.nupkg" />
     </ItemGroup>
 
     <ItemGroup>

@@ -33,7 +33,7 @@ public static class PgSqlLoggerDi
         services.Add(sd);
         
         var sd2 = new ServiceDescriptor(
-            typeof(IMsSqlLoggerService),
+            typeof(IPgSqlLoggerService),
             typeof(PgSqlLoggerService),
             lifetime);
         services.Add(sd2);
