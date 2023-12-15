@@ -6,4 +6,9 @@ namespace PvWay.LoggerService.PgSql.nc8;
 internal sealed class PgSqlLoggerService(
     IPgSqlLogWriter logWriter, ILoggerServiceConfig config) : 
     LoggerService.nc8.LoggerService(logWriter, config),
-    IMsSqlLoggerService;
+    IPgSqlLoggerService;
+    
+internal sealed class PgSqlLoggerService<T>(
+    IPgSqlLogWriter logWriter, ILoggerServiceConfig config) : 
+    LoggerService<T>(logWriter, config),
+    IPgSqlLoggerService<T>;
