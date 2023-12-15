@@ -8,3 +8,9 @@ internal sealed class UTestLoggerService(
     ILoggerServiceConfig config) : 
     LoggerService.nc8.LoggerService(logWriter, config), 
     IUTestLoggerService;
+    
+internal sealed class UTestLoggerService<T>(
+    IUTestLogWriter logWriter, 
+    ILoggerServiceConfig config) : 
+    LoggerService<T>(logWriter, config), 
+    IUTestLoggerService<T>;

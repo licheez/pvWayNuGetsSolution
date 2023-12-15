@@ -5,8 +5,27 @@ using PvWay.LoggerService.nc8;
 
 namespace PvWay.LoggerService.UTest.nc8;
 
-public static class UTestLoggerDi
+public static class PvWayUTestLogger
 {
+    public static IUTestLogWriter CreateUTestLogWriter()
+    {
+        return new UTestLogWriter();
+    }
+    
+    public static IUTestLoggerService Create(
+        IUTestLogWriter utLw)
+    {
+        return new UTestLoggerService(
+            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+    }
+    
+    public static IUTestLoggerService<T> Create<T>(
+        IUTestLogWriter utLw)
+    {
+        return new UTestLoggerService<T>(
+            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+    }
+    
     /// <summary>
     /// Injects a transient IUTestLoggerService
     /// </summary>
