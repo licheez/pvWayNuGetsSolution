@@ -4,14 +4,36 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay Ltd</Company>
+        <Description>Implements the ILoggerService as a simple stdout console using the well known Serilog(tm) console skin logger. </Description>
+        <Copyright>pvWay Ltd 2024</Copyright>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>Logging Logger Console Serilog</PackageTags>
+        <PackageReleaseNotes>initial version for dotNet core 8</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PvWay.LoggerService.nc8\PvWay.LoggerService.nc8.csproj" />
+      <PackageReference Include="PvWay.LoggerService.nc8" Version="1.0.1" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+      <None Update="pvwayLogoTextLess256.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="readme.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

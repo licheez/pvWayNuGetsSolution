@@ -5,8 +5,22 @@ using PvWay.LoggerService.nc8;
 
 namespace PvWay.LoggerService.SeriConsole.nc8;
 
-public static class SeriLogConsoleLoggerDi
+public static class PvWaySerilogConsoleLogger
 {
+    public static ISeriConsoleLoggerService Create(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new SerilogConsoleService(
+            new LoggerServiceConfig(minLogLevel));
+    }
+
+    public static ISeriConsoleLoggerService<T> Create<T>(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new SerilogConsoleService<T>(
+            new LoggerServiceConfig(minLogLevel));
+    }
+    
     public static void AddPvWaySeriConsoleLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
@@ -17,13 +31,13 @@ public static class SeriLogConsoleLoggerDi
         
         var sd = new ServiceDescriptor(
             typeof(ILoggerService),
-            typeof(SeriLogConsoleService),
+            typeof(SerilogConsoleService),
             lifetime);
         services.Add(sd);
         
         var sd2 = new ServiceDescriptor(
             typeof(ISeriConsoleLoggerService),
-            typeof(SeriLogConsoleService),
+            typeof(SerilogConsoleService),
             lifetime);
         services.Add(sd2);
     }

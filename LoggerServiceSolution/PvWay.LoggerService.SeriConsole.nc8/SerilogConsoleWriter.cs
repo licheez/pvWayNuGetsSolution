@@ -5,7 +5,7 @@ using Serilog.Events;
 
 namespace PvWay.LoggerService.SeriConsole.nc8;
 
-internal sealed class SeriLogConsoleWriter: ILogWriter
+internal sealed class SerilogConsoleWriter: ILogWriter
 {
     private readonly ILogger _sLogger = new LoggerConfiguration()
         .WriteTo.Console()
