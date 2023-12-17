@@ -5,19 +5,27 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay Ltd</Company>
         <Description>This nuGet brings the abstraction interfaces for the SemaphoreService</Description>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/</PackageProjectUrl>
         <Copyright>pvWay Ltd 2024</Copyright>
         <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>semaphore distributed lock mutex</PackageTags>
+        <PackageReleaseNotes>initial</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
-      <None Update="ReadMe.md">
+      <None Update="readme.md">
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
       </None>
       <None Update="pvwayLogoTextLess256.png">
         <Pack>True</Pack>
-        <PackagePath></PackagePath>
+        <PackagePath>\</PackagePath>
       </None>
     </ItemGroup>
 

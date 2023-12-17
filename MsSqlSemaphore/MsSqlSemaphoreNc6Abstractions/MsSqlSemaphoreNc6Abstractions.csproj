@@ -12,7 +12,7 @@
     <Company>pvWay Ltd</Company>
     <Description>Abstraction layer for a tiny SQL based semaphore service based on Ms SQL database</Description>
     <Copyright>pvWay Ltd 2023</Copyright>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>\</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlSemaphore/DotNetC6/MsSqlSemaphoreNc6Abstractions</RepositoryUrl>
