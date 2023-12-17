@@ -2,6 +2,11 @@
 
 public interface ISemaphoreInfo
 {
+    SemaphoreStatusEnu Status { get; }
+    
     string Owner { get; }
-    DateTime LastTouchUtcDate { get; }
+    TimeSpan Timeout { get; }
+    DateTime ExpiresAtUtc { get; }
+    DateTime CreateDateUtc { get; }
+    DateTime UpdateUtcDate { get; }
 }

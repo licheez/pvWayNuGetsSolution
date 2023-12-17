@@ -14,7 +14,7 @@ public interface ISemaphoreService
     /// If the semaphore is locked longer than the timeout period it will be forced release
     /// by any other process trying to acquire the semaphore</param>
     /// <returns>On success the status will be Acquired.</returns>
-    Task<SemaphoreStatusEnu> AcquireSemaphoreAsync(
+    Task<ISemaphoreInfo> AcquireSemaphoreAsync(
         string name, string owner, TimeSpan timeout);
     
     /// <summary>
@@ -37,4 +37,27 @@ public interface ISemaphoreService
     /// <param name="name"></param>
     /// <returns></returns>
     Task<ISemaphoreInfo?> GetSemaphoreAsync(string name);
+    
+    /// <summary>
+    /// this method provides a mutex (semaphore) protected
+    /// work session when a provided work can be performed.
+    /// </summary>
+    /// <param name="semaphoreName">The name of the mutex</param>
+    /// <param name="owner">the owner of the mutex (usually the machineName)</param>
+    /// <param name="timeout">The validity time of the lock</param>
+    /// <param name="workAsync">
+    /// The work to be performed.
+    /// </param>
+    /// <param name="notify">An optional notifier that will be used
+    /// for notifying sleep times</param>
+    /// <param name="sleepBetweenAttemptsInSeconds">
+    /// The number of seconds between two attempts for locking the semaphore</param>
+    /// <typeparam name="T">Type return by the workAsync method</typeparam>
+    /// <returns>The T result of the function invoked</returns>
+    Task<T> IsolateWorkAsync<T>(
+        string semaphoreName, string owner,
+        TimeSpan timeout,
+        Func<Task<T>> workAsync,
+        Action<string>? notify = null,
+        int sleepBetweenAttemptsInSeconds = 15);
 }
