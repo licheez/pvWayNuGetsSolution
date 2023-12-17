@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Description>This nuGet brings the abstraction interfaces for the SemaphoreService</Description>
+        <Copyright>pvWay Ltd 2024</Copyright>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="ReadMe.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="pvwayLogoTextLess256.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
+</Project>
