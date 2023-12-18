@@ -49,4 +49,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\MsSqlSemaphoreNc6Abstractions\MsSqlSemaphoreNc6Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

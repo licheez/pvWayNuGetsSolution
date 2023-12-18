@@ -4,9 +4,10 @@ public interface ISemaphoreInfo
 {
     SemaphoreStatusEnu Status { get; }
     
+    string Name { get; }
     string Owner { get; }
     TimeSpan Timeout { get; }
     DateTime ExpiresAtUtc { get; }
     DateTime CreateDateUtc { get; }
-    DateTime UpdateUtcDate { get; }
+    DateTime UpdateDateUtc { get; }
 }

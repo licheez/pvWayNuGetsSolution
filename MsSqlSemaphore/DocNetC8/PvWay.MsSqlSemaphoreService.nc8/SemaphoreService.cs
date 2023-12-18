@@ -68,6 +68,7 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
 
             var utcNow = DateTime.UtcNow;
             var sqlNow = DaoHelper.GetTimestamp(utcNow);
+            var timeoutInSeconds = Convert.ToInt32(timeout.TotalSeconds);
             var insertText =
                 $"INSERT INTO [{_schemaName}].[{_tableName}] " +
                 "(" +
@@ -78,8 +79,8 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
                 " [UpdateDateUtc] " +
                 ") VALUES (" +
                 $"'{name}', " +
-                $"{timeout.TotalSeconds}, " +
                 $"'{owner}', " +
+                $"{timeoutInSeconds}, " +
                 $"{sqlNow}, " +
                 $"{sqlNow}" +
                 ")";
@@ -95,7 +96,7 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
                 LogInfo($"{owner} acquired {name}");
                 return new DbSemaphore(
                     SemaphoreStatusEnu.Acquired,
-                    owner, timeout,
+                    name, owner, timeout,
                     utcNow, utcNow);
             }
             catch (Exception)
@@ -112,12 +113,12 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
                         return
                             new DbSemaphore(
                                 SemaphoreStatusEnu.ReleasedInTheMeanTime,
-                                null, timeout,
+                                name, null, timeout,
                                 utcNow, utcNow);
                     }
 
                     // the semaphore was found
-                    var timeElapsed = utcNow - fSemaphore.UpdateUtcDate;
+                    var timeElapsed = utcNow - fSemaphore.UpdateDateUtc;
                     // if the elapsed time is less than the timeout limit
                     // consider the semaphore is still valid
                     if (timeElapsed <= timeout)
@@ -284,7 +285,7 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
             var updateDateUtc = reader.GetDateTime(3);
             return new DbSemaphore(
                 SemaphoreStatusEnu.Acquired,
-                owner, timeout,
+                name, owner, timeout,
                 createDateUtc, updateDateUtc);
         }
         catch (Exception e)
@@ -319,6 +320,6 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
 
     private void LogInfo(string info)
     {
-        _logInfo?.Invoke(info);
+        _logInfo?.Invoke($"pvWaySemaphoreService: {info}");
     }
 }
