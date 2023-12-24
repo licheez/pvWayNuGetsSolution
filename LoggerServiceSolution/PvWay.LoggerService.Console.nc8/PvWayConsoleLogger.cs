@@ -10,13 +10,15 @@ public static class PvWayConsoleLogger
     public static IConsoleLoggerService Create(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
-        return new ConsoleLoggerService(minLogLevel);
+        return new ConsoleLoggerService(
+            new LoggerServiceConfig(minLogLevel));
     }
 
     public static IConsoleLoggerService<T> Create<T>(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
-        return new ConsoleLoggerService<T>(minLogLevel);
+        return new ConsoleLoggerService<T>(
+            new LoggerServiceConfig(minLogLevel));
     }
     
     public static void AddPvWayConsoleLoggerService(

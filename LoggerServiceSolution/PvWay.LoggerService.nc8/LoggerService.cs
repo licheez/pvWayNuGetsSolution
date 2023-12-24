@@ -1,8 +1,11 @@
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc8;
+
+// ReSharper disable ExplicitCallerInfoArgument
 
 [assembly: InternalsVisibleTo("PvWay.LoggerService.Console.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.Mute.nc8")]
@@ -10,6 +13,8 @@ using PvWay.LoggerService.Abstractions.nc8;
 [assembly: InternalsVisibleTo("PvWay.LoggerService.MsSql.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.PgSql.nc8")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.UTest.nc8")]
+[assembly: InternalsVisibleTo("PvWay.StackTraceConsole.nc8")]
+
 namespace PvWay.LoggerService.nc8;
 
 internal interface ILoggerServiceConfig
@@ -23,7 +28,7 @@ internal class LoggerServiceConfig : ILoggerServiceConfig
 
     public LoggerServiceConfig(IConfiguration? config)
     {
-        var minLevelCode = config?["minLogLevel"]??"T";
+        var minLevelCode = config?["minLogLevel"] ?? "T";
         MinLevel = minLevelCode.ToLower() switch
         {
             "trace" or "t" or "verbose" or "v" => SeverityEnu.Trace,
@@ -44,7 +49,7 @@ internal class LoggerServiceConfig : ILoggerServiceConfig
 
 internal abstract class LoggerService(
     ILogWriter logWriter,
-    ILoggerServiceConfig config) : 
+    ILoggerServiceConfig config) :
     ILoggerService
 {
     private string? _userId;
@@ -52,20 +57,50 @@ internal abstract class LoggerService(
     private string? _topic;
 
     public void Log<TState>(
-        LogLevel logLevel, 
-        EventId eventId, 
-        TState state, 
-        Exception? exception, 
+        LogLevel logLevel,
+        EventId eventId,
+        TState state,
+        Exception? exception,
         Func<TState, Exception?, string> formatter)
     {
         // Create a log message using the formatter function
         var logMessage = formatter(state, exception);
-    
+
+        if (exception != null)
+        {
+            // capture the stack trace skipping some technical lines
+            var stackTraceLines = Environment.StackTrace
+                .Split(Environment.NewLine)
+                .Where(x => !(
+                    x.Contains("Microsoft.Extensions.Logging.LoggerExtensions")
+                    || x.Contains("PvWay.LoggerService.nc8")
+                    || x.Contains("System.Environment")
+                ));
+            var sb = new StringBuilder();
+            foreach (var line in stackTraceLines)
+            {
+                if (sb.Length > 0) sb.Append(Environment.NewLine);
+                sb.Append(line);
+            }
+
+            logMessage += Environment.NewLine + sb;
+        }
+
         // Determine the severity from the log level
         var severity = GetSeverity(logLevel);
-    
+
+        // find the first numbered line out of the stack trace
+        // skipping the first 3 lines.
+        // This represents the calling member
+        var stackTrace = new StackTrace(true);
+        var frame = stackTrace.GetFrames()
+            .Skip(3).FirstOrDefault(x => x.GetFileLineNumber() > 0);
+        var memberName = frame?.GetMethod()?.ToString() ?? string.Empty;
+        var filePath = frame?.GetFileName() ?? string.Empty;
+        var lineNumber = frame?.GetFileLineNumber() ?? -1;
+
         // Use common method to log the message
-        Log(logMessage, severity);
+        Log(logMessage, severity, memberName, filePath, lineNumber);
     }
 
     public bool IsEnabled(LogLevel logLevel)
@@ -84,7 +119,7 @@ internal abstract class LoggerService(
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-    
+
     protected virtual void Dispose(bool disposing)
     {
         logWriter.Dispose();
@@ -153,7 +188,7 @@ internal abstract class LoggerService(
         WriteLog(result.ErrorMessage, _topic, result.Severity,
             memberName, filePath, lineNumber);
     }
-    
+
     public void Log(
         string message,
         string? topic,
@@ -290,7 +325,7 @@ internal abstract class LoggerService(
         return WriteLogAsync(result.ErrorMessage, topic, result.Severity,
             memberName, filePath, lineNumber);
     }
-    
+
     private static string GetMessage(IEnumerable<string> messages)
     {
         var sb = new StringBuilder();
@@ -300,10 +335,11 @@ internal abstract class LoggerService(
                 sb.Append(Environment.NewLine);
             sb.Append(msg);
         }
+
         return sb.ToString();
     }
-    
-    
+
+
     private void WriteLog(
         string message,
         string? topic,
@@ -312,9 +348,9 @@ internal abstract class LoggerService(
         string filePath = "",
         int lineNumber = -1)
     {
-        if (severity < config.MinLevel) 
+        if (severity < config.MinLevel)
             return;
-        
+
         logWriter.WriteLog(
             _userId, _companyId, topic,
             severity,
@@ -322,7 +358,7 @@ internal abstract class LoggerService(
             memberName, filePath, lineNumber,
             message, DateTime.UtcNow);
     }
-    
+
     private Task WriteLogAsync(
         string message,
         string? topic,
@@ -333,7 +369,7 @@ internal abstract class LoggerService(
     {
         if (severity < config.MinLevel)
             return Task.CompletedTask;
-        
+
         return logWriter.WriteLogAsync(
             _userId, _companyId, topic,
             severity,
@@ -341,7 +377,7 @@ internal abstract class LoggerService(
             memberName, filePath, lineNumber,
             message, DateTime.UtcNow);
     }
-    
+
     private static SeverityEnu GetSeverity(LogLevel logLevel)
     {
         switch (logLevel)
@@ -363,11 +399,10 @@ internal abstract class LoggerService(
             default:
                 throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null);
         }
-    }    
-
-    
+    }
 }
 
 internal abstract class LoggerService<T>(
-    ILogWriter logWriter, ILoggerServiceConfig config) 
+    ILogWriter logWriter,
+    ILoggerServiceConfig config)
     : LoggerService(logWriter, config), ILoggerService<T>;

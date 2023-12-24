@@ -14,13 +14,13 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>Logging Logger Console Serilog</PackageTags>
-        <PackageReleaseNotes>initial version for dotNet core 8</PackageReleaseNotes>
+        <PackageReleaseNotes>Uses LoggerService 1.0.3</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="PvWay.LoggerService.nc8" Version="1.0.1" />
+      <PackageReference Include="PvWay.LoggerService.nc8" Version="1.0.3" />
       <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     </ItemGroup>
 

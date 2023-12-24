@@ -14,9 +14,9 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>LoggerService</PackageTags>
-        <PackageReleaseNotes>now using Abstractions 1.0.2</PackageReleaseNotes>
+        <PackageReleaseNotes>stack trace now only shown for exceptions</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>1.0.1</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
