@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay</Company>
+        <Description>Persists (and retrieves) multi part text values IDictionary string, string into (and from) a single (N)VARCHAR column into 
+a database.</Description>
+        <Copyright>pvWay Ltd 2024</Copyright>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Core 
+</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlMultiLangVarChar/Core 
+</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>iso639 translations resources multi lingual varchar</PackageTags>
+        <PackageReleaseNotes>Initial version for dotNet Core 8</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="readme.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="pvwayLogoTextLess256.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+</Project>

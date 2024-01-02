@@ -1,6 +1,6 @@
-# Ms Sql MultiPart VarChar for .Net Core 6
+# Ms Sql MultiPart VarChar for .Net Core 8
 
-Persists multi part text values (dictionary string - string) into one single VARCHAR column into 
+Persists (and retrieves) multi part text values **IDictionary&lt;string, string&gt;** into (and from) a single **VARCHAR** column into 
 an Ms SQL Db (2014 or >=). 
 
 The package contains a cSharp class for storing/retrieving the dictionary to/from 
@@ -10,7 +10,7 @@ the field and the SQL code for creating a scalar function for stored procedure i
 
 #### Constructor
 
-From the business layer of your applicaiton use the Dictionary constructor
+From the business layer of your application use the Dictionary constructor
 
 ``` csharp
 	
@@ -19,20 +19,20 @@ From the business layer of your applicaiton use the Dictionary constructor
 		{"en", "bear"},
 		{"fr", "ours"}
 	};
-	IMpVarChar myMpVarChar = new MpVarChar(dic);
+	IPvWayMpVarChar myMpVarChar = new PvWayMpVarChar(dic);
 
 ```
 
 #### Persisting into the Db
 
-Now let's persist this value in one single NVARCHAR(MAX) into the Db.
+Now let's persist this value in one single NVARCHAR() column into the Db.
 
 The following example prepares a simple SQL statement for a DAO implementation of the DAL but of course you may want to use this with the ORM of your choice (EF, NHibernate...)
 
 ``` csharp
 	
     // convert myMpVarChar to a string for insertion into the Db.
-    var mpText = myMpVarChar.ToString(); 
+    var mpText = myMpVarChar.ToString();
     
     // hum yes... in this case we should make sure we escape the single quotes if any
     mpText = mpText.Replace("'", "''");
@@ -43,50 +43,64 @@ The following example prepares a simple SQL statement for a DAO implementation o
     // The line above will generate the following text
     // INSERT INTO [dbo].[MyTable] ([MpText]) VALUES ('<en>bear</en><fr>ours</fr>');
 
-    // for the simplicity i do not provide here the code executing this insert
+    // for the simplicity I do not provide here the code executing this insert
 
 ```
 
-The key value dictionnary is serialized to a single string that can be saved into the db into a VARCHAR(MAX) (or NVARCHAR(xxx)) column. Up to you to see if you need a MAX lenght or if a smaller column will do the job. the serialization cost is 4 char per dictionary entry. It takes the form '&lt;key&gt;::&lt;value&gt;::'. If the value of the key containst a ':' char it will be escaped with a '\' char. This should also be taken into consideration for determining the final size of the string.
+The key value dictionary is serialized to a single string that can be saved into the db into a VARCHAR(xxx) (or NVARCHAR(xxx)) column.
+
+Up to you to see if you need a MAX length or if a smaller column will do the job. 
+
+The serialization cost is 4 char per dictionary entry. 
+
+It takes the using XML tags '&lt;key&gt;value&lt;/key&gt;. 
+
+Example: &lt;en&gt;Bear&lt;/en&gt;&lt;fr&gt;Ours&lt;/fr&gt;
 
 #### Retrieving the data from the Db
 
 ``` csharp
 
-  // (not shown) here above the SELECT code that populates the IDataRecord object 
-  var ord = dataRecord.GetOrdinal("MpText");
-  var retrievedMpText = dataRecord.GetString(ord); // let's retreive the raw text from the Db
+  // (not shown) here above the SELECT code that populates the reader object 
+  var ord = reader.GetOrdinal("MpText");
+  
+  // let's retreive the raw text from the Db
+  var retrievedMpText = reader.GetString(ord); 
 
   // time to deserialize
-  var deserializeResult = MpVarChar.TryDeserialize(
+  // for this we will use the static method TryDeserialize 
+  var deserializeResult = PvWayMpVarChar.TryDeserialize(
   	retrievedMpText, 
-  	out var errorMessage);
+  	out var retrievedMpVarChar, 
+  	out var errorMessageIfAny);
 
   if (!deserializeResult == PvWayDeserializationResult.Failed)
   {
   	Console.WriteLine("it failed");
-  	Console.WriteLine(errorMessage);
+  	Console.WriteLine(errorMessageIfAny);
   	// log and throw
   }
   else
   {
-    // deserialization succeeded
+    // Deserialization succeeded
     
-    // three ways to get the data
-    // using the Dicionnary
+  	// three ways to get the data
+  	
+    // (1) using the Dicionnary
     var enVal = retrievedMpVarChar.MpDic["en"];
     Console.WriteLine(enVal);
-	// ==> displays "bear"                
+	// ==> displays "bear"... or throws an error if there is no entry for "en"
     
-    // using the FindPartForKey method
+    // using the GetPartForKey method
     var frVal = retrievedMpVarChar.GetPartForKey("fr");
     Console.WriteLine(frVal);
-	// ==> displays "ours"                
+	// ==> displays "ours"... or null if there is not entry for "fr"             
     
-    // using the TryGetPartForKey method
-    var deOk = retrievedMpVarChar.TryGetPartForKey("de", out var deVal);
+    // using the FindPartForKey method
+    var findResult = retrievedMpVarChar.FindPartForKey("de", out var deVal);
     Console.WriteLine(deVal);
-	// ==> displays "bear" taking de first key in the dic as default value                
+	// ==> displays "bear" taking de first key in the dic as default value
+	// the findResult equals PvWayFindPartResult.FirstValue              
   }
 
 ```
@@ -113,7 +127,7 @@ The key value dictionnary is serialized to a single string that can be saved int
         /*
         within the values the character '<' and '>' are replaced by '&lt;' and '&gt;'.
 	    the keys are encoded as XML tags <key></key> 
-	    '<en>english &lt;text&gt;</en><fr>texte en fran�ais</fr><nl>nederlandse tekst</nl>'
+	    '<en>english &lt;text&gt;</en><fr>texte en fran�ais</fr><nl>nederlandse text</nl>'
 	    */
 	    DECLARE @startTag NVARCHAR(MAX) = '<' + @key + '>';
 	    DECLARE @startTagPos INT = CHARINDEX(@startTag, @str, 0);
