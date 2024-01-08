@@ -9,14 +9,15 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <Description>Tiny utility encrypting/decrypting texts/objects to/from base64 strings with/without limited lifetime (token)</Description>
-    <Copyright>(c) pvWay 2023</Copyright>
+    <Copyright>(c) pvWay 2024</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution.nc6</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>readMe.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution.nc6</RepositoryUrl>
     <PackageTags>Crypto AES Cipher Ephemeral Token</PackageTags>
-    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageReleaseNotes>Breaking changes. Service made injectable </PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

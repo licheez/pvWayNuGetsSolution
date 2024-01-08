@@ -1,8 +1,7 @@
-﻿namespace pvWay.Crypto.nc6
+﻿namespace pvWay.Crypto.nc6;
+
+internal interface ICryptoEphemeral<out T>
 {
-    public interface ICryptoEphemeral<out T>
-    {
-        DateTime ValidUntil { get; }
-        T Data { get; }
-    }
+    DateTime ValidUntil { get; }
+    T Data { get; }
 }

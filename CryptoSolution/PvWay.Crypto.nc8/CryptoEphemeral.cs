@@ -1,10 +1,7 @@
-﻿
+﻿// ReSharper disable MemberCanBePrivate.Global
+namespace PvWay.Crypto.nc8;
 
-// ReSharper disable MemberCanBePrivate.Global
-
-namespace pvWay.Crypto.nc6;
-
-internal class CryptoEphemeral<T> : ICryptoEphemeral<T>
+internal sealed class CryptoEphemeral<T> : ICryptoEphemeral<T>
 {
     public DateTime ValidUntil { get; set; }
     public T Data { get; set; } = default!;

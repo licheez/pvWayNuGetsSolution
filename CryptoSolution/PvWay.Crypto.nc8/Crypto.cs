@@ -2,9 +2,9 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace pvWay.Crypto.nc6;
+namespace PvWay.Crypto.nc8;
 
-internal sealed class Crypto: ICrypto
+internal sealed class Crypto : ICrypto
 {
     private readonly TimeSpan _defaultValidity;
     private readonly byte[] _iv;
@@ -18,26 +18,27 @@ internal sealed class Crypto: ICrypto
     /// <param name="initializationVectorString">should be exactly 16 characters long</param>
     /// <param name="defaultValidity">default validity for ephemeral encryption</param>
     public Crypto(
-        string keyString, 
+        string keyString,
         string initializationVectorString,
         TimeSpan defaultValidity)
     {
-        if (keyString.Length != 32) 
+        if (keyString.Length != 32)
             throw new PvWayCryptoException(
                 "invalid key (should be 32  char long");
-        if (initializationVectorString.Length != 16) 
+        if (initializationVectorString.Length != 16)
             throw new PvWayCryptoException(
                 "invalid initialization vector (should be 16 char long");
         _defaultValidity = defaultValidity;
         _aes = Aes.Create();
-        if (_aes == null) throw 
-            new PvWayCryptoException(
-                "aes should not be null");
+        if (_aes == null)
+            throw
+                new PvWayCryptoException(
+                    "aes should not be null");
 
         _key = Encoding.UTF8.GetBytes(keyString);
         _iv = Encoding.ASCII.GetBytes(initializationVectorString);
     }
-        
+
     public async Task<string> EncryptStringAsync(string text)
     {
         var ct = _aes.CreateEncryptor(_key, _iv);
@@ -45,7 +46,7 @@ internal sealed class Crypto: ICrypto
         await using var cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
         await using var sw = new StreamWriter(cs);
         await sw.WriteAsync(text);
-            
+
         sw.Close();
         cs.Close();
         ms.Close();
@@ -55,30 +56,30 @@ internal sealed class Crypto: ICrypto
         return b64Str;
     }
 
-    public async Task<string> EncryptObjectAsync<T>(T data) where T: class
+    public async Task<string> EncryptObjectAsync<T>(T data) where T : class
     {
         var json = JsonConvert.SerializeObject(data);
         return await EncryptStringAsync(json);
     }
 
-        
+
     public async Task<string> EncryptEphemeralStringAsync(
         string text, TimeSpan? validity = null)
     {
         var ce = new CryptoEphemeral<string>(
-            text, validity??_defaultValidity);
+            text, validity ?? _defaultValidity);
         return await EncryptObjectAsync(ce);
     }
 
     public async Task<string> EncryptEphemeralObjectAsync<T>(
-        T data, TimeSpan? validity = null) 
+        T data, TimeSpan? validity = null)
         where T : class
     {
         var ce = new CryptoEphemeral<T>(
-            data, validity??_defaultValidity);
+            data, validity ?? _defaultValidity);
         return await EncryptObjectAsync(ce);
     }
-        
+
 
     public async Task<string> DecryptStringAsync(string base64Str)
     {
@@ -91,26 +92,25 @@ internal sealed class Crypto: ICrypto
         return text;
     }
 
-    public async Task<T> DecryptObjectAsync<T>(string base64Str) 
-        where T:class
+    public async Task<T> DecryptObjectAsync<T>(string base64Str)
+        where T : class
     {
         var json = await DecryptStringAsync(base64Str);
         return JsonConvert.DeserializeObject<T>(json)!;
     }
 
-        
+
     public async Task<string?> DecryptEphemeralStringAsync(string base64Str)
     {
         var ce = await DecryptObjectAsync<CryptoEphemeral<string>>(base64Str);
-        if (ce == null) return null;
-        return ce.ValidUntil > DateTime.UtcNow 
-            ? ce.Data : null;
+        return ce.ValidUntil > DateTime.UtcNow
+            ? ce.Data
+            : null;
     }
 
-    public async Task<T?> DecryptEphemeralObjectAsync<T>(string base64Str) where T: class
+    public async Task<T?> DecryptEphemeralObjectAsync<T>(string base64Str) where T : class
     {
         var ce = await DecryptObjectAsync<CryptoEphemeral<T>>(base64Str);
-        if (ce == null) return null;
         return ce.ValidUntil > DateTime.UtcNow ? ce.Data : null;
     }
 
