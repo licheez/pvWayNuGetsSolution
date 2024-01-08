@@ -5,10 +5,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay Ltd</Company>
         <Description>Tiny utility encrypting/decrypting texts/objects to/from base64 strings with/without limited lifetime (token)</Description>
         <Copyright>(c) pvWay 2024</Copyright>
-        <PackageTags>Crypto AES Cipher Ephemeral Token</PackageTags>
         <PackageReleaseNotes>initial version for dotNet Core 8</PackageReleaseNotes>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution/PvWay.Crypto.nc8</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readMe.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution/PvWay.Crypto.nc8</RepositoryUrl>
+        <PackageTags>Crypto AES Cipher Ephemeral Token</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,6 +26,10 @@
 
     <ItemGroup>
       <None Update="readMe.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="pvwayLogoTextLess256.png">
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
       </None>

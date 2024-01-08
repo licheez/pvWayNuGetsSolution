@@ -10,14 +10,14 @@
     <Company>pvWay Ltd</Company>
     <Description>Tiny utility encrypting/decrypting texts/objects to/from base64 strings with/without limited lifetime (token)</Description>
     <Copyright>(c) pvWay 2024</Copyright>
-    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution.nc6</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution/CryptoNc6</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>readMe.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution.nc6</RepositoryUrl>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/https://github.com/licheez/pvWayNuGetsSolution/tree/master/CryptoSolution/CryptoNc6</RepositoryUrl>
     <PackageTags>Crypto AES Cipher Ephemeral Token</PackageTags>
     <PackageReleaseNotes>Breaking changes. Service made injectable </PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
