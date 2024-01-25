@@ -88,15 +88,17 @@ namespace pvWay.AgentPoolManager.Core
             SetIsRunning();
             while (true)
             {
-                _repeat();
-
                 if (IsStopRequested)
                 {
                     Stop();
                     break;
                 }
+                _repeat();
 
-                Thread.Sleep(SleepSpan);
+                var repeatUtc = DateTime.UtcNow.Add(SleepSpan);
+                while (!IsStopRequested 
+                       && DateTime.UtcNow < repeatUtc)
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
             }
         }
     }
@@ -127,15 +129,17 @@ namespace pvWay.AgentPoolManager.Core
             SetIsRunning();
             while (true)
             {
-                var tParam = (T)workerParam;
-                _repeat(tParam);
-
                 if (IsStopRequested)
                 {
                     Stop();
                     break;
                 }
-                Thread.Sleep(SleepSpan);
+                var tParam = (T)workerParam;
+                _repeat(tParam);
+                var repeatUtc = DateTime.UtcNow.Add(SleepSpan);
+                while (!IsStopRequested 
+                       && DateTime.UtcNow < repeatUtc)
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
             }
         }
     }

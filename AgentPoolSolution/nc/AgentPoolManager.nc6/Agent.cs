@@ -1,139 +1,143 @@
-﻿namespace pvWay.agentPoolManager.nc6
+﻿namespace pvWay.agentPoolManager.nc6;
+
+internal abstract class BaseAgent : IAgent
 {
-    internal abstract class BaseAgent : IAgent
+    private readonly Action<IAgent> _endAction;
+    protected readonly TimeSpan SleepSpan;
+    private readonly AgentHandler _agentHandler = new();
+
+    public Guid Id { get; }
+    public DateTime StartTimeUtc { get; }
+    public string Title { get; }
+
+    protected BaseAgent(
+        Action<IAgent> endAction,
+        string title,
+        TimeSpan sleepSpan)
     {
-        private readonly Action<IAgent> _endAction;
-        protected readonly TimeSpan SleepSpan;
-        private readonly AgentHandler _agentHandler = new();
+        _endAction = endAction;
+        SleepSpan = sleepSpan;
 
-        public Guid Id { get; }
-        public DateTime StartTimeUtc { get; }
-        public string Title { get; }
+        Id = Guid.NewGuid();
+        StartTimeUtc = DateTime.UtcNow;
+        Title = title;
+    }
 
-        protected BaseAgent(
-            Action<IAgent> endAction,
-            string title,
-            TimeSpan sleepSpan)
+    public void RequestToStop()
+    {
+        lock (_agentHandler)
         {
-            _endAction = endAction;
-            SleepSpan = sleepSpan;
-
-            Id = Guid.NewGuid();
-            StartTimeUtc = DateTime.UtcNow;
-            Title = title;
+            _agentHandler.SetIsStopRequested();
         }
+    }
 
-        public void RequestToStop()
+    protected void SetIsRunning()
+    {
+        lock (_agentHandler)
+        {
+            _agentHandler.SetIsRunning();
+        }
+    }
+
+    protected bool IsStopRequested
+    {
+        get
         {
             lock (_agentHandler)
             {
-                _agentHandler.SetIsStopRequested();
-            }
-        }
-
-        protected void SetIsRunning()
-        {
-            lock (_agentHandler)
-            {
-                _agentHandler.SetIsRunning();
-            }
-        }
-
-        protected bool IsStopRequested
-        {
-            get
-            {
-                lock (_agentHandler)
-                {
-                    return _agentHandler.IsStopRequested;
-                }
-            }
-        }
-
-        protected void Stop()
-        {
-            lock (_agentHandler)
-            {
-                _agentHandler.SetIsStopped();
-                _endAction(this);
+                return _agentHandler.IsStopRequested;
             }
         }
     }
 
-    internal class Agent : BaseAgent
+    protected void Stop()
     {
-        private readonly Action _repeat;
-
-        public Agent(
-            Action<IAgent> endAction,
-            string title,
-            Action repeat,
-            TimeSpan sleepSpan,
-            ThreadPriority priority = ThreadPriority.Normal) :
-            base(endAction, title, sleepSpan)
+        lock (_agentHandler)
         {
-            _repeat = repeat;
-            var asyncWorker = new Thread(AsyncWorker)
-            {
-                Priority = priority
-            };
-            asyncWorker.Start();
-        }
-
-        private void AsyncWorker()
-        {
-            SetIsRunning();
-            while (true)
-            {
-                _repeat();
-
-                if (IsStopRequested)
-                {
-                    Stop();
-                    break;
-                }
-
-                Thread.Sleep(SleepSpan);
-            }
+            _agentHandler.SetIsStopped();
+            _endAction(this);
         }
     }
+}
 
-    internal class Agent<T> : BaseAgent
+internal class Agent : BaseAgent
+{
+    private readonly Action _repeat;
+
+    public Agent(
+        Action<IAgent> endAction,
+        string title,
+        Action repeat,
+        TimeSpan sleepSpan,
+        ThreadPriority priority = ThreadPriority.Normal) :
+        base(endAction, title, sleepSpan)
     {
-        private readonly Action<T> _repeat;
-
-        public Agent(
-            Action<IAgent> endAction,
-            string title,
-            Action<T> repeat,
-            T workerParam,
-            TimeSpan sleepSpan,
-            ThreadPriority priority = ThreadPriority.Normal) :
-                base(endAction, title, sleepSpan)
+        _repeat = repeat;
+        var asyncWorker = new Thread(AsyncWorker)
         {
-            _repeat = repeat;
-            var asyncWorker = new Thread(AsyncWorker)
-            {
-                Priority = priority
-            };
-            asyncWorker.Start(workerParam);
-        }
+            Priority = priority
+        };
+        asyncWorker.Start();
+    }
 
-        private void AsyncWorker(object? workerParam)
+    private void AsyncWorker()
+    {
+        SetIsRunning();
+        while (true)
         {
-            SetIsRunning();
-            while (true)
+            if (IsStopRequested)
             {
-                var tParam = (T)workerParam!;
-                _repeat(tParam);
-
-                if (IsStopRequested)
-                {
-                    Stop();
-                    break;
-                }
-                Thread.Sleep(SleepSpan);
+                Stop();
+                break;
             }
+            _repeat();
+            var repeatUtc = DateTime.UtcNow.Add(SleepSpan);
+            while (!IsStopRequested 
+                   && DateTime.UtcNow < repeatUtc)
+                Thread.Sleep(100);
+        }
+    }
+}
+
+internal class Agent<T> : BaseAgent
+{
+    private readonly Action<T> _repeat;
+
+    public Agent(
+        Action<IAgent> endAction,
+        string title,
+        Action<T> repeat,
+        T workerParam,
+        TimeSpan sleepSpan,
+        ThreadPriority priority = ThreadPriority.Normal) :
+        base(endAction, title, sleepSpan)
+    {
+        _repeat = repeat;
+        var asyncWorker = new Thread(AsyncWorker)
+        {
+            Priority = priority
+        };
+        asyncWorker.Start(workerParam);
+    }
+
+    private void AsyncWorker(object? workerParam)
+    {
+        SetIsRunning();
+        while (true)
+        {
+            if (IsStopRequested)
+            {
+                Stop();
+                break;
+            }
+                
+            var tParam = (T)workerParam!;
+            _repeat(tParam);
+
+            var repeatUtc = DateTime.UtcNow.Add(SleepSpan);
+            while (!IsStopRequested 
+                   && DateTime.UtcNow < repeatUtc)
+                Thread.Sleep(100);
         }
     }
 }

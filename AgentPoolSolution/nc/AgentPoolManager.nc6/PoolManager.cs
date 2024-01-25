@@ -2,13 +2,9 @@
 {
     public class PoolManager : IAgentPoolManager
     {
-        private readonly IDictionary<IAgent, Action<IAgent>?> _pool;
+        private readonly IDictionary<IAgent, Action<IAgent>?> _pool = 
+            new Dictionary<IAgent, Action<IAgent>?>();
         public IEnumerable<IAgent> Agents => _pool.Keys;
-
-        public PoolManager()
-        {
-            _pool = new Dictionary<IAgent, Action<IAgent>?>();
-        }
 
         public IAgent? GetAgent(Guid id)
         {

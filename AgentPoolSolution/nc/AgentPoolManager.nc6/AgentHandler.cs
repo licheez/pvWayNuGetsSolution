@@ -6,10 +6,6 @@
         private bool IsRunning { get; set; }
         public bool IsStopRequested { get; private set; }
 
-        //public int ItemCount { get; private set; }
-        //public int CurrentIndex { get; private set; }
-        //public string Status { get; private set; }
-
         public void SetIsRunning()
         {
             if (!CanStart) return;

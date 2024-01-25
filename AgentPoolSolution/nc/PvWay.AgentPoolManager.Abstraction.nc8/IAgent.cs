@@ -1,4 +1,4 @@
-﻿namespace pvWay.agentPoolManager.nc6;
+﻿namespace PvWay.AgentPoolManager.Abstraction.nc8;
 
 public interface IAgent
 {

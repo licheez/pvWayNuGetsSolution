@@ -1,4 +1,4 @@
-﻿namespace pvWay.agentPoolManager.nc6;
+﻿namespace PvWay.AgentPoolManager.Abstraction.nc8;
 
 public interface IAgentPoolManager
 {
@@ -13,12 +13,11 @@ public interface IAgentPoolManager
         TimeSpan sleepSpan,
         ThreadPriority priority = ThreadPriority.Normal,
         Action<IAgent>? stopCallback = null);
-    
+
     IAgent StartAgent(
         string title,
         Action repeat,
         TimeSpan sleepSpan,
         ThreadPriority priority = ThreadPriority.Normal,
         Action<IAgent>? stopCallback = null);
-    
 }

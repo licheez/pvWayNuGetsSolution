@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay</Company>
+        <Description>Abstraction layer for a the AgentPool nugGet that implements a pool of background services (agents) that keep repeating at a given interval until they are requested to stop</Description>
+        <Copyright>pvWay ltd 2024</Copyright>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readMe.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>agent background pool schedule</PackageTags>
+        <PackageReleaseNotes>initial version for dotNet 8</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="pvwayLogoTextLess256.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="readMe.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+</Project>
