@@ -4,6 +4,19 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>1.0.0</Version>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay</Company>
+        <Description>Offers a pool of background services (agents) that keep repeating at a given interval until they are requested to stop</Description>
+        <Copyright>pvWay ltd 2024</Copyright>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution</PackageProjectUrl>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readMe.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>agent background pool schedule</PackageTags>
+        <PackageReleaseNotes>initial version for dotNet Core 8</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +26,10 @@
 
     <ItemGroup>
       <None Update="readMe.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="pvwayLogoTextLess256.png">
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
       </None>
