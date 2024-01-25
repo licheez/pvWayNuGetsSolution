@@ -1,6 +1,6 @@
-﻿namespace PvWay.AgentPoolManager.Abstraction.nc8;
+﻿namespace pvWay.agentPoolManager.nc6.Abstractions;
 
-public interface IAgent
+public interface IPvWayAgentPoolManagerAgent
 {
     Guid Id { get; }
     DateTime StartTimeUtc { get; }

@@ -1,4 +1,4 @@
-﻿# Agent Pool Manager Core
+﻿# PvWay Agent Pool Manager for dotNet Core 6
 
 Manages a pool of background services (agents) that keep repeating at a given interval until they are requested to stop.
 
@@ -11,28 +11,28 @@ This nuGet has only one public class implementing the following interface
 ### IAgentPoolManager
 
 ```csharp
-namespace pvWay.agentPoolManager.nc6;
+namespace pvWay.agentPoolManager.nc6.Abstractions;
 
-public interface IAgentPoolManager
+public interface IPvWayAgentPoolManager
 {
-    IEnumerable<IAgent> Agents { get; }
+    IEnumerable<IPvWayAgentPoolManagerAgent> Agents { get; }
 
-    IAgent? GetAgent(Guid id);
+    IPvWayAgentPoolManagerAgent? GetAgent(Guid id);
 
-    IAgent StartAgent<T>(
+    IPvWayAgentPoolManagerAgent StartAgent<T>(
         string title,
         Action<T> repeat,
         T workerParam,
         TimeSpan sleepSpan,
         ThreadPriority priority = ThreadPriority.Normal,
-        Action<IAgent>? stopCallback = null);
+        Action<IPvWayAgentPoolManagerAgent>? stopCallback = null);
     
-    IAgent StartAgent(
+    IPvWayAgentPoolManagerAgent StartAgent(
         string title,
         Action repeat,
         TimeSpan sleepSpan,
         ThreadPriority priority = ThreadPriority.Normal,
-        Action<IAgent>? stopCallback = null);
+        Action<IPvWayAgentPoolManagerAgent>? stopCallback = null);
     
 }
 ```
@@ -40,9 +40,9 @@ public interface IAgentPoolManager
 ### IAgent
 
 ```csharp
-namespace pvWay.agentPoolManager.nc6;
+namespace pvWay.agentPoolManager.nc6.Abstractions;
 
-public interface IAgent
+public interface IPvWayAgentPoolManagerAgent
 {
     Guid Id { get; }
     DateTime StartTimeUtc { get; }
@@ -51,15 +51,40 @@ public interface IAgent
 }
 ```
 
+## Injection & factory
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using pvWay.agentPoolManager.nc6.Abstractions;
+using pvWay.agentPoolManager.nc6.Impl;
+
+namespace pvWay.agentPoolManager.nc6;
+
+public static class PvWayAgentPoolManager
+{
+    public static void AddPvWayAgentPoolManager(
+        this IServiceCollection services,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    {
+        var sd = new ServiceDescriptor(
+            typeof(IPvWayAgentPoolManager), 
+            typeof(PoolManager),
+            lifetime);
+        services.Add(sd);
+    }
+
+    public static IPvWayAgentPoolManager Create() => new PoolManager();
+}
+```
+
 ## Usage
 
-See here after a short Console that use the pool
+See here after a short Console that uses the pool
 
 ### Principe
 
 * Create a method (with or without parameter) that you want to repeatedly invoke in background
 * Determine the interval of time between two invocations of your method
-* Instantiate the PoolManager (you can wrap/inject this class into/as a Singleton)
+* Instantiate the PoolManager
 * Add your method into the Agent Pool and in return get a IAgent reference
 * Stop the method at any time by calling the IAgent RequestToStop method
 
@@ -72,7 +97,7 @@ using pvWay.agentPoolManager.nc6;
 
 Console.WriteLine("Hello, AgentPool");
 
-var apm = new PoolManager();
+var apm = PvWayAgentPoolManager.Create();
 
 var pulsar = apm.StartAgent(
     // the name of the asynchronous agent

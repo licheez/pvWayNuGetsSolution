@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>2.0.0</Version>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -8,20 +9,20 @@
     <RootNamespace>pvWay.agentPoolManager.nc6</RootNamespace>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay</Company>
-    <Description>Manages a pool of asynchronous methods (agents) that keep repeating at a given interval until they are requested to stop</Description>
-    <Copyright>pvWay ltd 2023</Copyright>
-    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</RepositoryUrl>
+    <Description>Manages a pool of background services (agents) that keep repeating at a given interval until they are requested to stop</Description>
+    <Copyright>pvWay ltd 2024</Copyright>
+    <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution</RepositoryUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>readMe.md</PackageReadmeFile>
     <PackageTags>pvWay agent pool scheduler</PackageTags>
-    <PackageReleaseNotes>initial</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependency injection and factory</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\..\pvwayLogoTextLess256.png" Link="pvwayLogoTextLess256.png">
-      <PackagePath></PackagePath>
+      <PackagePath>\</PackagePath>
       <Pack>True</Pack>
     </None>
   </ItemGroup>
@@ -31,6 +32,10 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
   </ItemGroup>
 
 </Project>

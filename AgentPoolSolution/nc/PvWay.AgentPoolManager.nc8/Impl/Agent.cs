@@ -1,27 +1,19 @@
-﻿namespace pvWay.agentPoolManager.nc6;
+﻿using PvWay.AgentPoolManager.Abstraction.nc8;
 
-internal abstract class BaseAgent : IAgent
+namespace PvWay.AgentPoolManager.nc8.Impl;
+
+internal abstract class BaseAgent(
+    Action<IPvWayAgentPoolManagerAgent> endAction,
+    string title,
+    TimeSpan sleepSpan)
+    : IPvWayAgentPoolManagerAgent
 {
-    private readonly Action<IAgent> _endAction;
-    protected readonly TimeSpan SleepSpan;
+    protected readonly TimeSpan SleepSpan = sleepSpan;
     private readonly AgentHandler _agentHandler = new();
 
-    public Guid Id { get; }
-    public DateTime StartTimeUtc { get; }
-    public string Title { get; }
-
-    protected BaseAgent(
-        Action<IAgent> endAction,
-        string title,
-        TimeSpan sleepSpan)
-    {
-        _endAction = endAction;
-        SleepSpan = sleepSpan;
-
-        Id = Guid.NewGuid();
-        StartTimeUtc = DateTime.UtcNow;
-        Title = title;
-    }
+    public Guid Id { get; } = Guid.NewGuid();
+    public DateTime StartTimeUtc { get; } = DateTime.UtcNow;
+    public string Title { get; } = title;
 
     public void RequestToStop()
     {
@@ -55,7 +47,7 @@ internal abstract class BaseAgent : IAgent
         lock (_agentHandler)
         {
             _agentHandler.SetIsStopped();
-            _endAction(this);
+            endAction(this);
         }
     }
 }
@@ -65,7 +57,7 @@ internal class Agent : BaseAgent
     private readonly Action _repeat;
 
     public Agent(
-        Action<IAgent> endAction,
+        Action<IPvWayAgentPoolManagerAgent> endAction,
         string title,
         Action repeat,
         TimeSpan sleepSpan,
@@ -104,7 +96,7 @@ internal class Agent<T> : BaseAgent
     private readonly Action<T> _repeat;
 
     public Agent(
-        Action<IAgent> endAction,
+        Action<IPvWayAgentPoolManagerAgent> endAction,
         string title,
         Action<T> repeat,
         T workerParam,

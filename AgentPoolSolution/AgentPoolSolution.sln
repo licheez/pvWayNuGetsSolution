@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nc8", "nc8", "{7DB9DCCD-943
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.AgentPoolManager.nc8", "nc\PvWay.AgentPoolManager.nc8\PvWay.AgentPoolManager.nc8.csproj", "{5D53AF80-93C7-4FC7-A99B-4D1138C373D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.AgentPoolManager.Lab.nc8", "nc\PvWay.AgentPoolManager.Lab.nc8\PvWay.AgentPoolManager.Lab.nc8.csproj", "{BB3AF9E2-9723-4875-B96F-DF8A0CC6737A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{5D53AF80-93C7-4FC7-A99B-4D1138C373D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D53AF80-93C7-4FC7-A99B-4D1138C373D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D53AF80-93C7-4FC7-A99B-4D1138C373D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB3AF9E2-9723-4875-B96F-DF8A0CC6737A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB3AF9E2-9723-4875-B96F-DF8A0CC6737A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB3AF9E2-9723-4875-B96F-DF8A0CC6737A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB3AF9E2-9723-4875-B96F-DF8A0CC6737A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{7DB9DCCD-943A-49CC-B947-53E17D24BC24} = {52A857B1-7C36-4C2F-8DBF-7F812777A1CF}
 		{C338A42E-DE0E-4262-A821-5E9871B787B5} = {7DB9DCCD-943A-49CC-B947-53E17D24BC24}
 		{5D53AF80-93C7-4FC7-A99B-4D1138C373D7} = {7DB9DCCD-943A-49CC-B947-53E17D24BC24}
+		{BB3AF9E2-9723-4875-B96F-DF8A0CC6737A} = {7DB9DCCD-943A-49CC-B947-53E17D24BC24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1AA2645-8295-4BF7-860F-A0D558CB6B85}

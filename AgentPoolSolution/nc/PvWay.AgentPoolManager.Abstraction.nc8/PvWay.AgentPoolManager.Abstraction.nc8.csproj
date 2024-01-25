@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Version>1.0.1</Version>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -8,13 +9,13 @@
         <Company>pvWay</Company>
         <Description>Abstraction layer for a the AgentPool nugGet that implements a pool of background services (agents) that keep repeating at a given interval until they are requested to stop</Description>
         <Copyright>pvWay ltd 2024</Copyright>
-        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution</PackageProjectUrl>
         <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
         <PackageReadmeFile>readMe.md</PackageReadmeFile>
-        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution/nc/AgentPoolManager.nc6</RepositoryUrl>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/AgentPoolSolution</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <PackageTags>agent background pool schedule</PackageTags>
-        <PackageReleaseNotes>initial version for dotNet 8</PackageReleaseNotes>
+        <PackageReleaseNotes>PvWay prefix on interface names</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 

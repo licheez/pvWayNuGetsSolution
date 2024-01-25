@@ -8,46 +8,69 @@ This lets your Web application runs a pool of tasks in the background.
 
 This nuGet has only one public class implementing the following interface
 
-### IAgentPoolManager
+### IPvWayAgentPoolManager
 
 ```csharp
-namespace pvWay.agentPoolManager.nc6;
+namespace PvWay.AgentPoolManager.Abstraction.nc8;
 
-public interface IAgentPoolManager
+public interface IPvWayAgentPoolManager
 {
-    IEnumerable<IAgent> Agents { get; }
+    IEnumerable<IPvWayAgentPoolManagerAgent> Agents { get; }
 
-    IAgent? GetAgent(Guid id);
+    IPvWayAgentPoolManagerAgent? GetAgent(Guid id);
 
-    IAgent StartAgent<T>(
+    IPvWayAgentPoolManagerAgent StartAgent<T>(
         string title,
         Action<T> repeat,
         T workerParam,
         TimeSpan sleepSpan,
         ThreadPriority priority = ThreadPriority.Normal,
-        Action<IAgent>? stopCallback = null);
-    
-    IAgent StartAgent(
+        Action<IPvWayAgentPoolManagerAgent>? stopCallback = null);
+
+    IPvWayAgentPoolManagerAgent StartAgent(
         string title,
         Action repeat,
         TimeSpan sleepSpan,
         ThreadPriority priority = ThreadPriority.Normal,
-        Action<IAgent>? stopCallback = null);
-    
+        Action<IPvWayAgentPoolManagerAgent>? stopCallback = null);
 }
 ```
 
-### IAgent
+### IPvWayAgentPoolManagerAgent
 
 ```csharp
-namespace pvWay.agentPoolManager.nc6;
+namespace PvWay.AgentPoolManager.Abstraction.nc8;
 
-public interface IAgent
+public interface IPvWayAgentPoolManagerAgent
 {
     Guid Id { get; }
     DateTime StartTimeUtc { get; }
     string Title { get; }
     void RequestToStop();
+}
+```
+## Injection & factory
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using pvWay.agentPoolManager.Abstractions.nc8;
+using pvWay.agentPoolManager.nc8;
+
+namespace pvWay.agentPoolManager.nc8;
+
+public static class PvWayAgentPoolManager
+{
+    public static void AddPvWayAgentPoolManager(
+        this IServiceCollection services,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    {
+        var sd = new ServiceDescriptor(
+            typeof(IPvWayAgentPoolManager), 
+            typeof(PoolManager),
+            lifetime);
+        services.Add(sd);
+    }
+
+    public static IPvWayAgentPoolManager Create() => new PoolManager();
 }
 ```
 
@@ -68,11 +91,11 @@ The following example shows the code for a simple clock pulsar that write the ti
 ### The code
 
 ```csharp
-using pvWay.agentPoolManager.nc6;
+using pvWay.agentPoolManager.nc8;
 
 Console.WriteLine("Hello, AgentPool");
 
-var apm = new PoolManager();
+var apm = PvWayAgentPoolManager.Create();
 
 var pulsar = apm.StartAgent(
     // the name of the asynchronous agent
@@ -99,7 +122,6 @@ static void Pulsar(string prefix)
 {
     Console.WriteLine($"{prefix}-{DateTime.Now:HH:mm:ss}");
 }
-
 ```
 
 Happy coding
