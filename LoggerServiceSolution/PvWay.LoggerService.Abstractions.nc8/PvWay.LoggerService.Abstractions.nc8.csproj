@@ -14,10 +14,10 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>Logger</PackageTags>
-        <PackageReleaseNotes>adding generic loggers</PackageReleaseNotes>
+        <PackageReleaseNotes>adding purgeLogs method for sqlLoggers</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -35,6 +35,7 @@
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
+        <None Remove="bin\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,12 +43,14 @@
         <Content Include="bin\Release\net8.0\PvWay.LoggerService.Abstractions.nc8.dll"/>
         <Content Include="bin\Release\net8.0\PvWay.LoggerService.Abstractions.nc8.pdb"/>
         <Content Include="bin\Release\net8.0\readme.md"/>
-        <Content Include="bin\Release\PvWay.LoggerService.Abstractions.nc8.1.0.0.nupkg"/>
-        <Content Include="bin\Release\PvWay.LoggerService.Abstractions.nc8.1.0.1.nupkg" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="bin\Debug\net8.0\"/>
+      <Compile Remove="bin\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="bin\**" />
     </ItemGroup>
 
 </Project>
