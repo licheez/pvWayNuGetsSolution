@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Diagnostics;
 using System.Text;
 using Npgsql;
 using PvWay.LoggerService.Abstractions.nc8;
@@ -9,7 +8,7 @@ namespace PvWay.LoggerService.PgSql.nc8;
 internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 {
     private readonly IConnectionStringProvider _csp;
-    
+
     private readonly string _schemaName;
     private readonly string _tableName;
 
@@ -52,7 +51,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 
         CheckTable().Wait();
     }
-    
+
     public void WriteLog(
         string? userId, string? companyId, string? topic,
         SeverityEnu severity, string machineName,
@@ -72,7 +71,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         string memberName, string filePath, int lineNumber,
         string message, DateTime dateUtc)
     {
-        var cmdText = GetCommandText(
+        var cmdText = GetInsertCommandText(
             userId, companyId, topic,
             severity, machineName,
             memberName, filePath, lineNumber,
@@ -92,19 +91,45 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         catch (Exception e)
         {
             Console.WriteLine(e);
-            Debug.WriteLine(e);
         }
         finally
         {
             await cn.CloseAsync();
         }
     }
+    
+    public async Task<int> PurgeLogs(IDictionary<SeverityEnu, TimeSpan> retainDi){
+        var cs = await _csp.GetConnectionStringAsync();
+        await using var cn = new NpgsqlConnection(cs);
+        await cn.OpenAsync();
+        var totRows = 0;
+        try
+        {
+            foreach (var (severity, keep) in retainDi)
+            {
+                var cmdText = GetPurgeCommandText(severity, keep);
+                await using var cmd = new NpgsqlCommand(cmdText, cn);
+                var nbRows = await cmd.ExecuteNonQueryAsync();
+                totRows += nbRows;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            await cn.CloseAsync();
+        }
 
-    private string GetCommandText(
-    string? userId, string? companyId, string? topic,
-    SeverityEnu severity, string machineName,
-    string memberName, string filePath, int lineNumber,
-    string message, DateTime dateUtc)
+        return totRows;
+    }
+
+    private string GetInsertCommandText(
+        string? userId, string? companyId, string? topic,
+        SeverityEnu severity, string machineName,
+        string memberName, string filePath, int lineNumber,
+        string message, DateTime dateUtc)
     {
         // userId
         string pUserId;
@@ -161,6 +186,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         {
             machineName = Environment.MachineName;
         }
+
         machineName = TruncateThenEscape(machineName, _machineNameLength);
         var pMachineName = $"'{machineName}'";
 
@@ -202,6 +228,23 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         return cmdText;
     }
 
+    private string GetPurgeCommandText(SeverityEnu severity, TimeSpan keep)
+    {
+        // severityCode
+        var severityCode = EnumSeverity.GetCode(severity);
+        if (severityCode.Length > 1)
+            severityCode = severityCode[..1];
+        var pSeverityCode = $"'{severityCode}'";
+
+        var cutoffUtc = DateTime.UtcNow - keep;
+        var pDate = $"'{cutoffUtc:yyyy-MM-dd HH:mm:ss.sss}'";
+
+        var cmdText = $"DELETE FROM {_schemaName}.\"{_tableName}\" " +
+                      $"WHERE  \"{_severityCodeColumnName}\" = {pSeverityCode} " +
+                      $"AND \"{_createDateColumnName}\" < {pDate}";
+        return cmdText;
+    }
+
     private static string TruncateThenEscape(string value, int maxLength)
     {
         if (string.IsNullOrEmpty(value)) return value;
@@ -213,7 +256,6 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 
     private async Task CheckTable()
     {
-        Console.WriteLine($"checking {_schemaName}.{_tableName}");
         var cs = await _csp.GetConnectionStringAsync();
         await using var cn = new NpgsqlConnection(cs);
         await cn.OpenAsync();
@@ -237,6 +279,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
             var ci = new ColumnInfo(reader);
             dic.Add(ci.ColumnName, ci);
         }
+
         await reader.CloseAsync();
         await cn.CloseAsync();
 
@@ -265,6 +308,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
             {
                 errors.Add($"column {_messageColumnName} should be text");
             }
+
             CheckColumn(errors, dic, _createDateColumnName, "timestamp with time zone",
                 false, out _);
         }
@@ -297,6 +341,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
             errors.Add($"{columnName} not found in log table");
             return;
         }
+
         var info = dic[columnName];
 
         var type = info.Type.ToLower();

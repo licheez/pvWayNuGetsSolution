@@ -14,13 +14,13 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>method result wrapper error flow managment</PackageTags>
-        <PackageReleaseNotes>using abstractions 1.0.2</PackageReleaseNotes>
+        <PackageReleaseNotes>using abstractions 1.0.3</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="PvWay.LoggerService.Abstractions.nc8" Version="1.0.2" />
+      <PackageReference Include="PvWay.LoggerService.Abstractions.nc8" Version="1.0.3" />
     </ItemGroup>
 
     <ItemGroup>

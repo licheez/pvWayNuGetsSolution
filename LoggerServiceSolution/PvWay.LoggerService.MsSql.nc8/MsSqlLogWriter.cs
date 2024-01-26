@@ -72,7 +72,7 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         string memberName, string filePath, int lineNumber,
         string message, DateTime dateUtc)
     {
-        var cmdText = GetCommandText(
+        var cmdText = GetInsertCommandText(
             userId, companyId, topic,
             severity, machineName,
             memberName, filePath, lineNumber,
@@ -100,7 +100,34 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         }
     }
 
-    private string GetCommandText(
+    public async Task<int> PurgeLogs(IDictionary<SeverityEnu, TimeSpan> retainDi){
+        var cs = await _csp.GetConnectionStringAsync();
+        await using var cn = new SqlConnection(cs);
+        await cn.OpenAsync();
+        var totRows = 0;
+        try
+        {
+            foreach (var (severity, keep) in retainDi)
+            {
+                var cmdText = GetPurgeCommandText(severity, keep);
+                await using var cmd = new SqlCommand(cmdText, cn);
+                var nbRows = await cmd.ExecuteNonQueryAsync();
+                totRows += nbRows;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            await cn.CloseAsync();
+        }
+
+        return totRows;
+    }
+    
+    private string GetInsertCommandText(
         string? userId, string? companyId, string? topic,
         SeverityEnu severity, string machineName,
         string memberName, string filePath, int lineNumber,
@@ -202,6 +229,24 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
         return cmdText;
     }
 
+    private string GetPurgeCommandText(SeverityEnu severity, TimeSpan keep)
+    {
+        // severityCode
+        var severityCode = EnumSeverity.GetCode(severity);
+            if (severityCode.Length > 1)
+                severityCode = severityCode[..1];
+        var pSeverityCode = $"'{severityCode}'";
+
+        // date
+        var cutoffUtc = DateTime.UtcNow - keep;
+        var pDate = $"'{cutoffUtc:yyyy-MM-dd HH:mm:ss.sss}'";
+
+        var cmdText = $"DELETE FROM [{_schemaName}].[{_tableName}] " +
+                      $"WHERE [{_severityCodeColumnName}] = {pSeverityCode} " +
+                      $"AND [{_createDateColumnName}] < {pDate}";
+        return cmdText;
+    }
+    
     private static string TruncateThenEscape(string value, int maxLength)
     {
         if (string.IsNullOrEmpty(value)) return value;
@@ -213,7 +258,6 @@ internal sealed class MsSqlLogWriter : IMsSqlLogWriter
 
     private async Task CheckTable()
     {
-        Console.WriteLine($"checking {_schemaName}.{_tableName}");
         var cs = await _csp.GetConnectionStringAsync();
         await using var cn = new SqlConnection(cs);
 

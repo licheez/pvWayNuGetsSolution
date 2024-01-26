@@ -86,5 +86,12 @@ public static class PvWayMsSqlLogger
             typeof(MsSqlLoggerService),
             lifetime);
         services.Add(sd2);
+        
+        var sd3 = new ServiceDescriptor(
+            typeof(ISqlLoggerService),
+            typeof(MsSqlLoggerService),
+            lifetime);
+        services.Add(sd3);
+        
     }
 }

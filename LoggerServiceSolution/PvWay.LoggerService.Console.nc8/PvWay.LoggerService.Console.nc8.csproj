@@ -14,9 +14,9 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>Logging Logger Console Color</PackageTags>
-        <PackageReleaseNotes>Uses LoggerService 1.0.3 and fixes constructor issue in Create methods</PackageReleaseNotes>
+        <PackageReleaseNotes>Uses LoggerService 1.0.4</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,7 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="PvWay.LoggerService.nc8" Version="1.0.3" />
+      <PackageReference Include="PvWay.LoggerService.nc8" Version="1.0.4" />
     </ItemGroup>
 
 </Project>

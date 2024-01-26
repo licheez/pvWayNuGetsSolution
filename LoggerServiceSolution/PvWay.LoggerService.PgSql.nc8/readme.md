@@ -86,6 +86,23 @@ Task LogAsync(
     [CallerLineNumber] int lineNumber = -1);
 
 ```
+## Maintenance
+
+For keeping the size of the log table under control there is a method that purges the logs based on a purge plan.
+
+Task&lt;int&gt; PurgeLogsAsync(IDictionary&lt;SeverityEnu, TimeSpan&gt; retainDic);
+
+The method returns the number of rows purged from the database.
+
+Up to you to decide how long you need to keep the logs. This can be done per severity.
+
+for example:
+* Fatal: 6 month
+* Error: 3 month
+* Warning: 1 month
+* Info: 5 days
+* Debut: 1 day,
+* Trace: 2 hours
 
 ## Injection
 
@@ -191,6 +208,13 @@ Finally you'll find here after the code for the service injection
             typeof(PgSqlLoggerService),
             lifetime);
         services.Add(sd2);
+        
+        var sd3 = new ServiceDescriptor(
+            typeof(ISqlLoggerService),
+            typeof(PgSqlLoggerService),
+            lifetime);
+        services.Add(sd3);
+        
     }
 ```
 

@@ -3,12 +3,19 @@ using PvWay.LoggerService.nc8;
 
 namespace PvWay.LoggerService.MsSql.nc8;
 
-internal sealed class MsSqlLoggerService(
+internal class MsSqlLoggerService(
     IMsSqlLogWriter logWriter, ILoggerServiceConfig config) : 
     LoggerService.nc8.LoggerService(logWriter, config),
-    IMsSqlLoggerService;
+    IMsSqlLoggerService
+{
+    public Task<int> PurgeLogsAsync(IDictionary<SeverityEnu, TimeSpan> retainDic)
+    {
+        var cLw = (MsSqlLogWriter)logWriter;
+        return cLw.PurgeLogs(retainDic);
+    }
+}
 
 internal sealed class MsSqlLoggerService<T>(
-    ILogWriter logWriter, ILoggerServiceConfig config) : 
-    LoggerService<T>(logWriter, config),
+    IMsSqlLogWriter logWriter, ILoggerServiceConfig config) : 
+    MsSqlLoggerService(logWriter, config),
     IMsSqlLoggerService<T>;
