@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlLogWriter.Core", "MsSq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlLogWriterLab.Core", "MsSqlLogWriterLab.Core\MsSqlLogWriterLab.Core.csproj", "{C5F1B407-3E25-48CB-A336-07D1CBABE86B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlLogWriter.Fw", "MsSqlLogWriter.Fw\MsSqlLogWriter.Fw.csproj", "{B996746E-E84C-48E3-9D1D-E553A91D7244}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlLogWriter.nc6", "MsSqlLogWriter.nc6\MsSqlLogWriter.nc6.csproj", "{7DAD99CA-1573-487D-BD76-2A11F6CD921D}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{C5F1B407-3E25-48CB-A336-07D1CBABE86B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5F1B407-3E25-48CB-A336-07D1CBABE86B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5F1B407-3E25-48CB-A336-07D1CBABE86B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B996746E-E84C-48E3-9D1D-E553A91D7244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B996746E-E84C-48E3-9D1D-E553A91D7244}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B996746E-E84C-48E3-9D1D-E553A91D7244}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B996746E-E84C-48E3-9D1D-E553A91D7244}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DAD99CA-1573-487D-BD76-2A11F6CD921D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DAD99CA-1573-487D-BD76-2A11F6CD921D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DAD99CA-1573-487D-BD76-2A11F6CD921D}.Release|Any CPU.ActiveCfg = Release|Any CPU

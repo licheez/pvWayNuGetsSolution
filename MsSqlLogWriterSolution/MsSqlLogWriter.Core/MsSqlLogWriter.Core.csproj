@@ -15,22 +15,28 @@
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlLogWriterSolution/MsSqlLogWriter.Core</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>pvWay MsSql Database Logger Persistence</PackageTags>
-    <PackageReleaseNotes>becomes a singleton so that check table is only done once</PackageReleaseNotes>
+    <PackageReleaseNotes>fix vulnerability</PackageReleaseNotes>
+    <PackageReadmeFile>readMe.md</PackageReadmeFile>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
-    <Version>2.0.1</Version>
-    <Copyright>pvWay ltd 2023</Copyright>
+    <Version>2.0.2</Version>
+    <Copyright>pvWay ltd 2024</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\pvwayLogoTextLess256.png">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
 </Project>
