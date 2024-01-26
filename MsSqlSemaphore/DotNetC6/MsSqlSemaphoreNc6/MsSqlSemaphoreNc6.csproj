@@ -11,15 +11,15 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <Description>A tiny SQL based semaphore service based on Ms SQL database</Description>
-    <Copyright>pvWay Ltd 2023</Copyright>
+    <Copyright>pvWay Ltd 2024</Copyright>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageTags>pvWay Ms Sql Semaphore</PackageTags>
-    <PackageReleaseNotes>now using pvWay.MsSqlSemaphore.nc6.abstractions for separating interfaces and implementations</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix vulnerability</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlSemaphore/DotNetC6/MsSqlSemaphoreNc6</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,7 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="pvWay.MsSqlSemaphore.nc6.abstractions" Version="1.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
