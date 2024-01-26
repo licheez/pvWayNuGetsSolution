@@ -10,21 +10,28 @@
     <Copyright>pvWay Ltd 2020</Copyright>
     <PackageId>pvWay.MsSqlBackup.Core</PackageId>
     <Description>Backup any Ms Sql database to a local or network folder and execute maintenance plans</Description>
-    <PackageReleaseNotes>added maintenance plan, removed MethodResultWrapper dependency</PackageReleaseNotes>
+    <PackageReleaseNotes>fix vulnerability</PackageReleaseNotes>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution/nc/MsSqlBackup.Core</PackageProjectUrl>
     <PackageTags>pvWay Ms Sql Backup</PackageTags>
-    <Version>1.0.4</Version>
+    <PackageReadmeFile>readMe.md</PackageReadmeFile>
+    <Version>1.0.5</Version>
+    <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution/nc/MsSqlBackup.Core</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\..\pvwayLogoTextLess256.png">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="readMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

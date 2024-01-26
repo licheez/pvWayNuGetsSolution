@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>pvWay.MsSqlBackup.nc6</AssemblyName>
     <RootNamespace>pvWay.MsSqlBackup.nc6</RootNamespace>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <Description>Backup any Ms Sql database to a local folder, a network folder or an Azure Storage Container and execute maintenance plans</Description>
@@ -15,7 +15,7 @@
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/MsSqlBackupSolution</RepositoryUrl>
     <PackageTags>pvWay Ms Sql Backup Azure Container Blob</PackageTags>
-    <PackageReleaseNotes>update azure storage nuGet</PackageReleaseNotes>
+    <PackageReleaseNotes>fix vulnerability</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readMe.md</PackageReadmeFile>
   </PropertyGroup>
@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
