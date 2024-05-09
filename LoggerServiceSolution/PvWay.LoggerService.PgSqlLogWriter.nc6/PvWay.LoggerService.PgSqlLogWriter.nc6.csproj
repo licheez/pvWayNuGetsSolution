@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="7.0.4" />
+    <PackageReference Include="Npgsql" Version="8.0.3" />
     <PackageReference Include="PvWay.LoggerService.nc6" Version="2.0.1" />
   </ItemGroup>
 
