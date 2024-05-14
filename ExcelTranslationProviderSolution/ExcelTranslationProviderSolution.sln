@@ -17,6 +17,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelTranslationProviderCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTranslationProvider.nc6", "Core\ExcelTranslationProvider.nc6\ExcelTranslationProvider.nc6.csproj", "{89D06D33-4562-4654-A110-720C39AC56A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetCore8", "DotNetCore8", "{92931DA5-0ABC-49DB-BE37-05301740809C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.ExcelTranslationProvider.Abstractions.nc8", "PvWay.ExcelTranslationProvider.Abstractions.nc8\PvWay.ExcelTranslationProvider.Abstractions.nc8.csproj", "{4247544E-1E2C-41C4-85CE-81007AA989D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.ExcelTranslationProvider.nc8", "PvWay.ExcelTranslationProvider.nc8\PvWay.ExcelTranslationProvider.nc8.csproj", "{F489B729-2987-46C1-9419-60274042C5B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.ExcelTranslationConsole", "PvWay.ExcelTranslationConsole\PvWay.ExcelTranslationConsole.csproj", "{56494287-8A4E-42E3-A576-ACE313B0D43D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +51,18 @@ Global
 		{89D06D33-4562-4654-A110-720C39AC56A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89D06D33-4562-4654-A110-720C39AC56A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89D06D33-4562-4654-A110-720C39AC56A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4247544E-1E2C-41C4-85CE-81007AA989D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4247544E-1E2C-41C4-85CE-81007AA989D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4247544E-1E2C-41C4-85CE-81007AA989D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4247544E-1E2C-41C4-85CE-81007AA989D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F489B729-2987-46C1-9419-60274042C5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F489B729-2987-46C1-9419-60274042C5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F489B729-2987-46C1-9419-60274042C5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F489B729-2987-46C1-9419-60274042C5B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56494287-8A4E-42E3-A576-ACE313B0D43D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56494287-8A4E-42E3-A576-ACE313B0D43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56494287-8A4E-42E3-A576-ACE313B0D43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56494287-8A4E-42E3-A576-ACE313B0D43D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +73,9 @@ Global
 		{84E76D7D-21CF-4AAF-8671-4DCA423D26BD} = {AD972754-7948-40A9-B7A4-71ADFD7A4051}
 		{6664BDB1-246B-40AC-9FC9-00A553410B88} = {4380C376-10F5-4F3F-8A14-8F508121F632}
 		{89D06D33-4562-4654-A110-720C39AC56A0} = {4380C376-10F5-4F3F-8A14-8F508121F632}
+		{4247544E-1E2C-41C4-85CE-81007AA989D3} = {92931DA5-0ABC-49DB-BE37-05301740809C}
+		{F489B729-2987-46C1-9419-60274042C5B9} = {92931DA5-0ABC-49DB-BE37-05301740809C}
+		{56494287-8A4E-42E3-A576-ACE313B0D43D} = {92931DA5-0ABC-49DB-BE37-05301740809C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C30D72FE-EA78-427B-81BC-EB79D9B8A780}

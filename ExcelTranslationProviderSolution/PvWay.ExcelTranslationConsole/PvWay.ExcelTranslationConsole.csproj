@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="EmbeddedTranslationsFolder\trans_alpha.xlsx" />
+      <EmbeddedResource Include="EmbeddedTranslationsFolder\trans_alpha.xlsx" />
+      <None Remove="EmbeddedTranslationsFolder\trans_top.xlsx" />
+      <EmbeddedResource Include="EmbeddedTranslationsFolder\trans_top.xlsx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PvWay.ExcelTranslationProvider.nc8\PvWay.ExcelTranslationProvider.nc8.csproj" />
+    </ItemGroup>
+
+</Project>
