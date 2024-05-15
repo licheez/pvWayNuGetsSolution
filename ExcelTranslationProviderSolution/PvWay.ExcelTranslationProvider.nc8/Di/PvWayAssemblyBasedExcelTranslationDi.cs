@@ -33,7 +33,7 @@ public static class PvWayAssemblyBasedExcelTranslationDi
     /// <param name="resourceNameMatcher">A regular expression used to match the names of the translation resources.</param>
     /// <param name="logException">An action to handle any exceptions that occur during the translation process.</param>
     /// <param name="lifetime">The lifetime of the translation service.</param>
-    public static void AddAssemblyBasedExcelTranslation(
+    public static void AddPvWayAssemblyBasedExcelTranslation(
         this IServiceCollection services,
         Assembly assembly,
         Regex resourceNameMatcher,
