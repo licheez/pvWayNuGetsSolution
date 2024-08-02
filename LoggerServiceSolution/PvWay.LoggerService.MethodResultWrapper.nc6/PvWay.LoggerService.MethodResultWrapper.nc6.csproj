@@ -7,31 +7,28 @@
     <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
-    <Copyright>pvWay Ltd 2023</Copyright>
+    <Copyright>pvWay Ltd 2024</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
-    <PackageReadmeFile>MethodResultWrapperReadMe.md</PackageReadmeFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>method result wrapper error flow managment</PackageTags>
     <PackageReleaseNotes>new documentation</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.1</Version>
+    <Version>3.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\pvwayLogoTextLess256.png">
+    <PackageReference Include="PvWay.LoggerService.Abstractions.nc6" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="pvwayLogoTextLess256.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="PvWay.LoggerService.nc6" Version="2.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="MethodResultWrapperReadMe.md">
+    <None Update="readme.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

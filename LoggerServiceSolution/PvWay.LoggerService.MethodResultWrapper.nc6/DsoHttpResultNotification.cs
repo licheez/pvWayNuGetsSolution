@@ -7,15 +7,13 @@ namespace PvWay.LoggerService.MethodResultWrapper.nc6;
 
 public class DsoHttpResultNotification
 {
-    public string SeverityCode { get; }
-    public string Message { get; }
-
-    public DsoHttpResultNotification(
-        SeverityEnum severity,
+    public DsoHttpResultNotification(SeverityEnu severity,
         string message)
     {
         SeverityCode = EnumSeverity.GetCode(severity);
         Message = message;
     }
 
+    public string SeverityCode { get; }
+    public string Message { get; }
 }

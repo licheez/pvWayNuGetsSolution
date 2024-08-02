@@ -1,11 +1,11 @@
-# Method Result Wrapper Core DotNet 6 by pvWay
+# Method Result Wrapper DotNet Core 6 by pvWay
 
 Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success 
 or a list of notifications in case of failure.
 
 ## Interfaces
 
-Interfaces are defined in the [LoggerService.Abstractions](https://www.nuget.org/packages/PvWay.LoggerService.Abstractions.nc6/) nuGet
+Interfaces are defined in the [LoggerService.Abstractions for dotNet core 8](https://www.nuget.org/packages/PvWay.LoggerService.Abstractions.nc8/) nuGet
 
 ### MethodResult interfaces
 
@@ -61,39 +61,30 @@ public interface IMethodResultNotification
 ## Features
 
 * **MethodResult** (implementing **IMethodResult**) is a class that
-  * returns whether or not a method succeeded, has fatals, errors or warnings
+  * returns whether or not a method _succeeded_, has _fatal_, _errors_ or _warnings_
   * the returned object provides
-    * a boolean property named Failure that will be set when at least on notification has a severity of error or fatal
+    * a boolean property named Failure that will be set when at least on notification has a severity of _error_ or _fatal_
     * a boolean property named Success that is simply equals to !Failure
     * a list of notifications (message and severity)
     * an ErrorMessage string (list of notifications separated by new lines)
     * a method that allows to throw an exception
 
 * **MethodResult&lt;T&gt;** (inheriting from **IMethodResult**) is a generic class that
-  * returns an object of type T if the method succeeded
+  * returns an object of type **T** if the method succeeded
 
 
 ## Usage
-
 ```csharp
-using PvWay.LoggerService.Abstractions.nc6;
-using PvWay.LoggerService.MethodResultWrapper.nc6;
+using System.Data;
+using PvWay.LoggerService.Abstractions.nc8;
+using PvWay.LoggerService.MethodResultWrapper.nc8;
 
-namespace PvWay.LoggerServiceLab.nc6;
+namespace PvWay.MethodResultWrapperLab.nc8;
 
-internal class MethodResultWrapperDemo
+internal sealed class MethodResultWrapperDemo(
+    ILoggerService ls,
+    IUserStore userStore)
 {
-    private readonly ILoggerService _ls;
-    private readonly IUserStore _userStore;
-
-    public MethodResultWrapperDemo(
-        ILoggerService ls,
-        IUserStore userStore)
-    {
-        _ls = ls;
-        _userStore = userStore;
-    }
-
     public async Task<IMethodResult<string>> GetUserFirstNameAsync(
         string userName)
     {
@@ -106,7 +97,7 @@ internal class MethodResultWrapperDemo
             // let's log this and return a
             // MethodResult object that will carry
             // the notifications collected by the getUser method
-            await _ls.LogAsync(getUser);
+            await ls.LogAsync(getUser);
             return new MethodResult<string>(getUser);
         }
 
@@ -127,7 +118,7 @@ internal class MethodResultWrapperDemo
     {
         try
         {
-            var user = await _userStore.GetUserAsync(userName);
+            var user = await userStore.GetUserAsync(userName);
             if (user != null)
             {
                 // the user was found
@@ -142,10 +133,10 @@ internal class MethodResultWrapperDemo
             // let's construct a failure MethodResult object
             // with the Error (business error) severity
             var err = new MethodResult<IUser>(
-                $"User {userName} not found", SeverityEnum.Error);
+                $"User {userName} not found", SeverityEnu.Error);
 
             // let's log this (business) error
-            await _ls.LogAsync(err);
+            await ls.LogAsync(err);
 
             // let's return the MethodResult to the caller
             return err;
@@ -155,7 +146,7 @@ internal class MethodResultWrapperDemo
             // something raised an exception...
             // for example the data base might not be up
             // let's log this fatal error
-            await _ls.LogAsync(e);
+            await ls.LogAsync(e);
             // let's construct and return a failure MethodResult
             // with the Fatal (technical error) severity
             // and the exception.
@@ -179,44 +170,26 @@ internal class UserStore : IUserStore
 {
     public Task<IUser?> GetUserAsync(string userName)
     {
-        throw new Exception();
+        throw new DataException();
     }
 }
-
 ```
 
 ## Output
 
-<p style="color: red;">
-crit:8/27/2023 6:25:52 AM TDHPRO18A.GetUserAsync.80
-    'Exception: Exception of type 'System.Exception' was thrown.
-StackTrace:    at PvWay.LoggerServiceLab.nc6.UserStore.GetUserAsync(String userName) in C:\GitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.LoggerServiceLab.nc6\MethodResultWrapperDemo.cs:line 104
-   at PvWay.LoggerServiceLab.nc6.MethodResultWrapperDemo.GetUserAsync(String userName) in C:\GitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.LoggerServiceLab.nc6\MethodResultWrapperDemo.cs:line 52'
-</p>
+14:13:48 <span style="background-color: red;">FTL</span> Exception: Data Exception.<BR>
+StackTrace:    at PvWay.MethodResultWrapperLab.nc8.UserStore.GetUserAsync(String userName) in C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\MethodResultWrapperDemo.cs:line 96
+at PvWay.MethodResultWrapperLab.nc8.MethodResultWrapperDemo.GetUserAsync(String userName) in C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\MethodResultWrapperDemo.cs:line 44 from LNV14A in GetUserAsync (C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\MethodResultWrapperDemo.cs) line 72 at 12/13/2023 13:13:48
 
-<p style="color: red;">
-crit:8/27/2023 6:25:52 AM TDHPRO18A.GetUserFirstNameAsync.31
-    'Fatal:Exception: Exception of type 'System.Exception' was thrown.
-StackTrace:    at PvWay.LoggerServiceLab.nc6.UserStore.GetUserAsync(String userName) in C:\GitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.LoggerServiceLab.nc6\MethodResultWrapperDemo.cs:line 104
-   at PvWay.LoggerServiceLab.nc6.MethodResultWrapperDemo.GetUserAsync(String userName) in C:\GitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.LoggerServiceLab.nc6\MethodResultWrapperDemo.cs:line 52'
-</p>
+14:13:48 <span style="background-color: red;">FTL</span> Fatal:Exception: Data Exception.<BR>
+StackTrace:    at PvWay.MethodResultWrapperLab.nc8.UserStore.GetUserAsync(String userName) in C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\MethodResultWrapperDemo.cs:line 96
+at PvWay.MethodResultWrapperLab.nc8.MethodResultWrapperDemo.GetUserAsync(String userName) in C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\Me
+thodResultWrapperDemo.cs:line 44 from LNV14A in GetUserFirstNameAsync (C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\MethodResultWrapperDemo.cs) line 23 at 12/13/2023 13:13:48
 
-## See Also
-
-
-
-The following nuGet packages implement the LoggerService
-
-* [pvWay.LoggerService.nc6](https://www.nuget.org/packages/PvWay.LoggerService.nc6/)
-  * ConsoleLogger: Colorful console implementation
-  * MuteLogger: Silent logger for uTesting
-  * MicrosoftLogger: uses the Microsoft.Extensions.Logger
-  * MicrosoftConsoleLogger: uses the Ms AddConsole extension
-  * MultiChannelLogger: writes to multiple logs in one shot
-
-* [pvWay.MsSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.MsSqlLogWriter.nc6) Implementation for Ms SQL Database
-
-* [pvWay.PgSqlLogWriter.nc6](https://www.nuget.org/packages/PvWay.LoggerService.PgSqlLogWriter.nc6) Implementation for PostgreSQL Database
+14:13:48 <span style="background-color: red;">FTL</span> Fatal:Exception: Data Exception.<BR>
+StackTrace:    at PvWay.MethodResultWrapperLab.nc8.UserStore.GetUserAsync(String userName) in C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\MethodResultWrapperDemo.cs:line 96
+at PvWay.MethodResultWrapperLab.nc8.MethodResultWrapperDemo.GetUserAsync(String userName) in C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\Me
+thodResultWrapperDemo.cs:line 44 from LNV14A in <Main>$ (C:\gitHub\pvWayNuGetsSolution\LoggerServiceSolution\PvWay.MethodResultWrapperLab.nc8\Program.cs) line 26 at 12/13/2023 13:13:48
 
 
 Happy coding !

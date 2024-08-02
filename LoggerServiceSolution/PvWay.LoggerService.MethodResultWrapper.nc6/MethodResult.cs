@@ -1,22 +1,22 @@
-﻿using PvWay.LoggerService.Abstractions.nc6;
-using PvWay.LoggerService.nc6;
+﻿using System.Text;
+using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.MethodResultWrapper.nc6;
 
 public class MethodResult : IMethodResult
 {
-    private readonly ICollection<IMethodResultNotification> _notifications;
+    private readonly IList<IMethodResultNotification> _notifications;
 
-    private class Notification : IMethodResultNotification
+    private sealed class Notification : IMethodResultNotification
     {
-        public SeverityEnum Severity { get; }
-        public string Message { get; }
-
-        public Notification(SeverityEnum severity, string message)
+        public Notification(SeverityEnu severity, string message)
         {
             Severity = severity;
             Message = message;
         }
+
+        public SeverityEnu Severity { get; }
+        public string Message { get; }
 
         public override string ToString()
         {
@@ -27,6 +27,7 @@ public class MethodResult : IMethodResult
     /// <summary>
     /// Successful constructor
     /// </summary>
+    // ReSharper disable once MemberCanBeProtected.Global
     public MethodResult()
     {
         _notifications = new List<IMethodResultNotification>();
@@ -39,6 +40,7 @@ public class MethodResult : IMethodResult
     /// but makes sense when using the generic version of the class
     /// </summary>
     /// <param name="res"></param>
+    // ReSharper disable once MemberCanBeProtected.Global
     public MethodResult(IMethodResult res)
         : this()
     {
@@ -54,7 +56,8 @@ public class MethodResult : IMethodResult
     /// </summary>
     /// <param name="message"></param>
     /// <param name="severity"></param>
-    public MethodResult(string message, SeverityEnum severity) :
+    // ReSharper disable once MemberCanBeProtected.Global
+    public MethodResult(string message, SeverityEnu severity) :
         this()
     {
         AddNotification(message, severity);
@@ -71,7 +74,7 @@ public class MethodResult : IMethodResult
     /// </summary>
     /// <param name="e"></param>
     /// <param name="severity"></param>
-    public MethodResult(Exception e, SeverityEnum severity = SeverityEnum.Fatal)
+    public MethodResult(Exception e, SeverityEnu severity = SeverityEnu.Fatal)
         : this(e.GetDeepMessage(), severity)
     {
     }
@@ -84,7 +87,8 @@ public class MethodResult : IMethodResult
     /// </summary>
     /// <param name="messages"></param>
     /// <param name="severity"></param>
-    public MethodResult(IEnumerable<string> messages, SeverityEnum severity) :
+    // ReSharper disable once MemberCanBeProtected.Global
+    public MethodResult(IEnumerable<string> messages, SeverityEnu severity) :
         this()
     {
         foreach (var message in messages)
@@ -93,7 +97,7 @@ public class MethodResult : IMethodResult
         }
     }
 
-    public void AddNotification(string message, SeverityEnum severity)
+    public void AddNotification(string message, SeverityEnu severity)
     {
         AddNotification(new Notification(severity, message));
     }
@@ -108,7 +112,7 @@ public class MethodResult : IMethodResult
     /// greater or equal to Error
     /// </summary>
     public bool Failure => _notifications
-        .Any(n => n.Severity >= SeverityEnum.Error);
+        .Any(n => n.Severity >= SeverityEnu.Error);
 
     /// <summary>
     /// No notification or all notifications severity
@@ -119,31 +123,31 @@ public class MethodResult : IMethodResult
     /// <summary>
     /// returns the highest severity from the list of notifications
     /// </summary>
-    public SeverityEnum Severity =>
+    public SeverityEnu Severity =>
         _notifications.Any()
             ? _notifications.Max(x => x.Severity)
-            : SeverityEnum.Ok;
+            : SeverityEnu.Ok;
 
     public IEnumerable<IMethodResultNotification> Notifications =>
         _notifications;
 
     public void Throw()
     {
-        throw new Exception(ErrorMessage);
+        throw new MethodResultException(ErrorMessage);
     }
 
     public string ErrorMessage => ToString();
 
     public override string ToString()
     {
-        var str = string.Empty;
+        var sb = new StringBuilder();
         foreach (var notification in _notifications)
         {
-            if (!string.IsNullOrEmpty(str))
-                str += Environment.NewLine;
-            str += notification.ToString();
+            if (sb.Length > 0) 
+                sb.Append(Environment.NewLine);
+            sb.Append(notification);
         }
-        return str;
+        return sb.ToString();
     }
 
     public static MethodResult Ok => new();
@@ -153,6 +157,8 @@ public class MethodResult : IMethodResult
 public class MethodResult<T> : MethodResult, IMethodResult<T>
 {
     public T? Data { get; }
+
+    public static IMethodResult<T> Null => new MethodResult<T>(default(T));
 
     /// <summary>
     /// Successful constructor that carries
@@ -164,8 +170,6 @@ public class MethodResult<T> : MethodResult, IMethodResult<T>
     {
         Data = data;
     }
-
-    public static IMethodResult<T> Null => new MethodResult<T>(default(T));
 
     /// <summary>
     /// Wraps the result of a previous MethodResult
@@ -185,7 +189,7 @@ public class MethodResult<T> : MethodResult, IMethodResult<T>
     /// </summary>
     /// <param name="message"></param>
     /// <param name="severity"></param>
-    public MethodResult(string message, SeverityEnum severity)
+    public MethodResult(string message, SeverityEnu severity)
         : base(message, severity)
     {
     }
@@ -198,7 +202,7 @@ public class MethodResult<T> : MethodResult, IMethodResult<T>
     /// </summary>
     /// <param name="messages"></param>
     /// <param name="severity"></param>
-    public MethodResult(IEnumerable<string> messages, SeverityEnum severity)
+    public MethodResult(IEnumerable<string> messages, SeverityEnu severity)
         : base(messages, severity)
     {
     }
@@ -214,7 +218,7 @@ public class MethodResult<T> : MethodResult, IMethodResult<T>
     /// </summary>
     /// <param name="e"></param>
     /// <param name="severity"></param>
-    public MethodResult(Exception e, SeverityEnum severity = SeverityEnum.Fatal)
+    public MethodResult(Exception e, SeverityEnu severity = SeverityEnu.Fatal)
         : base(e, severity)
     {
     }
