@@ -8,7 +8,7 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <Description>Simple logger service interfaces and enums</Description>
-    <Copyright>pvWay Ltd 2023</Copyright>
+    <Copyright>pvWay Ltd 2024</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
@@ -16,8 +16,8 @@
     <PackageTags>Logger Abstraction Trace</PackageTags>
     <PackageReleaseNotes>MethodResult now support in LoggerService</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>pvWayLoggerServiceAbstractions.md</PackageReadmeFile>
-    <Version>2.0.0</Version>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <Version>3.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
