@@ -7,7 +7,7 @@
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
     <Description>PostgreSQL implementation of the pvWay.LoggerService.Abstractions.nc6 that persists logs into a table in a PostgreSQL database</Description>
-    <Copyright>pvWay Ltd 2023</Copyright>
+    <Copyright>pvWay Ltd 2024</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
@@ -16,7 +16,8 @@
     <PackageTags>log postgre SQL database trace audit persist</PackageTags>
     <PackageReleaseNotes>breaking changes: some column types were modify to comply with EntityFramework</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.2</Version>
+    <PackageReleaseNotes>Upgrade NpgSql nuGet from 7.0.4 to 7.0.7</PackageReleaseNotes>
+    <Version>2.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="7.0.4" />
+    <PackageReference Include="Npgsql" Version="7.0.7" />
     <PackageReference Include="PvWay.LoggerService.nc6" Version="2.0.1" />
   </ItemGroup>
 

@@ -2,9 +2,10 @@
 
 namespace PvWay.LoggerService.Abstractions.nc6;
 
-public enum SeverityEnum
+public enum SeverityEnu
 {
     Ok,
+    Trace,
     Debug,
     Info,
     Warning,
@@ -15,37 +16,40 @@ public enum SeverityEnum
 public static class EnumSeverity
 {
     private const string Ok = "O";
+    private const string Trace = "T";
     private const string Debug = "D";
     private const string Info = "I";
     private const string Warning = "W";
     private const string Error = "E";
     private const string Fatal = "F";
 
-    public static string GetCode(SeverityEnum value)
+    public static string GetCode(SeverityEnu value)
     {
         return value switch
         {
-            SeverityEnum.Ok => Ok,
-            SeverityEnum.Debug => Debug,
-            SeverityEnum.Info => Info,
-            SeverityEnum.Warning => Warning,
-            SeverityEnum.Error => Error,
-            SeverityEnum.Fatal => Fatal,
+            SeverityEnu.Ok => Ok,
+            SeverityEnu.Trace => Trace,
+            SeverityEnu.Debug => Debug,
+            SeverityEnu.Info => Info,
+            SeverityEnu.Warning => Warning,
+            SeverityEnu.Error => Error,
+            SeverityEnu.Fatal => Fatal,
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
         };
     }
 
-    public static SeverityEnum GetValue(string code)
+    public static SeverityEnu GetValue(string code)
     {
         return code switch
         {
-            null => SeverityEnum.Ok,
-            Ok => SeverityEnum.Ok,
-            Debug => SeverityEnum.Debug,
-            Info => SeverityEnum.Info,
-            Warning => SeverityEnum.Warning,
-            Error => SeverityEnum.Error,
-            Fatal => SeverityEnum.Fatal,
+            null => SeverityEnu.Ok,
+            Ok => SeverityEnu.Ok,
+            Trace => SeverityEnu.Trace,
+            Debug => SeverityEnu.Debug,
+            Info => SeverityEnu.Info,
+            Warning => SeverityEnu.Warning,
+            Error => SeverityEnu.Error,
+            Fatal => SeverityEnu.Fatal,
             _ => throw new ArgumentOutOfRangeException(nameof(code), code, null)
         };
     }
@@ -67,31 +71,32 @@ public static class EnumSeverity
         };
     }
 
-    public static LogLevel GetMsLogLevel(SeverityEnum severity)
+    public static LogLevel GetMsLogLevel(SeverityEnu severity)
     {
         return severity switch
         {
-            SeverityEnum.Ok => LogLevel.None,
-            SeverityEnum.Debug => LogLevel.Debug,
-            SeverityEnum.Info => LogLevel.Information,
-            SeverityEnum.Warning => LogLevel.Warning,
-            SeverityEnum.Error => LogLevel.Error,
-            SeverityEnum.Fatal => LogLevel.Critical,
+            SeverityEnu.Ok => LogLevel.None,
+            SeverityEnu.Trace => LogLevel.Trace,
+            SeverityEnu.Debug => LogLevel.Debug,
+            SeverityEnu.Info => LogLevel.Information,
+            SeverityEnu.Warning => LogLevel.Warning,
+            SeverityEnu.Error => LogLevel.Error,
+            SeverityEnu.Fatal => LogLevel.Critical,
             _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
         };
     }
 
-    public static SeverityEnum GetSeverity(LogLevel level)
+    public static SeverityEnu GetSeverity(LogLevel level)
     {
         return level switch
         {
-            LogLevel.Trace => SeverityEnum.Debug,
-            LogLevel.Debug => SeverityEnum.Debug,
-            LogLevel.Information => SeverityEnum.Info,
-            LogLevel.Warning => SeverityEnum.Warning,
-            LogLevel.Error => SeverityEnum.Error,
-            LogLevel.Critical => SeverityEnum.Fatal,
-            LogLevel.None => SeverityEnum.Ok,
+            LogLevel.Trace => SeverityEnu.Trace,
+            LogLevel.Debug => SeverityEnu.Debug,
+            LogLevel.Information => SeverityEnu.Info,
+            LogLevel.Warning => SeverityEnu.Warning,
+            LogLevel.Error => SeverityEnu.Error,
+            LogLevel.Critical => SeverityEnu.Fatal,
+            LogLevel.None => SeverityEnu.Ok,
             _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
         };
     }
