@@ -16,14 +16,16 @@ public static class PvWayUTestLogger
         IUTestLogWriter utLw)
     {
         return new UTestLoggerService(
-            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
     }
     
     public static IUTestLoggerService<T> Create<T>(
         IUTestLogWriter utLw)
     {
         return new UTestLoggerService<T>(
-            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
     }
     
     /// <summary>
