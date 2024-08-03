@@ -9,7 +9,9 @@ internal class MsSqlLoggerService :
 {
     private readonly IMsSqlLogWriter _logWriter1;
 
-    public MsSqlLoggerService(IMsSqlLogWriter logWriter, ILoggerServiceConfig config) : base(logWriter, config)
+    public MsSqlLoggerService(
+        ILoggerServiceConfig config, 
+        IMsSqlLogWriter logWriter) : base(config, logWriter)
     {
         _logWriter1 = logWriter;
     }
@@ -25,7 +27,9 @@ internal sealed class MsSqlLoggerService<T> :
     MsSqlLoggerService,
     IMsSqlLoggerService<T>
 {
-    public MsSqlLoggerService(IMsSqlLogWriter logWriter, ILoggerServiceConfig config) : base(logWriter, config)
+    public MsSqlLoggerService(
+        ILoggerServiceConfig config, 
+        IMsSqlLogWriter logWriter) : base(config, logWriter)
     {
     }
 }

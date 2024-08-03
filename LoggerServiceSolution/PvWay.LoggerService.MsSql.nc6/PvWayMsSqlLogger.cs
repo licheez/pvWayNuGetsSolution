@@ -23,15 +23,15 @@ public static class PvWayMsSqlLogger
         string? createDateUtcColumnName = "CreateDateUtc")
     {
         return new MsSqlLoggerService(
+            new LoggerServiceConfig(minLogLevel), 
             new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync), 
-                new MsSqlLogWriterConfig(
-                    schemaName, tableName, 
-                    userIdColumnName, companyIdColumnName, 
-                    machineNameColumnName, severityCodeColumnName, 
-                    contextColumnName, topicColumnName, 
-                    messageColumnName, createDateUtcColumnName)), 
-            new LoggerServiceConfig(minLogLevel));
+            new MsSqlConnectionStringProvider(getCsAsync), 
+            new MsSqlLogWriterConfig(
+                schemaName, tableName, 
+                userIdColumnName, companyIdColumnName, 
+                machineNameColumnName, severityCodeColumnName, 
+                contextColumnName, topicColumnName, 
+                messageColumnName, createDateUtcColumnName)));
     }
 
     public static IMsSqlLoggerService<T> Create<T>(
@@ -49,15 +49,15 @@ public static class PvWayMsSqlLogger
         string? createDateUtcColumnName = "CreateDateUtc")
     {
         return new MsSqlLoggerService<T>(
+            new LoggerServiceConfig(minLogLevel), 
             new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync), 
-                new MsSqlLogWriterConfig(
-                    schemaName, tableName, 
-                    userIdColumnName, companyIdColumnName, 
-                    machineNameColumnName, severityCodeColumnName, 
-                    contextColumnName, topicColumnName, 
-                    messageColumnName, createDateUtcColumnName)), 
-            new LoggerServiceConfig(minLogLevel));
+            new MsSqlConnectionStringProvider(getCsAsync), 
+            new MsSqlLogWriterConfig(
+                schemaName, tableName, 
+                userIdColumnName, companyIdColumnName, 
+                machineNameColumnName, severityCodeColumnName, 
+                contextColumnName, topicColumnName, 
+                messageColumnName, createDateUtcColumnName)));
     }
     
     public static void AddPvWayMsSqlLoggerService(
@@ -92,6 +92,5 @@ public static class PvWayMsSqlLogger
             typeof(MsSqlLoggerService),
             lifetime);
         services.Add(sd3);
-        
     }
 }
