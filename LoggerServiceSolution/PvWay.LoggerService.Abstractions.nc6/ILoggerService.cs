@@ -153,4 +153,4 @@ public interface ILoggerService : ILogger, IDisposable, IAsyncDisposable
 
 }
 
-public interface ILoggerService<out T>: ILogger<T>, ILoggerService{};
+public interface ILoggerService<out T>: ILogger<T>, ILoggerService{}
