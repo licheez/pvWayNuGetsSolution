@@ -23,15 +23,15 @@ public static class PvWayPgSqlLogger
         string? createDateUtcColumnName = "CreateDateUtc")
     {
         return new PgSqlLoggerService(
+            new LoggerServiceConfig(minLogLevel), 
             new PgSqlLogWriter(
-                new PgSqlConnectionStringProvider(getCsAsync), 
-                new PgSqlLogWriterConfig(
-                    schemaName, tableName, 
-                    userIdColumnName, companyIdColumnName, 
-                    machineNameColumnName, severityCodeColumnName, 
-                    contextColumnName, topicColumnName, 
-                    messageColumnName, createDateUtcColumnName)), 
-            new LoggerServiceConfig(minLogLevel));
+            new PgSqlConnectionStringProvider(getCsAsync), 
+            new PgSqlLogWriterConfig(
+                schemaName, tableName, 
+                userIdColumnName, companyIdColumnName, 
+                machineNameColumnName, severityCodeColumnName, 
+                contextColumnName, topicColumnName, 
+                messageColumnName, createDateUtcColumnName)));
     }
 
     public static IPgSqlLoggerService<T> Create<T>(
@@ -49,15 +49,15 @@ public static class PvWayPgSqlLogger
         string? createDateUtcColumnName = "CreateDateUtc")
     {
         return new PgSqlLoggerService<T>(
+            new LoggerServiceConfig(minLogLevel), 
             new PgSqlLogWriter(
-                new PgSqlConnectionStringProvider(getCsAsync), 
-                new PgSqlLogWriterConfig(
-                    schemaName, tableName, 
-                    userIdColumnName, companyIdColumnName, 
-                    machineNameColumnName, severityCodeColumnName, 
-                    contextColumnName, topicColumnName, 
-                    messageColumnName, createDateUtcColumnName)), 
-            new LoggerServiceConfig(minLogLevel));
+            new PgSqlConnectionStringProvider(getCsAsync), 
+            new PgSqlLogWriterConfig(
+                schemaName, tableName, 
+                userIdColumnName, companyIdColumnName, 
+                machineNameColumnName, severityCodeColumnName, 
+                contextColumnName, topicColumnName, 
+                messageColumnName, createDateUtcColumnName)));
     }
     
     

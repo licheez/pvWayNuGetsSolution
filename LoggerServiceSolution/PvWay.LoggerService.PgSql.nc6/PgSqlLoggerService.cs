@@ -9,8 +9,9 @@ internal class PgSqlLoggerService :
 {
     private readonly IPgSqlLogWriter _logWriter;
 
-    public PgSqlLoggerService(IPgSqlLogWriter logWriter,
-        ILoggerServiceConfig config) : base(logWriter, config)
+    public PgSqlLoggerService(
+        ILoggerServiceConfig config, 
+        IPgSqlLogWriter logWriter) : base(config, logWriter)
     {
         _logWriter = logWriter;
     }
@@ -26,8 +27,9 @@ internal sealed class PgSqlLoggerService<T> :
     PgSqlLoggerService,
     IPgSqlLoggerService<T>
 {
-    public PgSqlLoggerService(IPgSqlLogWriter logWriter,
-        ILoggerServiceConfig config) : base(logWriter, config)
+    public PgSqlLoggerService(
+        ILoggerServiceConfig config, 
+        IPgSqlLogWriter logWriter) : base(config, logWriter)
     {
     }
 }
