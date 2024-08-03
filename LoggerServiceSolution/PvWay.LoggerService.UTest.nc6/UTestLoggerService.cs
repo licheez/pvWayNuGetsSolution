@@ -7,8 +7,9 @@ internal sealed class UTestLoggerService :
     LoggerService.nc6.LoggerService, 
     IUTestLoggerService
 {
-    public UTestLoggerService(IUTestLogWriter logWriter, 
-        ILoggerServiceConfig config) : base(logWriter, config)
+    public UTestLoggerService(
+        ILoggerServiceConfig config, 
+        IUTestLogWriter logWriter) : base(config, logWriter)
     {
     }
 }
@@ -17,8 +18,9 @@ internal sealed class UTestLoggerService<T> :
     LoggerService<T>, 
     IUTestLoggerService<T>
 {
-    public UTestLoggerService(IUTestLogWriter logWriter, 
-        ILoggerServiceConfig config) : base(logWriter, config)
+    public UTestLoggerService(
+        ILoggerServiceConfig config, 
+        IUTestLogWriter logWriter) : base(config, logWriter)
     {
     }
 }
