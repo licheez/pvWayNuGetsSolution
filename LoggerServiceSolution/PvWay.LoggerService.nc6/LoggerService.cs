@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc6;
 
@@ -22,35 +21,10 @@ internal interface ILoggerServiceConfig
     SeverityEnu MinLevel { get; }
 }
 
-internal class LoggerServiceConfig : ILoggerServiceConfig
-{
-    public SeverityEnu MinLevel { get; }
-
-    public LoggerServiceConfig(IConfiguration? config)
-    {
-        var minLevelCode = config?["minLogLevel"] ?? "T";
-        MinLevel = minLevelCode.ToLower() switch
-        {
-            "trace" or "t" or "verbose" or "v" => SeverityEnu.Trace,
-            "debug" or "d" => SeverityEnu.Debug,
-            "info" or "information" or "i" => SeverityEnu.Info,
-            "warning" or "w" => SeverityEnu.Warning,
-            "error" or "e" => SeverityEnu.Error,
-            "fatal" or "f" or "critic" or "critical" or "c" => SeverityEnu.Fatal,
-            _ => SeverityEnu.Trace
-        };
-    }
-
-    public LoggerServiceConfig(SeverityEnu minLogLevel)
-    {
-        MinLevel = minLogLevel;
-    }
-}
-
 internal abstract class LoggerService :
     ILoggerService
 {
-    private readonly ILogWriter _logWriter;
+    private readonly ILogWriter[] _logWriters;
     private readonly ILoggerServiceConfig _config;
     
     private string? _userId;
@@ -58,10 +32,10 @@ internal abstract class LoggerService :
     private string? _topic;
 
     protected LoggerService(
-        ILogWriter logWriter,
-        ILoggerServiceConfig config)
+        ILoggerServiceConfig config,
+        params ILogWriter[] logWriters)
     {
-        _logWriter = logWriter;
+        _logWriters = logWriters;
         _config = config;
     }
 
@@ -118,9 +92,11 @@ internal abstract class LoggerService :
         return severity >= _config.MinLevel;
     }
 
-    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+#pragma warning disable CS8633 // Nullability in constraints for type parameter doesn't match the constraints for type parameter in implicitly implemented interface method'.
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull
+#pragma warning restore CS8633 // Nullability in constraints for type parameter doesn't match the constraints for type parameter in implicitly implemented interface method'.
     {
-        return null;
+        return this;
     }
 
     public void Dispose()
@@ -131,7 +107,10 @@ internal abstract class LoggerService :
 
     protected virtual void Dispose(bool disposing)
     {
-        _logWriter.Dispose();
+        foreach (var logWriter in _logWriters)
+        {
+            logWriter.Dispose();
+        }
     }
 
     ~LoggerService()
@@ -141,7 +120,12 @@ internal abstract class LoggerService :
 
     public ValueTask DisposeAsync()
     {
-        return _logWriter.DisposeAsync();
+        foreach (var logWriter in _logWriters)
+        {
+            logWriter.DisposeAsync();
+        }
+        GC.SuppressFinalize(this);
+        return new ValueTask();
     }
 
     public void SetUser(string? userId, string? companyId = null)
@@ -360,15 +344,18 @@ internal abstract class LoggerService :
         if (severity < _config.MinLevel)
             return;
 
-        _logWriter.WriteLog(
-            _userId, _companyId, topic,
-            severity,
-            Environment.MachineName,
-            memberName, filePath, lineNumber,
-            message, DateTime.UtcNow);
+        foreach (var logWriter in _logWriters)
+        {
+            logWriter.WriteLog(
+                _userId, _companyId, topic,
+                severity,
+                Environment.MachineName,
+                memberName, filePath, lineNumber,
+                message, DateTime.UtcNow);
+        }
     }
 
-    private Task WriteLogAsync(
+    private async Task WriteLogAsync(
         string message,
         string? topic,
         SeverityEnu severity = SeverityEnu.Debug,
@@ -377,14 +364,17 @@ internal abstract class LoggerService :
         int lineNumber = -1)
     {
         if (severity < _config.MinLevel)
-            return Task.CompletedTask;
+            return;
 
-        return _logWriter.WriteLogAsync(
-            _userId, _companyId, topic,
-            severity,
-            Environment.MachineName,
-            memberName, filePath, lineNumber,
-            message, DateTime.UtcNow);
+        foreach (var logWriter in _logWriters)
+        {
+            await logWriter.WriteLogAsync(
+                _userId, _companyId, topic,
+                severity,
+                Environment.MachineName,
+                memberName, filePath, lineNumber,
+                message, DateTime.UtcNow); 
+        }
     }
 
     private static SeverityEnu GetSeverity(LogLevel logLevel)
@@ -411,11 +401,12 @@ internal abstract class LoggerService :
     }
 }
 
+// ReSharper disable once UnusedTypeParameter
 internal abstract class LoggerService<T>: LoggerService
 {
     protected LoggerService(
-        ILogWriter lw,
-        ILoggerServiceConfig config): base(lw, config)
+        ILoggerServiceConfig config,
+        params ILogWriter[] logWriters): base(config, logWriters)
     {
     }
 }
