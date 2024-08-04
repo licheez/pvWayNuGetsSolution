@@ -40,17 +40,26 @@ public static class PvWayMuteLogger
     public static void AddPvWayMuteLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
         
-        services.TryAddSingleton<IMuteLogWriter, MuteLogWriter>();
-        
-        var sd = new ServiceDescriptor(
-            typeof(IMuteLoggerService<>), 
-            typeof(MuteLoggerService<>),
-            lifetime);
-        services.Add(sd);
+        services.AddPvWayMuteLogWriter();
+
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new (typeof(IMuteLoggerService),
+                 typeof(MuteLoggerService),
+                 lifetime),
+            new (typeof(IMuteLoggerService<>),
+                 typeof(MuteLoggerService<>),
+                 lifetime)
+        };
+
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
     }
 }

@@ -89,49 +89,75 @@ Task LogAsync(
 
 The **AddPvWayMuteLoggerService** method extends the IServiceCollection
 
-The default lifetime is **Scoped** and the default minimum log level is **Trace**... i.e. logging everything
+The default lifetime is **Singleton** and the default minimum log level is **Trace**... i.e. logging everything
 
 ``` csharp
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
+
+namespace PvWay.LoggerService.Mute.nc6;
+
+public static class PvWayMuteLogger
+{
+    // CREATORS
+    public static ILogWriter CreateWriter()
+    {
+        return new MuteLogWriter();
+    }
+    
+    public static IMuteLoggerService CreateService(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new MuteLoggerService(
+            new LoggerServiceConfig(minLogLevel),
+            new MuteLogWriter());
+    }
+
+    public static IMuteLoggerService<T> CreateService<T>(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new MuteLoggerService<T>(
+            new LoggerServiceConfig(minLogLevel),
+            new MuteLogWriter());
+    }
+    
+    // LOG WRITER
+    public static void AddPvWayMuteLogWriter(
+        this IServiceCollection services)
+    {
+        services.TryAddSingleton<IMuteLogWriter, MuteLogWriter>();
+    }
+    
+    // SERVICE
     public static void AddPvWayMuteLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
         
-        var sd = new ServiceDescriptor(
-            typeof(ILoggerService), 
-            typeof(MuteLoggerService),
-            lifetime);
-        services.Add(sd);
-        
-        var sd2 = new ServiceDescriptor(
-            typeof(IMuteLoggerService), 
-            typeof(MuteLoggerService),
-            lifetime);
-        services.Add(sd2);
+        services.AddPvWayMuteLogWriter();
+
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new (typeof(IMuteLoggerService),
+                 typeof(MuteLoggerService),
+                 lifetime),
+            new (typeof(IMuteLoggerService<>),
+                 typeof(MuteLoggerService<>),
+                 lifetime)
+        };
+
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
     }
+}
 ```
-
-## Static factories
-
-The **PvWayConsoleLogger** static class also exposes two public **Create** methods enabling to factor the service from your own code
-
-``` csharp
-    public static IMuteLoggerService Create(
-        SeverityEnu minLogLevel = SeverityEnu.Trace)
-    {
-        return new MuteLoggerService(new LoggerServiceConfig(minLogLevel));
-    }
-
-    public static IMuteLoggerService<T> Create<T>(
-        SeverityEnu minLogLevel = SeverityEnu.Trace)
-    {
-        return new MuteLoggerService<T>(new LoggerServiceConfig(minLogLevel));
-    }
-```
-
 
 ## Usage
 
@@ -147,7 +173,7 @@ Console.WriteLine();
 var services = new ServiceCollection();
 services.AddPvWayMuteLoggerService();
 var sp = services.BuildServiceProvider();
-var ls = sp.GetService<ILoggerService>()!;
+var ls = sp.GetRequiredService<ILoggerService>();
 
 ls.Log("This is a trace test log message", SeverityEnu.Trace);
 ls.Log("This is a debug test log message");
