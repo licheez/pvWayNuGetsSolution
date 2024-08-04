@@ -3,7 +3,7 @@ using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.Console.nc6;
 
-internal sealed class ConsoleLogWriter : ILogWriter
+internal sealed class ConsoleLogWriter : IConsoleLogWriter
 {
     public void Dispose()
     {

@@ -8,7 +8,8 @@ internal sealed class ConsoleLoggerService :
     IConsoleLoggerService
 {
     public ConsoleLoggerService(
-        ILoggerServiceConfig config): base(config, new ConsoleLogWriter())
+        ILoggerServiceConfig config,
+        IConsoleLogWriter lw): base(config, lw)
     {
     }
 
@@ -18,8 +19,10 @@ internal sealed class ConsoleLoggerService<T> :
     LoggerService<T>,
     IConsoleLoggerService<T>
 {
-    public ConsoleLoggerService(ILoggerServiceConfig config) : 
-        base(config, new ConsoleLogWriter())
+    public ConsoleLoggerService(
+        ILoggerServiceConfig config,
+        IConsoleLogWriter lw) : 
+        base(config, lw)
     {
     }
 }
