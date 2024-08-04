@@ -7,20 +7,40 @@ namespace PvWay.LoggerService.SeriConsole.nc6;
 
 public static class PvWaySerilogConsoleLogger
 {
+    // CREATE
     public static ISeriConsoleLoggerService Create(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
         return new SerilogConsoleService(
-            new LoggerServiceConfig(minLogLevel));
+            new LoggerServiceConfig(minLogLevel),
+            new SerilogConsoleWriter());
     }
 
     public static ISeriConsoleLoggerService<T> Create<T>(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
         return new SerilogConsoleService<T>(
-            new LoggerServiceConfig(minLogLevel));
+            new LoggerServiceConfig(minLogLevel),
+            new SerilogConsoleWriter());
     }
     
+    // LOG WRITER
+    public static void AddPvWaySeriConsoleLogWriter(
+        this IServiceCollection services)
+    {
+        services.TryAddSingleton<IConsoleLogWriter, SerilogConsoleWriter>();
+    }
+    
+    // FACTORY
+    public static void AddPvWaySeriConsoleLoggerFactory(
+        this IServiceCollection services)
+    {
+        services.AddSingleton<
+            ILoggerServiceFactory<IConsoleLoggerService>,
+            SerilogConsoleFactory>();
+    }
+    
+    // SERVICES
     public static void AddPvWaySeriConsoleLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
@@ -30,16 +50,10 @@ public static class PvWaySerilogConsoleLogger
             new LoggerServiceConfig(minLogLevel));
         
         var sd = new ServiceDescriptor(
-            typeof(ILoggerService),
-            typeof(SerilogConsoleService),
+            typeof(ISeriConsoleLoggerService<>),
+            typeof(SerilogConsoleService<>),
             lifetime);
         services.Add(sd);
-        
-        var sd2 = new ServiceDescriptor(
-            typeof(ISeriConsoleLoggerService),
-            typeof(SerilogConsoleService),
-            lifetime);
-        services.Add(sd2);
     }
     
 }

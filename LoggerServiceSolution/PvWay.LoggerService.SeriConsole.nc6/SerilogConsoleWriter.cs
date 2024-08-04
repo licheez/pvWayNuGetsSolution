@@ -5,9 +5,9 @@ using Serilog.Events;
 
 namespace PvWay.LoggerService.SeriConsole.nc6;
 
-internal sealed class SerilogConsoleWriter: ILogWriter
+internal sealed class SerilogConsoleWriter: IConsoleLogWriter
 {
-    private readonly ILogger _sLogger = new LoggerConfiguration()
+    private readonly ILogger _logger = new LoggerConfiguration()
         .WriteTo.Console()
         // filtering message is done by WriteLog method
         .MinimumLevel.Is(LogEventLevel.Verbose)
@@ -54,7 +54,7 @@ internal sealed class SerilogConsoleWriter: ILogWriter
             ? string.Empty
             : $" topic: '{topic}'";
         var dateUtcStr = dateUtc.ToString(CultureInfo.InvariantCulture);
-        _sLogger.Write(sLevel,
+        _logger.Write(sLevel,
             "{Message} from {MachineName} in {MemberName} " +
             "({FilePath}) line {LineNumber} at {DateUtc}" +
             "{UserId}{CompanyId}{Topic}",
