@@ -56,12 +56,13 @@ public static class PvWayMsSqlLogger
         Func<SqlRoleEnu, Task<string>> getCsAsync,
         IConfiguration? lwConfig = null)
     {
-        services.TryAddSingleton<IMsSqlLogWriter>(_ =>
-            new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync),
-                new MsSqlLogWriterConfig(lwConfig)));
+        var csp = new MsSqlConnectionStringProvider(getCsAsync);
+        var cfg = new MsSqlLogWriterConfig(lwConfig);
+        var logWriter = new MsSqlLogWriter(csp, cfg);
+        services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
     }
-    
+   
     // FACTORY
     public static void AddPvWayMsSqlLoggerServiceFactory(
         this IServiceCollection services,
@@ -83,37 +84,51 @@ public static class PvWayMsSqlLogger
     public static void AddPvWayMsSqlLoggerService(
         this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
-        
-        var sd = new ServiceDescriptor(
-            typeof(IMsSqlLoggerService<>),
-            typeof(MsSqlLoggerService<>),
-            lifetime);
-        services.Add(sd);
-    }
 
+        RegisterService(services, lifetime);
+    }
+    
     public static void AddPvWayMsSqlLoggerService(
         this IServiceCollection services,
         Func<SqlRoleEnu, Task<string>> getCsAsync,
         IConfiguration? lwConfig = null,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
-
-        services.TryAddSingleton<IMsSqlLogWriter>(_ =>
-            new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync),
-                new MsSqlLogWriterConfig(lwConfig)));
-
-        var sd = new ServiceDescriptor(
-            typeof(IMsSqlLoggerService<>),
-            typeof(MsSqlLoggerService<>),
-            lifetime);
-        services.Add(sd);
+        
+        services.AddPvWayMsSqlLogWriter(getCsAsync, lwConfig);
+        
+        RegisterService(services, lifetime);
     }
+
+    private static void RegisterService(
+        IServiceCollection services, ServiceLifetime lifetime)
+    {
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new ServiceDescriptor(typeof(IMsSqlLoggerService),
+                typeof(MsSqlLoggerService),
+                lifetime),
+            new ServiceDescriptor(typeof(ISqlLoggerService),
+                typeof(MsSqlLoggerService),
+                lifetime),
+            new ServiceDescriptor(typeof(IMsSqlLoggerService<>),
+                typeof(MsSqlLoggerService<>),
+                lifetime),
+            new ServiceDescriptor(typeof(ISqlLoggerService<>),
+                typeof(MsSqlLoggerService<>),
+                lifetime),
+        };
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
+    }
+
 }
