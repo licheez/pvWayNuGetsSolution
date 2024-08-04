@@ -7,7 +7,9 @@ internal sealed class MuteLoggerService :
     LoggerService.nc6.LoggerService,
     IMuteLoggerService
 {
-    public MuteLoggerService(ILoggerServiceConfig config) : base(config, new MuteLogWriter())
+    public MuteLoggerService(
+        ILoggerServiceConfig config,
+        IMuteLogWriter logWriter) : base(config, logWriter)
     {
     }
 }
@@ -16,7 +18,9 @@ internal sealed class MuteLoggerService<T> :
     LoggerService<T>,
     IMuteLoggerService<T>
 {
-    public MuteLoggerService(ILoggerServiceConfig config) : base(config, new MuteLogWriter())
+    public MuteLoggerService(
+        ILoggerServiceConfig config,
+        IMuteLogWriter logWriter) : base(config, logWriter)
     {
     }
 }

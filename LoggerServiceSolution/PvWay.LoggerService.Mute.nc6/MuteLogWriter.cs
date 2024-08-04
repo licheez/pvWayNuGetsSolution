@@ -2,7 +2,7 @@ using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.Mute.nc6;
 
-public sealed class MuteLogWriter: ILogWriter
+public sealed class MuteLogWriter: IMuteLogWriter
 {
     public void Dispose()
     {
