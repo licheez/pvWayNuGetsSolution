@@ -7,18 +7,18 @@ internal class MsSqlLoggerService :
     LoggerService.nc6.LoggerService,
     IMsSqlLoggerService
 {
-    private readonly IMsSqlLogWriter _logWriter1;
+    private readonly IMsSqlLogWriter _logWriter;
 
     public MsSqlLoggerService(
         ILoggerServiceConfig config, 
         IMsSqlLogWriter logWriter) : base(config, logWriter)
     {
-        _logWriter1 = logWriter;
+        _logWriter = logWriter;
     }
 
     public Task<int> PurgeLogsAsync(IDictionary<SeverityEnu, TimeSpan> retainDic)
     {
-        var cLw = (MsSqlLogWriter)_logWriter1;
+        var cLw = (MsSqlLogWriter)_logWriter;
         return cLw.PurgeLogs(retainDic);
     }
 }
