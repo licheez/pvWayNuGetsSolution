@@ -17,7 +17,7 @@
     <PackageReleaseNotes>MethodResult now support in LoggerService</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
