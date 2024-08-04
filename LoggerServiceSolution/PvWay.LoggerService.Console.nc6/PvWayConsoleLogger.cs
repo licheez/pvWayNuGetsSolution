@@ -21,7 +21,7 @@ public static class PvWayConsoleLogger
             new ConsoleLogWriter());
     }
 
-    public static IConsoleLoggerService<T> Create<T>(
+    public static IConsoleLoggerService<T> CreateService<T>(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
         return new ConsoleLoggerService<T>(
@@ -53,12 +53,22 @@ public static class PvWayConsoleLogger
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
         
-        services.TryAddSingleton<IConsoleLogWriter, ConsoleLogWriter>();
-        
-        // Injecting the service
-        services.AddSingleton(
-            typeof(IConsoleLoggerService<>),
-            typeof(ConsoleLoggerService<>));
+        services.AddPvWayConsoleLogWriter();
+
+        const ServiceLifetime lifetime = ServiceLifetime.Singleton;
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new(typeof(IConsoleLoggerService),
+                typeof(ConsoleLoggerService),
+                lifetime),
+            new(typeof(IConsoleLoggerService<>),
+                typeof(ConsoleLoggerService<>),
+                lifetime)
+        };
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
     }
     
 }

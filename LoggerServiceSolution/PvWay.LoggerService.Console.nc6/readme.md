@@ -91,54 +91,74 @@ Task LogAsync(
 
 The **AddPvWayConsoleLoggerService** method extends the IServiceCollection
 
-The default lifetime is **Scoped** and the default minimum log level is **Trace**... i.e. logging everything
-
 ``` csharp
+   // WRITER 
+    public static void AddPvWayConsoleLogWriter(
+        this IServiceCollection services)
+    {
+        services.TryAddSingleton<IConsoleLogWriter, ConsoleLogWriter>();
+    }
+   
+    // FACTORY
+    public static void AddPvWayConsoleLoggerFactory(
+        this IServiceCollection services)
+    {
+        services.AddSingleton<
+            ILoggerServiceFactory<IConsoleLoggerService>,
+            ConsoleLoggerServiceFactory>();
+    }
+    
+    // SERVICE
     public static void AddPvWayConsoleLoggerService(
         this IServiceCollection services,
-        SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
         
-        services.AddSingleton<
-            ILoggerServiceFactory<IConsoleLoggerService>,
-            ConsoleLoggerServiceFactory>();
+        services.AddPvWayConsoleLogWriter();
 
-        services.AddSingleton(
-            typeof(IConsoleLoggerService<>),
-            typeof(ConsoleLoggerService<>));
-
-        var sd = new ServiceDescriptor(
-            typeof(ILoggerService), 
-            typeof(ConsoleLoggerService),
-            lifetime);
-        services.Add(sd);
-        
-        var sd2 = new ServiceDescriptor(
-            typeof(IConsoleLoggerService),
-            typeof(ConsoleLoggerService),
-            lifetime);
-        services.Add(sd2);
+        const ServiceLifetime lifetime = ServiceLifetime.Singleton;
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new(typeof(IConsoleLoggerService),
+                typeof(ConsoleLoggerService),
+                lifetime),
+            new(typeof(IConsoleLoggerService<>),
+                typeof(ConsoleLoggerService<>),
+                lifetime)
+        };
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
     }
 ```
 
 ## Static factories
 
-The **PvWayConsoleLogger** static class also exposes two public **Create** methods enabling to factor the service from your own code
+The **PvWayConsoleLogger** static class also exposes two public **Create...** methods enabling to factor the service from your own code
 
 ``` csharp
-    public static IConsoleLoggerService Create(
-        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    public static IConsoleLogWriter CreateWriter()
     {
-        return new ConsoleLoggerService(minLogLevel);
+        return new ConsoleLogWriter();
     }
 
-    public static IConsoleLoggerService<T> Create<T>(
+    public static IConsoleLoggerService CreateService(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
-        return new ConsoleLoggerService<T>(minLogLevel);
+        return new ConsoleLoggerService(
+            new LoggerServiceConfig(minLogLevel),
+            new ConsoleLogWriter());
+    }
+
+    public static IConsoleLoggerService<T> CreateService<T>(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerService<T>(
+            new LoggerServiceConfig(minLogLevel),
+            new ConsoleLogWriter());
     }
 ```
 
@@ -157,7 +177,7 @@ Console.WriteLine();
 var services = new ServiceCollection();
 services.AddPvWayConsoleLoggerService();
 var sp = services.BuildServiceProvider();
-var ls = sp.GetService<ILoggerService>()!;
+var ls = sp.GetRequiredService<IConsoleLoggerService>();
 
 ls.Log("This is a trace test log message", SeverityEnu.Trace);
 ls.Log("This is a debug test log message");
