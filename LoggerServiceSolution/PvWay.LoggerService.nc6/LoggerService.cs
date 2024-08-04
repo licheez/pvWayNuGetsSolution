@@ -5,12 +5,12 @@ using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc6;
 
 // ReSharper disable ExplicitCallerInfoArgument
-
 [assembly: InternalsVisibleTo("PvWay.LoggerService.Console.nc6")]
-[assembly: InternalsVisibleTo("PvWay.LoggerService.Mute.nc6")]
-[assembly: InternalsVisibleTo("PvWay.LoggerService.SeriConsole.nc6")]
+[assembly: InternalsVisibleTo("PvWay.LoggerService.Hybrid.nc6")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.MsSql.nc6")]
+[assembly: InternalsVisibleTo("PvWay.LoggerService.Mute.nc6")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.PgSql.nc6")]
+[assembly: InternalsVisibleTo("PvWay.LoggerService.SeriConsole.nc6")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.UTest.nc6")]
 [assembly: InternalsVisibleTo("PvWay.StackTraceConsole.nc6")]
 
