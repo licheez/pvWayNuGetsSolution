@@ -89,49 +89,89 @@ Task LogAsync(
 
 The **PvWaySerilogConsoleLogger** method extends the IServiceCollection
 
-The default lifetime is **Scoped** and the default minimum log level is **Trace**... i.e. logging everything
+The default lifetime is **Singleton** and the default minimum log level is **Trace**... i.e. logging everything
 
 ``` csharp
-    public static void AddPvWaySeriConsoleLoggerService(
-        this IServiceCollection services,
-        SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
+
+namespace PvWay.LoggerService.SeriConsole.nc6;
+
+public static class PvWaySerilogConsoleLogger
+{
+    // CREATE
+    public static IConsoleLogWriter CreateWriter()
     {
-        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
-            new LoggerServiceConfig(minLogLevel));
-        
-        var sd = new ServiceDescriptor(
-            typeof(ILoggerService),
-            typeof(SerilogConsoleService),
-            lifetime);
-        services.Add(sd);
-        
-        var sd2 = new ServiceDescriptor(
-            typeof(ISeriConsoleLoggerService),
-            typeof(SerilogConsoleService),
-            lifetime);
-        services.Add(sd2);
+        return new SerilogConsoleWriter();
     }
-```
-
-## Static factories
-
-The **PvWaySerilogConsoleLogger** static class also exposes two public **Create** methods enabling to factor the service from your own code
-
-``` csharp
-    public static ISeriConsoleLoggerService Create(
+    
+    public static ISeriConsoleLoggerService CreateService(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
         return new SerilogConsoleService(
-            new LoggerServiceConfig(minLogLevel));
+            new LoggerServiceConfig(minLogLevel),
+            new SerilogConsoleWriter());
     }
 
-    public static ISeriConsoleLoggerService<T> Create<T>(
+    public static ISeriConsoleLoggerService<T> CreateService<T>(
         SeverityEnu minLogLevel = SeverityEnu.Trace)
     {
         return new SerilogConsoleService<T>(
-            new LoggerServiceConfig(minLogLevel));
+            new LoggerServiceConfig(minLogLevel),
+            new SerilogConsoleWriter());
     }
+    
+    // LOG WRITER
+    public static void AddPvWaySeriConsoleLogWriter(
+        this IServiceCollection services)
+    {
+        services.TryAddSingleton<
+            IConsoleLogWriter, SerilogConsoleWriter>();
+    }
+    
+    // FACTORY
+    public static void AddPvWaySeriConsoleLoggerFactory(
+        this IServiceCollection services)
+    {
+        services.TryAddSingleton<
+            ILoggerServiceFactory<IConsoleLoggerService>,
+            SerilogConsoleFactory>();
+    }
+    
+    // SERVICES
+    public static void AddPvWaySeriConsoleLoggerService(
+        this IServiceCollection services,
+        SeverityEnu minLogLevel = SeverityEnu.Trace,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
+    {
+        services.AddPvWaySeriConsoleLogWriter();
+        
+        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
+            new LoggerServiceConfig(minLogLevel));
+        
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new(typeof(ISeriConsoleLoggerService),
+                typeof(SerilogConsoleService),
+                lifetime),
+            new(typeof(IConsoleLoggerService),
+                typeof(SerilogConsoleService),
+                lifetime),
+            new(typeof(ISeriConsoleLoggerService<>),
+                typeof(SerilogConsoleService<>),
+                lifetime),
+            new(typeof(IConsoleLoggerService<>),
+                typeof(SerilogConsoleService<>),
+                lifetime),
+        };
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
+    }   
+}
 ```
 
 
@@ -149,7 +189,7 @@ Console.WriteLine();
 var services = new ServiceCollection();
 services.AddPvWaySeriConsoleLoggerService();
 var sp = services.BuildServiceProvider();
-var ls = sp.GetService<ILoggerService>()!;
+var ls = sp.GetRequiredService<ILoggerService>();
 
 ls.Log("This is a trace test log message", SeverityEnu.Trace);
 ls.Log("This is a debug test log message");
