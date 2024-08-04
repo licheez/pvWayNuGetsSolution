@@ -11,7 +11,6 @@ public static class PvWayPgSqlLogger
     // CREATORS
     public static IPgSqlLogWriter CreateWriter(
         Func<SqlRoleEnu, Task<string>> getCsAsync,
-        SeverityEnu minLogLevel = SeverityEnu.Trace,
         string? schemaName = "public",
         string? tableName = "Log",
         string? userIdColumnName = "UserId",
@@ -56,9 +55,10 @@ public static class PvWayPgSqlLogger
         IConfiguration? lwConfig = null)
     {
         var csp = new PgSqlConnectionStringProvider(getCsAsync);
-        var config = new PgSqlLogWriterConfig(lwConfig);
-        services.TryAddSingleton<IPgSqlLogWriter>(_ =>
-            new PgSqlLogWriter(csp, config));
+        var cfg = new PgSqlLogWriterConfig(lwConfig);
+        var logWriter = new PgSqlLogWriter(csp, cfg); 
+        services.TryAddSingleton<IPgSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
     }
     
     // FACTORY
@@ -83,10 +83,12 @@ public static class PvWayPgSqlLogger
    public static void AddPvWayPgSqlLoggerService(
        this IServiceCollection services,
        SeverityEnu minLogLevel = SeverityEnu.Trace,
-       ServiceLifetime lifetime = ServiceLifetime.Scoped)
+       ServiceLifetime lifetime = ServiceLifetime.Singleton)
    {
        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
            new LoggerServiceConfig(minLogLevel));
+       
+       RegisterService(services, lifetime);
         
        var sd = new ServiceDescriptor(
            typeof(IPgSqlLoggerService<>),
@@ -100,20 +102,39 @@ public static class PvWayPgSqlLogger
         Func<SqlRoleEnu, Task<string>> getCsAsync,
         IConfiguration? lwConfig = null,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
-
-        services.AddSingleton<IPgSqlLogWriter>(_ =>
-            new PgSqlLogWriter(
-                new PgSqlConnectionStringProvider(getCsAsync),
-                new PgSqlLogWriterConfig(lwConfig)));
-
-        var sd = new ServiceDescriptor(
-            typeof(IPgSqlLogWriter),
-            typeof(PgSqlLoggerService),
-            lifetime);
-        services.Add(sd);
+        
+        services.AddPvWayPgSqlLogWriter(getCsAsync, lwConfig);
+        
+        RegisterService(services, lifetime);
     }
+    
+    private static void RegisterService(
+        IServiceCollection services, ServiceLifetime lifetime)
+    {
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new ServiceDescriptor(typeof(IMsSqlLoggerService),
+                typeof(PgSqlLoggerService),
+                lifetime),
+            new ServiceDescriptor(typeof(ISqlLoggerService),
+                typeof(PgSqlLoggerService),
+                lifetime),
+            new ServiceDescriptor(typeof(IMsSqlLoggerService<>),
+                typeof(PgSqlLoggerService<>),
+                lifetime),
+            new ServiceDescriptor(typeof(ISqlLoggerService<>),
+                typeof(PgSqlLoggerService<>),
+                lifetime),
+        };
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
+    }
+    
+    
 }
