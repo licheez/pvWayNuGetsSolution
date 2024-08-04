@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PvWay.LoggerService.Console.nc6\PvWay.LoggerService.Console.nc6.csproj" />
+      <ProjectReference Include="..\PvWay.LoggerService.Hybrid.nc6\PvWay.LoggerService.Hybrid.nc6.csproj" />
+      <ProjectReference Include="..\PvWay.LoggerService.MsSql.nc6\PvWay.LoggerService.MsSql.nc6.csproj" />
+      <ProjectReference Include="..\PvWay.LoggerService.PgSql.nc6\PvWay.LoggerService.PgSql.nc6.csproj" />
+      <ProjectReference Include="..\PvWay.LoggerService.SeriConsole.nc6\PvWay.LoggerService.SeriConsole.nc6.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+    </ItemGroup>
+
+</Project>
