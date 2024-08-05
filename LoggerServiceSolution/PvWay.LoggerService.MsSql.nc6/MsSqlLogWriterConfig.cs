@@ -3,7 +3,7 @@ using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.MsSql.nc6;
 
-public class MsSqlLogWriterConfig : ISqlLogWriterConfig
+internal class MsSqlLogWriterConfig : ISqlLogWriterConfig
 {
     public string SchemaName { get; }
     public string TableName { get; }
@@ -31,7 +31,8 @@ public class MsSqlLogWriterConfig : ISqlLogWriterConfig
     {
     }
 
-    public MsSqlLogWriterConfig(string? schemaName = "dbo",
+    public MsSqlLogWriterConfig(
+        string? schemaName = "dbo",
         string? tableName = "Log",
         string? userIdColumnName = "UserId",
         string? companyIdColumnName = "CompanyId",

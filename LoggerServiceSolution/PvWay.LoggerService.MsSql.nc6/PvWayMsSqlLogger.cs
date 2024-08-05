@@ -62,6 +62,32 @@ public static class PvWayMsSqlLogger
         services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
         services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
     }
+    
+    public static void AddPvWayMsSqlLogWriter(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        string? schemaName = "dbo",
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
+    {
+        var csp = new MsSqlConnectionStringProvider(getCsAsync);
+        var cfg = new MsSqlLogWriterConfig(
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        var logWriter = new MsSqlLogWriter(csp, cfg);
+        services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
+    }
    
     // FACTORY
     public static void AddPvWayMsSqlLoggerServiceFactory(
@@ -95,9 +121,9 @@ public static class PvWayMsSqlLogger
     public static void AddPvWayMsSqlLoggerService(
         this IServiceCollection services,
         Func<SqlRoleEnu, Task<string>> getCsAsync,
-        IConfiguration? lwConfig = null,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        IConfiguration? lwConfig = null)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
@@ -107,6 +133,36 @@ public static class PvWayMsSqlLogger
         RegisterService(services, lifetime);
     }
 
+    public static void AddPvWayMsSqlLoggerService(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        SeverityEnu minLogLevel = SeverityEnu.Trace,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        string? schemaName = "dbo",
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
+    {
+        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
+            new LoggerServiceConfig(minLogLevel));
+        
+        services.AddPvWayMsSqlLogWriter(getCsAsync, 
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        
+        RegisterService(services, lifetime);
+    }
+
+    
     private static void RegisterService(
         IServiceCollection services, ServiceLifetime lifetime)
     {

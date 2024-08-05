@@ -2,7 +2,7 @@ using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.MsSql.nc6;
 
-public class MsSqlConnectionStringProvider : IConnectionStringProvider
+internal class MsSqlConnectionStringProvider : IConnectionStringProvider
 {
     private readonly Func<SqlRoleEnu, Task<string>> _getCs;
 

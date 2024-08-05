@@ -136,55 +136,6 @@ see here after the config class
 
 ``` csharp
 using Microsoft.Extensions.Configuration;
-using PvWay.LoggerService.Abstractions.nc8;
-
-namespace PvWay.LoggerService.MsSql.nc8;
-
-public class MsSqlLogWriterConfig(
-    string? schemaName = "dbo",
-    string? tableName = "Log",
-    string? userIdColumnName = "UserId",
-    string? companyIdColumnName = "CompanyId",
-    string? machineNameColumnName = "MachineName",
-    string? severityCodeColumnName = "SeverityCode",
-    string? contextColumnName = "Context",
-    string? topicColumnName = "Topic",
-    string? messageColumnName = "Message",
-    string? createDateUtcColumnName = "CreateDateUtc")
-    : ISqlLogWriterConfig
-{
-    public string SchemaName { get; } = schemaName ?? "dbo";
-    public string TableName { get; } = tableName ?? "Log";
-    public string UserIdColumnName { get; } = userIdColumnName ?? "UserId";
-    public string CompanyIdColumnName { get; } = companyIdColumnName ?? "CompanyId";
-    public string MachineNameColumnName { get; } = machineNameColumnName ?? "MachineName";
-    public string SeverityCodeColumnName { get; } = severityCodeColumnName ?? "SeverityCode";
-    public string ContextColumnName { get; } = contextColumnName ?? "Context";
-    public string TopicColumnName { get; } = topicColumnName ?? "Topic";
-    public string MessageColumnName { get; } = messageColumnName ?? "Message";
-    public string CreateDateUtcColumnName { get; } = createDateUtcColumnName ?? "CreateDateUtc";
-
-    public MsSqlLogWriterConfig(IConfiguration? config):
-        this(
-            config?["schemaName"],
-            config?["tableName"],
-            config?["userIdColumnName"],
-            config?["companyIdColumnName"],
-            config?["machineNameColumnName"],
-            config?["severityCodeColumnName"],
-            config?["contextColumnName"],
-            config?["topicColumnName"],
-            config?["messageColumnName"],
-            config?["createDateUtcColumnName"])
-    {
-    }
-}
-```
-
-Finally you'll find here after the code for the service injection and static creators
-
-``` csharp
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PvWay.LoggerService.Abstractions.nc6;
@@ -248,6 +199,32 @@ public static class PvWayMsSqlLogger
         services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
         services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
     }
+    
+    public static void AddPvWayMsSqlLogWriter(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        string? schemaName = "dbo",
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
+    {
+        var csp = new MsSqlConnectionStringProvider(getCsAsync);
+        var cfg = new MsSqlLogWriterConfig(
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        var logWriter = new MsSqlLogWriter(csp, cfg);
+        services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
+    }
    
     // FACTORY
     public static void AddPvWayMsSqlLoggerServiceFactory(
@@ -281,9 +258,9 @@ public static class PvWayMsSqlLogger
     public static void AddPvWayMsSqlLoggerService(
         this IServiceCollection services,
         Func<SqlRoleEnu, Task<string>> getCsAsync,
-        IConfiguration? lwConfig = null,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Singleton)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        IConfiguration? lwConfig = null)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
@@ -293,6 +270,36 @@ public static class PvWayMsSqlLogger
         RegisterService(services, lifetime);
     }
 
+    public static void AddPvWayMsSqlLoggerService(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        SeverityEnu minLogLevel = SeverityEnu.Trace,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        string? schemaName = "dbo",
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
+    {
+        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
+            new LoggerServiceConfig(minLogLevel));
+        
+        services.AddPvWayMsSqlLogWriter(getCsAsync, 
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        
+        RegisterService(services, lifetime);
+    }
+
+    
     private static void RegisterService(
         IServiceCollection services, ServiceLifetime lifetime)
     {
