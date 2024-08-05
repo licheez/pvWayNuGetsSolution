@@ -16,7 +16,7 @@
         <PackageTags>Logging Logger Unit Testing Mock Fake</PackageTags>
         <PackageReleaseNotes>Uses LoggerService 1.0.4</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>3.0.2</Version>
+        <Version>3.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>

@@ -141,18 +141,39 @@ The **PvWayConsoleLogger** static class also exposes two public **Create** metho
         return new UTestLogWriter();
     }
     
-    public static IUTestLoggerService Create(
+    public static IUTestLoggerService CreateService(
         IUTestLogWriter utLw)
     {
         return new UTestLoggerService(
-            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
     }
     
-    public static IUTestLoggerService<T> Create<T>(
+    public static IUTestLoggerService CreateService(
+        out IUTestLogWriter utLw)
+    {
+        utLw = CreateUTestLogWriter();
+        return new UTestLoggerService(
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
+    }
+
+    
+    public static IUTestLoggerService<T> CreateService<T>(
         IUTestLogWriter utLw)
     {
         return new UTestLoggerService<T>(
-            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
+    }
+
+    public static IUTestLoggerService<T> CreateService<T>(
+        out IUTestLogWriter utLw)
+    {
+        utLw = CreateUTestLogWriter();
+        return new UTestLoggerService<T>(
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
     }
 ```
 
@@ -171,7 +192,7 @@ Console.WriteLine();
 var services = new ServiceCollection();
 var lw = services.AddPvWayUTestLoggerService();
 var sp = services.BuildServiceProvider();
-var ls = sp.GetService<ILoggerService>()!;
+var ls = sp.GetRequiredService<ILoggerService>();
 
 ls.Log("This is a trace test log message", SeverityEnu.Trace);
 ls.Log("This is a debug test log message");
