@@ -16,7 +16,7 @@
         <PackageTags>Logging Logger Console Serilog</PackageTags>
         <PackageReleaseNotes>Uses LoggerService 1.0.4</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>3.0.3</Version>
+        <Version>3.0.4</Version>
     </PropertyGroup>
 
     <ItemGroup>
