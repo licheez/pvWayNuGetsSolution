@@ -92,6 +92,45 @@ Task LogAsync(
 The **AddPvWayConsoleLoggerService** method extends the IServiceCollection
 
 ``` csharp
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
+
+namespace PvWay.LoggerService.Console.nc6;
+
+public static class PvWayConsoleLogger
+{
+    // LOGGER PROVIDER
+    public static ILoggerProvider GetProvider(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerProvider(minLogLevel);
+    }
+    
+    // CREATORS
+    public static IConsoleLogWriter CreateWriter()
+    {
+        return new ConsoleLogWriter();
+    }
+
+    public static IConsoleLoggerService CreateService(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerService(
+            new LoggerServiceConfig(minLogLevel),
+            new ConsoleLogWriter());
+    }
+
+    public static IConsoleLoggerService<T> CreateService<T>(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerService<T>(
+            new LoggerServiceConfig(minLogLevel),
+            new ConsoleLogWriter());
+    }
+
    // WRITER 
     public static void AddPvWayConsoleLogWriter(
         this IServiceCollection services)
@@ -132,34 +171,8 @@ The **AddPvWayConsoleLoggerService** method extends the IServiceCollection
         {
             services.TryAdd(sd);
         }
-    }
-```
-
-## Static factories
-
-The **PvWayConsoleLogger** static class also exposes two public **Create...** methods enabling to factor the service from your own code
-
-``` csharp
-    public static IConsoleLogWriter CreateWriter()
-    {
-        return new ConsoleLogWriter();
-    }
-
-    public static IConsoleLoggerService CreateService(
-        SeverityEnu minLogLevel = SeverityEnu.Trace)
-    {
-        return new ConsoleLoggerService(
-            new LoggerServiceConfig(minLogLevel),
-            new ConsoleLogWriter());
-    }
-
-    public static IConsoleLoggerService<T> CreateService<T>(
-        SeverityEnu minLogLevel = SeverityEnu.Trace)
-    {
-        return new ConsoleLoggerService<T>(
-            new LoggerServiceConfig(minLogLevel),
-            new ConsoleLogWriter());
-    }
+    }   
+}
 ```
 
 

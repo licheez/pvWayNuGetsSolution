@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc6;
 using PvWay.LoggerService.nc6;
 
@@ -7,6 +8,13 @@ namespace PvWay.LoggerService.Console.nc6;
 
 public static class PvWayConsoleLogger
 {
+    // LOGGER PROVIDER
+    public static ILoggerProvider GetProvider(
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        return new ConsoleLoggerProvider(minLogLevel);
+    }
+    
     // CREATORS
     public static IConsoleLogWriter CreateWriter()
     {
