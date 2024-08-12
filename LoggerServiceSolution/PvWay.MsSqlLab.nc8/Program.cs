@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PvWay.LoggerService.Abstractions.nc8;
 using PvWay.LoggerService.MsSql.nc8;
@@ -13,8 +14,9 @@ const string msSqlCs = "Data Source=localhost;" +
                        "TrustServerCertificate=True;";
 
 var services = new ServiceCollection();
-services.AddPvWayMsSqlLoggerService(_ => 
-    Task.FromResult(msSqlCs));
+services.AddPvWayMsSqlLogWriter(_ => Task.FromResult<string>(msSqlCs), 
+    null);
+services.AddPvWayMsSqlLoggerService();
 var sp = services.BuildServiceProvider();
 var ls = sp.GetService<ISqlLoggerService>()!;
 

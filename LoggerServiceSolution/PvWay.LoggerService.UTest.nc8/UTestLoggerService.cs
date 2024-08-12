@@ -4,13 +4,15 @@ using PvWay.LoggerService.nc8;
 namespace PvWay.LoggerService.UTest.nc8;
 
 internal sealed class UTestLoggerService(
-    IUTestLogWriter logWriter, 
-    ILoggerServiceConfig config) : 
-    LoggerService.nc8.LoggerService(logWriter, config), 
-    IUTestLoggerService;
-    
+    ILoggerServiceConfig config,
+    IUTestLogWriter logWriter)
+    :
+        LoggerService.nc8.LoggerService(config, logWriter),
+        IUTestLoggerService;
+
 internal sealed class UTestLoggerService<T>(
-    IUTestLogWriter logWriter, 
-    ILoggerServiceConfig config) : 
-    LoggerService<T>(logWriter, config), 
-    IUTestLoggerService<T>;
+    ILoggerServiceConfig config,
+    IUTestLogWriter logWriter)
+    :
+        LoggerService<T>(config, logWriter),
+        IUTestLoggerService<T>;

@@ -12,19 +12,41 @@ public static class PvWayUTestLogger
         return new UTestLogWriter();
     }
     
-    public static IUTestLoggerService Create(
+    public static IUTestLoggerService CreateService(
         IUTestLogWriter utLw)
     {
         return new UTestLoggerService(
-            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
     }
     
-    public static IUTestLoggerService<T> Create<T>(
+    public static IUTestLoggerService CreateService(
+        out IUTestLogWriter utLw)
+    {
+        utLw = CreateUTestLogWriter();
+        return new UTestLoggerService(
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
+    }
+
+    
+    public static IUTestLoggerService<T> CreateService<T>(
         IUTestLogWriter utLw)
     {
         return new UTestLoggerService<T>(
-            utLw, new LoggerServiceConfig(SeverityEnu.Trace));
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
     }
+
+    public static IUTestLoggerService<T> CreateService<T>(
+        out IUTestLogWriter utLw)
+    {
+        utLw = CreateUTestLogWriter();
+        return new UTestLoggerService<T>(
+            new LoggerServiceConfig(SeverityEnu.Trace), 
+            utLw);
+    }
+
     
     /// <summary>
     /// Injects a transient IUTestLoggerService
