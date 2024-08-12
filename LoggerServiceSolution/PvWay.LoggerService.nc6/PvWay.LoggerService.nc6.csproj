@@ -14,9 +14,9 @@
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>LoggerSesrvice</PackageTags>
-    <PackageReleaseNotes>Refactoring</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix EventId not shown when set</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>3.0.4</Version>
+    <Version>4.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

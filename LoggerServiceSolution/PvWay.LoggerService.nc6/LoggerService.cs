@@ -13,6 +13,7 @@ using PvWay.LoggerService.Abstractions.nc6;
 [assembly: InternalsVisibleTo("PvWay.LoggerService.SeriConsole.nc6")]
 [assembly: InternalsVisibleTo("PvWay.LoggerService.UTest.nc6")]
 [assembly: InternalsVisibleTo("PvWay.StackTraceConsole.nc6")]
+[assembly: InternalsVisibleTo("PvWay.LoggerServiceDebug.nc6")]
 
 namespace PvWay.LoggerService.nc6;
 
@@ -56,7 +57,7 @@ internal abstract class LoggerService :
                 .Split(Environment.NewLine)
                 .Where(x => !(
                     x.Contains("Microsoft.Extensions.Logging.LoggerExtensions")
-                    || x.Contains("PvWay.LoggerService.nc8")
+                    || x.Contains("PvWay.LoggerService.nc")
                     || x.Contains("System.Environment")
                 ));
             var sb = new StringBuilder();
@@ -83,7 +84,13 @@ internal abstract class LoggerService :
         var lineNumber = frame?.GetFileLineNumber() ?? -1;
 
         // Use common method to log the message
-        Log(logMessage, severity, memberName, filePath, lineNumber);
+        var eventMessage = string.Empty;
+        if (eventId.Id != 0 || !string.IsNullOrEmpty(eventId.Name))
+        {
+            eventMessage = $"[{eventId.Id}:{eventId.Name}] ";
+        }
+        var message = $"{eventMessage}{logMessage}";
+        Log(message, severity, memberName, filePath, lineNumber);
     }
 
     public bool IsEnabled(LogLevel logLevel)

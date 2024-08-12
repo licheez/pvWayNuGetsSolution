@@ -32,14 +32,18 @@ var mLw = PvWayMsSqlLogger.CreateWriter(
 var hLogger = PvWayHybridLogger.CreateService(
     SeverityEnu.Trace, cLw, sLw, pLw, mLw);
 
-hLogger.Log("Hello", SeverityEnu.Info);
+await hLogger.LogAsync("Hello", SeverityEnu.Info);
 hLogger.LogInformation("some info");
 
 var services = new ServiceCollection();
 services.AddPvWaySeriConsoleLoggerService();
 var sp = services.BuildServiceProvider();
 var sLs = sp.GetRequiredService<IConsoleLoggerService>();
-sLs.Log("ILoggerService");
+await sLs.LogAsync("ILoggerService");
+var ex = new Exception("MainEx", new Exception("InnerEx"));
+sLs.LogCritical(ex, "got '{Error}'", ex.GetDeepMessage());
+ILogger logger = sLs;
+logger.Log(LogLevel.Critical, ex, null);
 
 
 
