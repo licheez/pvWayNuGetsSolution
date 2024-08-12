@@ -4,13 +4,14 @@ using PvWay.LoggerService.nc8;
 namespace PvWay.LoggerService.Console.nc8;
 
 internal sealed class ConsoleLoggerService(
-    ILoggerServiceConfig config) :
-    LoggerService.nc8.LoggerService(
-        new ConsoleLogWriter(), config),
+    ILoggerServiceConfig config,
+    IConsoleLogWriter lw) :
+    LoggerService.nc8.LoggerService(config, lw),
     IConsoleLoggerService;
 
 internal sealed class ConsoleLoggerService<T>(
-    ILoggerServiceConfig config) :
-    LoggerService<T>(new ConsoleLogWriter(), config),
+    ILoggerServiceConfig config,
+    IConsoleLogWriter lw) :
+    LoggerService<T>(config, lw),
     IConsoleLoggerService<T>;
 

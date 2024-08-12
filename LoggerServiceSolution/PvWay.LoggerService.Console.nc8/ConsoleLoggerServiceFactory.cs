@@ -8,7 +8,9 @@ internal class ConsoleLoggerServiceFactory(ILoggerServiceConfig config) :
 {
     public IConsoleLoggerService CreateLoggerService()
     {
-        return new ConsoleLoggerService(config);
+        return new ConsoleLoggerService(
+            config,
+            new ConsoleLogWriter());
     }
 }
 
@@ -17,6 +19,8 @@ internal class ConsoleLoggerServiceFactory<T>(ILoggerServiceConfig config) :
 {
     public IConsoleLoggerService<T> CreateLoggerService()
     {
-        return new ConsoleLoggerService<T>(config);
+        return new ConsoleLoggerService<T>(
+            config,
+            new ConsoleLogWriter());
     }
 }
