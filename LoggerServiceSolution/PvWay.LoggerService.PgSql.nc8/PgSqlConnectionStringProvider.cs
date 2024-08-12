@@ -2,8 +2,7 @@ using PvWay.LoggerService.Abstractions.nc8;
 
 namespace PvWay.LoggerService.PgSql.nc8;
 
-public class PgSqlConnectionStringProvider(
-    Func<SqlRoleEnu, Task<string>> getCs) : 
+public class PgSqlConnectionStringProvider(Func<SqlRoleEnu, Task<string>> getCs) :
     IConnectionStringProvider
 {
     public Task<string> GetConnectionStringAsync(SqlRoleEnu role = SqlRoleEnu.Application)
