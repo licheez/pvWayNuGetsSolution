@@ -1,4 +1,4 @@
-# pvWay Logger Service for dotNet core 6
+# pvWay Logger Service for dotNet core 8
 
 ## Description
 This nuget provides the base classes for several very intuitive LoggerService implementations of the *PvWay.LoggerService.Abstractions.nc8* ILoggerService interface :
@@ -20,10 +20,13 @@ This nuget provides the base classes for several very intuitive LoggerService im
 
 
 * **SeriConsoleLoggerService** (ISeriConsoleLoggerService)
-    * Uses the well known serilog(tm) console skin package
+  * Uses the well known serilog(tm) console skin package
 
 
 * **UTestLoggerService** (IUTestLoggerService)
-    * Unit testing implementation allowing you to perform asserts on logs content
+  * Unit testing implementation allowing you to perform asserts on logs content
 
+
+* **HybridLoggerService** (IHybridLoggerService)
+  * Write simultaneously to multiple outputs usually a ConsoleLogger and a SqlLogger
 

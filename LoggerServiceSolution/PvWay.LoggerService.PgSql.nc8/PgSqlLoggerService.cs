@@ -4,10 +4,10 @@ using PvWay.LoggerService.nc8;
 namespace PvWay.LoggerService.PgSql.nc8;
 
 internal class PgSqlLoggerService(
-    IPgSqlLogWriter logWriter,
-    ILoggerServiceConfig config) :
-    LoggerService.nc8.LoggerService(logWriter, config),
-    IPgSqlLoggerService
+    ILoggerServiceConfig config,
+    IPgSqlLogWriter logWriter)
+    : LoggerService.nc8.LoggerService(config, logWriter),
+      IPgSqlLoggerService
 {
     public Task<int> PurgeLogsAsync(IDictionary<SeverityEnu, TimeSpan> retainDic)
     {
@@ -17,7 +17,7 @@ internal class PgSqlLoggerService(
 }
 
 internal sealed class PgSqlLoggerService<T>(
-    IPgSqlLogWriter logWriter,
-    ILoggerServiceConfig config) :
-    PgSqlLoggerService(logWriter, config),
-    IPgSqlLoggerService<T>;
+    ILoggerServiceConfig config,
+    IPgSqlLogWriter logWriter)
+    : PgSqlLoggerService(config, logWriter),
+      IPgSqlLoggerService<T>;

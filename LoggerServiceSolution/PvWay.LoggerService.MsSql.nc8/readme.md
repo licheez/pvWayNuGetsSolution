@@ -110,7 +110,7 @@ for example:
 
 The **AddPvWayMsSqlLoggerService** method extends the IServiceCollection
 
-The default lifetime is **Scoped** and the default minimum log level is **Trace**... i.e. logging everything
+The default lifetime is **Singleton** and the default minimum log level is **Trace**... i.e. logging everything
 
 The injection method expects some important parameters
 
@@ -136,97 +136,145 @@ see here after the config class
 
 ``` csharp
 using Microsoft.Extensions.Configuration;
-using PvWay.LoggerService.Abstractions.nc8;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using PvWay.LoggerService.Abstractions.nc6;
+using PvWay.LoggerService.nc6;
 
-namespace PvWay.LoggerService.MsSql.nc8;
+namespace PvWay.LoggerService.MsSql.nc6;
 
-public class MsSqlLogWriterConfig(
-    string? schemaName = "dbo",
-    string? tableName = "Log",
-    string? userIdColumnName = "UserId",
-    string? companyIdColumnName = "CompanyId",
-    string? machineNameColumnName = "MachineName",
-    string? severityCodeColumnName = "SeverityCode",
-    string? contextColumnName = "Context",
-    string? topicColumnName = "Topic",
-    string? messageColumnName = "Message",
-    string? createDateUtcColumnName = "CreateDateUtc")
-    : ISqlLogWriterConfig
+public static class PvWayMsSqlLogger
 {
-    public string SchemaName { get; } = schemaName ?? "dbo";
-    public string TableName { get; } = tableName ?? "Log";
-    public string UserIdColumnName { get; } = userIdColumnName ?? "UserId";
-    public string CompanyIdColumnName { get; } = companyIdColumnName ?? "CompanyId";
-    public string MachineNameColumnName { get; } = machineNameColumnName ?? "MachineName";
-    public string SeverityCodeColumnName { get; } = severityCodeColumnName ?? "SeverityCode";
-    public string ContextColumnName { get; } = contextColumnName ?? "Context";
-    public string TopicColumnName { get; } = topicColumnName ?? "Topic";
-    public string MessageColumnName { get; } = messageColumnName ?? "Message";
-    public string CreateDateUtcColumnName { get; } = createDateUtcColumnName ?? "CreateDateUtc";
-
-    public MsSqlLogWriterConfig(IConfiguration? config):
-        this(
-            config?["schemaName"],
-            config?["tableName"],
-            config?["userIdColumnName"],
-            config?["companyIdColumnName"],
-            config?["machineNameColumnName"],
-            config?["severityCodeColumnName"],
-            config?["contextColumnName"],
-            config?["topicColumnName"],
-            config?["messageColumnName"],
-            config?["createDateUtcColumnName"])
+    // CREATORS
+    public static IMsSqlLogWriter CreateWriter(
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        string? schemaName = "dbo",
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
     {
+        return new MsSqlLogWriter(
+            new MsSqlConnectionStringProvider(getCsAsync),
+            new MsSqlLogWriterConfig(
+                schemaName, tableName,
+                userIdColumnName, companyIdColumnName,
+                machineNameColumnName, severityCodeColumnName,
+                contextColumnName, topicColumnName,
+                messageColumnName, createDateUtcColumnName));
     }
-}
-```
 
-Finally you'll find here after the code for the service injection 
+    public static IMsSqlLoggerService CreateService(
+        IMsSqlLogWriter logWriter,
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        var config = new LoggerServiceConfig(minLogLevel);
+        return new MsSqlLoggerService(
+            config, logWriter);
+    }
 
-``` csharp
-    public static void AddPvWayMsSqlLoggerService(
+    public static IMsSqlLoggerService<T> CreateService<T>(
+        IMsSqlLogWriter logWriter,
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        var config = new LoggerServiceConfig(minLogLevel);
+        return new MsSqlLoggerService<T>(
+            config, logWriter);
+    }
+
+    // LOG WRITER
+    public static void AddPvWayMsSqlLogWriter(
         this IServiceCollection services,
         Func<SqlRoleEnu, Task<string>> getCsAsync,
-        IConfiguration? lwConfig = null,
+        IConfiguration? lwConfig = null)
+    {
+        var csp = new MsSqlConnectionStringProvider(getCsAsync);
+        var cfg = new MsSqlLogWriterConfig(lwConfig);
+        var logWriter = new MsSqlLogWriter(csp, cfg);
+        services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
+    }
+    
+    public static void AddPvWayMsSqlLogWriter(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        string? schemaName = "dbo",
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
+    {
+        var csp = new MsSqlConnectionStringProvider(getCsAsync);
+        var cfg = new MsSqlLogWriterConfig(
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        var logWriter = new MsSqlLogWriter(csp, cfg);
+        services.TryAddSingleton<IMsSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
+    }
+   
+    // FACTORY
+    public static void AddPvWayMsSqlLoggerServiceFactory(
+        this IServiceCollection services,
+        IConfiguration config,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        SeverityEnu minLogLevel = SeverityEnu.Trace)
+    {
+        services.AddSingleton<ILoggerServiceFactory<IMsSqlLoggerService>>(_ =>
+            new MsSqlLoggerServiceFactory(getCsAsync, config, minLogLevel));
+    }
+    
+    // SERVICE
+    /// <summary>
+    /// Use this injector if you already injected the IMsSqlLogWriter
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="minLogLevel"></param>
+    /// <param name="lifetime"></param>
+    public static void AddPvWayMsSqlLoggerService(
+        this IServiceCollection services,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        ServiceLifetime lifetime = ServiceLifetime.Singleton)
     {
         services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
 
-        services.AddSingleton<IMsSqlLogWriter>(_ => 
-            new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync),
-                new MsSqlLogWriterConfig(lwConfig)));
-
-        var sd = new ServiceDescriptor(
-            typeof(ILoggerService),
-            typeof(MsSqlLoggerService),
-            lifetime);
-        services.Add(sd);
-
-        var sd2 = new ServiceDescriptor(
-            typeof(IMsSqlLoggerService),
-            typeof(MsSqlLoggerService),
-            lifetime);
-        services.Add(sd2);
+        RegisterService(services, lifetime);
+    }
+    
+    public static void AddPvWayMsSqlLoggerService(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        SeverityEnu minLogLevel = SeverityEnu.Trace,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
+        IConfiguration? lwConfig = null)
+    {
+        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
+            new LoggerServiceConfig(minLogLevel));
         
-        var sd3 = new ServiceDescriptor(
-            typeof(ISqlLoggerService),
-            typeof(MsSqlLoggerService),
-            lifetime);
-        services.Add(sd3);        
+        services.AddPvWayMsSqlLogWriter(getCsAsync, lwConfig);
+        
+        RegisterService(services, lifetime);
     }
-```
 
-## Static factories
-
-The **PvWayMsSqlLogger** static class also exposes two public **Create** methods enabling to factor the service from your own code
-
-``` csharp
-    public static IMsSqlLoggerService Create(
+    public static void AddPvWayMsSqlLoggerService(
+        this IServiceCollection services,
         Func<SqlRoleEnu, Task<string>> getCsAsync,
         SeverityEnu minLogLevel = SeverityEnu.Trace,
+        ServiceLifetime lifetime = ServiceLifetime.Singleton,
         string? schemaName = "dbo",
         string? tableName = "Log",
         string? userIdColumnName = "UserId",
@@ -238,45 +286,45 @@ The **PvWayMsSqlLogger** static class also exposes two public **Create** methods
         string? messageColumnName = "Message",
         string? createDateUtcColumnName = "CreateDateUtc")
     {
-        return new MsSqlLoggerService(
-            new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync), 
-                new MsSqlLogWriterConfig(
-                    schemaName, tableName, 
-                    userIdColumnName, companyIdColumnName, 
-                    machineNameColumnName, severityCodeColumnName, 
-                    contextColumnName, topicColumnName, 
-                    messageColumnName, createDateUtcColumnName)), 
+        services.TryAddSingleton<ILoggerServiceConfig>(_ =>
             new LoggerServiceConfig(minLogLevel));
+        
+        services.AddPvWayMsSqlLogWriter(getCsAsync, 
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        
+        RegisterService(services, lifetime);
     }
 
-    public static IMsSqlLoggerService<T> Create<T>(
-        Func<SqlRoleEnu, Task<string>> getCsAsync,
-        SeverityEnu minLogLevel = SeverityEnu.Trace,
-        string? schemaName = "dbo",
-        string? tableName = "Log",
-        string? userIdColumnName = "UserId",
-        string? companyIdColumnName = "CompanyId",
-        string? machineNameColumnName = "MachineName",
-        string? severityCodeColumnName = "SeverityCode",
-        string? contextColumnName = "Context",
-        string? topicColumnName = "Topic",
-        string? messageColumnName = "Message",
-        string? createDateUtcColumnName = "CreateDateUtc")
+    
+    private static void RegisterService(
+        IServiceCollection services, ServiceLifetime lifetime)
     {
-        return new MsSqlLoggerService<T>(
-            new MsSqlLogWriter(
-                new MsSqlConnectionStringProvider(getCsAsync), 
-                new MsSqlLogWriterConfig(
-                    schemaName, tableName, 
-                    userIdColumnName, companyIdColumnName, 
-                    machineNameColumnName, severityCodeColumnName, 
-                    contextColumnName, topicColumnName, 
-                    messageColumnName, createDateUtcColumnName)), 
-            new LoggerServiceConfig(minLogLevel));
+        var descriptors = new List<ServiceDescriptor>
+        {
+            new ServiceDescriptor(typeof(IMsSqlLoggerService),
+                typeof(MsSqlLoggerService),
+                lifetime),
+            new ServiceDescriptor(typeof(ISqlLoggerService),
+                typeof(MsSqlLoggerService),
+                lifetime),
+            new ServiceDescriptor(typeof(IMsSqlLoggerService<>),
+                typeof(MsSqlLoggerService<>),
+                lifetime),
+            new ServiceDescriptor(typeof(ISqlLoggerService<>),
+                typeof(MsSqlLoggerService<>),
+                lifetime),
+        };
+        foreach (var sd in descriptors)
+        {
+            services.TryAdd(sd);
+        }
     }
+}
 ```
-
 
 ## Usage
 

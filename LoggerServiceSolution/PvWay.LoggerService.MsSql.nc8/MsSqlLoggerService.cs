@@ -4,9 +4,10 @@ using PvWay.LoggerService.nc8;
 namespace PvWay.LoggerService.MsSql.nc8;
 
 internal class MsSqlLoggerService(
-    IMsSqlLogWriter logWriter, ILoggerServiceConfig config) : 
-    LoggerService.nc8.LoggerService(logWriter, config),
-    IMsSqlLoggerService
+    ILoggerServiceConfig config,
+    IMsSqlLogWriter logWriter)
+    : LoggerService.nc8.LoggerService(config, logWriter),
+      IMsSqlLoggerService
 {
     public Task<int> PurgeLogsAsync(IDictionary<SeverityEnu, TimeSpan> retainDic)
     {
@@ -16,6 +17,7 @@ internal class MsSqlLoggerService(
 }
 
 internal sealed class MsSqlLoggerService<T>(
-    IMsSqlLogWriter logWriter, ILoggerServiceConfig config) : 
-    MsSqlLoggerService(logWriter, config),
-    IMsSqlLoggerService<T>;
+    ILoggerServiceConfig config,
+    IMsSqlLogWriter logWriter)
+    : MsSqlLoggerService(config, logWriter),
+      IMsSqlLoggerService<T>;
