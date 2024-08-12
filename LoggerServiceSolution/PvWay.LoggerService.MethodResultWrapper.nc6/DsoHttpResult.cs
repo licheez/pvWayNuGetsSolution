@@ -13,12 +13,12 @@ namespace PvWay.LoggerService.MethodResultWrapper.nc6;
 public class DsoHttpResult 
 {
     public HttpStatusCode HttpStatusCode =>
-        Status == SeverityEnum.Fatal
-        || Status == SeverityEnum.Error
+        Status == SeverityEnu.Fatal
+        || Status == SeverityEnu.Error
             ? HttpStatusCode.InternalServerError
             : HttpStatusCode.OK;
 
-    internal SeverityEnum Status => EnumSeverity.GetValue(StatusCode);
+    internal SeverityEnu Status => EnumSeverity.GetValue(StatusCode);
 
     public string StatusCode { get; }
     public string MutationCode { get; }
@@ -30,37 +30,37 @@ public class DsoHttpResult
     /// </summary>
     public DsoHttpResult()
     {
-        StatusCode = EnumSeverity.GetCode(SeverityEnum.Ok);
+        StatusCode = EnumSeverity.GetCode(SeverityEnu.Ok);
         Notifications = new List<DsoHttpResultNotification>();
         MutationCode = EnumDsoHttpResultMutation
-            .GetCode(DsoHttpResultMutationEnum.None);
+            .GetCode(DsoHttpResultMutationEnu.None);
     }
 
     /// <summary>
     /// Enables to set the StatusCode
     /// </summary>
     /// <param name="severity"></param>
-    public DsoHttpResult(SeverityEnum severity)
+    public DsoHttpResult(SeverityEnu severity)
     {
         StatusCode = EnumSeverity.GetCode(severity);
         Notifications = new List<DsoHttpResultNotification>();
         MutationCode = EnumDsoHttpResultMutation
-            .GetCode(DsoHttpResultMutationEnum.None);
+            .GetCode(DsoHttpResultMutationEnu.None);
     }
 
     /// <summary>
     /// Successful constructor passing the mutation type
     /// </summary>
     /// <param name="mutation"></param>
-    public DsoHttpResult(DsoHttpResultMutationEnum mutation) :
-        this(SeverityEnum.Ok, false, mutation)
+    public DsoHttpResult(DsoHttpResultMutationEnu mutation) :
+        this(SeverityEnu.Ok, false, mutation)
     {
     }
 
     protected DsoHttpResult(
-        SeverityEnum severity,
+        SeverityEnu severity,
         bool hasMoreResults,
-        DsoHttpResultMutationEnum mutation = DsoHttpResultMutationEnum.None) :
+        DsoHttpResultMutationEnu mutation = DsoHttpResultMutationEnu.None) :
         this()
     {
         StatusCode = EnumSeverity.GetCode(severity);
@@ -92,10 +92,6 @@ public class DsoHttpResult<T> : DsoHttpResult
 {
     public T Data { get; }
 
-    //public DsoResponseData()
-    //{
-    //}
-
     /// <summary>
     /// Successful constructor passing back some data
     /// </summary>
@@ -113,7 +109,7 @@ public class DsoHttpResult<T> : DsoHttpResult
     public DsoHttpResult(
         T data,
         bool hasMoreResults) :
-        base(SeverityEnum.Ok, hasMoreResults)
+        base(SeverityEnu.Ok, hasMoreResults)
     {
         Data = data;
     }
@@ -125,8 +121,8 @@ public class DsoHttpResult<T> : DsoHttpResult
     /// <param name="mutation"></param>
     public DsoHttpResult(
         T data,
-        DsoHttpResultMutationEnum mutation) :
-        base(SeverityEnum.Ok, false, mutation)
+        DsoHttpResultMutationEnu mutation) :
+        base(SeverityEnu.Ok, false, mutation)
     {
         Data = data;
     }

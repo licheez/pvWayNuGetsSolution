@@ -14,7 +14,7 @@ public interface IMethodResult
     /// </summary>
     bool Success { get; }
 
-    SeverityEnum Severity { get; }
+    SeverityEnu Severity { get; }
 
     /// <summary>
     /// Bulk string made of the concatenation
@@ -25,7 +25,7 @@ public interface IMethodResult
 
     IEnumerable<IMethodResultNotification> Notifications { get; }
 
-    void AddNotification(string message, SeverityEnum severity);
+    void AddNotification(string message, SeverityEnu severity);
     void AddNotification(IMethodResultNotification notification);
 
     /// <summary>
@@ -41,6 +41,6 @@ public interface IMethodResult<out T> : IMethodResult
 
 public interface IMethodResultNotification
 {
-    SeverityEnum Severity { get; }
+    SeverityEnu Severity { get; }
     string Message { get; }
 }

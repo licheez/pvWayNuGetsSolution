@@ -2,13 +2,13 @@
 
 namespace PvWay.LoggerService.nc6;
 
-internal class LogRow : IPvWayLogRow
+internal class LogRow: ILoggerServiceRow
 {
     public int Id { get; }
     public string? UserId { get; }
     public string? CompanyId { get; }
     public string? Topic { get; }
-    public SeverityEnum Severity { get; }
+    public SeverityEnu Severity { get; }
     public string MachineName { get; }
     public string MemberName { get; }
     public string FilePath { get; }
@@ -17,12 +17,17 @@ internal class LogRow : IPvWayLogRow
     public DateTime CreationDateUtc { get; }
 
     public LogRow(
-        int id,
-        string? userId, string? companyId,
-        string? topic, SeverityEnum severity,
-        string machineName, string memberName,
-        string filePath, int lineNumber,
-        string message, DateTime creationDateUtc)
+        int id, 
+        string? userId, 
+        string? companyId, 
+        string? topic, 
+        SeverityEnu severity, 
+        string machineName, 
+        string memberName, 
+        string filePath, 
+        int lineNumber, 
+        string message, 
+        DateTime creationDateUtc)
     {
         Id = id;
         UserId = userId;

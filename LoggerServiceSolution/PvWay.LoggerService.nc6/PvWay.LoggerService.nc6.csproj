@@ -6,35 +6,30 @@
     <Nullable>enable</Nullable>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
-    <Description>Several implementations of the pvWay.LoggerService.Abstractions.nc6 such as ConsoleLogger, MuteLogger, MsLogger...</Description>
-    <Copyright>pvWay Ltd 2023</Copyright>
+    <Description>Provides the base classes for several very intuitive LoggerService implementations of the PvWay.LoggerService.Abstractions.nc8 ILoggerService interface</Description>
+    <Copyright>pvWay Ltd 2024</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
-    <PackageReadmeFile>pvWayLoggerService.md</PackageReadmeFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>Log Console Trace Audit Debug Unit Testing</PackageTags>
-    <PackageReleaseNotes>More Loggers, Dependency Injection, uTestingLogger</PackageReleaseNotes>
+    <PackageTags>LoggerSesrvice</PackageTags>
+    <PackageReleaseNotes>Fix EventId not shown when set</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.1</Version>
+    <Version>4.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\pvwayLogoTextLess256.png">
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="PvWay.LoggerService.Abstractions.nc6" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="pvwayLogoTextLess256.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
-    <PackageReference Include="PvWay.LoggerService.Abstractions.nc6" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="pvWayLoggerService.md">
+    <None Update="readme.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

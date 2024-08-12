@@ -1,8 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
 
 namespace PvWay.LoggerService.Abstractions.nc6;
 
-public interface ILoggerService : IDisposable, IAsyncDisposable
+public interface ILoggerService : ILogger, IDisposable, IAsyncDisposable
 {
     /// <summary>
     /// Subsequent calls to the Log method will
@@ -33,42 +34,21 @@ public interface ILoggerService : IDisposable, IAsyncDisposable
     /// <param name="lineNumber"></param>
     void Log(
         string message,
-        SeverityEnum severity = SeverityEnum.Debug,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-
-    Task LogAsync(
-        string message,
-        SeverityEnum severity = SeverityEnum.Debug,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-        
-    void Log(
-        IEnumerable<string> messages,
-        SeverityEnum severity,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-
-    Task LogAsync(
-        IEnumerable<string> messages,
-        SeverityEnum severity,
+        SeverityEnu severity = SeverityEnu.Debug,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
 
     void Log(
-        Exception e,
-        SeverityEnum severity = SeverityEnum.Fatal,
+        IEnumerable<string> messages,
+        SeverityEnu severity,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
-
-    Task LogAsync(
+    
+    void Log(
         Exception e,
-        SeverityEnum severity = SeverityEnum.Fatal,
+        SeverityEnu severity = SeverityEnu.Fatal,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
@@ -79,8 +59,10 @@ public interface ILoggerService : IDisposable, IAsyncDisposable
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
 
-    Task LogAsync(
-        IMethodResult result,
+    void Log(
+        IEnumerable<string> messages,
+        string? topic,
+        SeverityEnu severity,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
@@ -89,47 +71,7 @@ public interface ILoggerService : IDisposable, IAsyncDisposable
     void Log(
         string message,
         string? topic,
-        SeverityEnum severity = SeverityEnum.Debug,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-
-    Task LogAsync(
-        string message,
-        string? topic,
-        SeverityEnum severity = SeverityEnum.Debug,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-        
-    void Log(
-        IEnumerable<string> messages,
-        string? topic,
-        SeverityEnum severity,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-
-    Task LogAsync(
-        IEnumerable<string> messages,
-        string? topic,
-        SeverityEnum severity,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-
-    void Log(
-        Exception e,
-        string? topic,
-        SeverityEnum severity = SeverityEnum.Fatal,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string filePath = "",
-        [CallerLineNumber] int lineNumber = -1);
-
-    Task LogAsync(
-        Exception e,
-        string? topic,
-        SeverityEnum severity = SeverityEnum.Fatal,
+        SeverityEnu severity = SeverityEnu.Debug,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
@@ -137,6 +79,67 @@ public interface ILoggerService : IDisposable, IAsyncDisposable
     void Log(
         IMethodResult result,
         string? topic,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+
+    void Log(
+        Exception e,
+        string? topic,
+        SeverityEnu severity = SeverityEnu.Fatal,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+
+    // ASYNC
+    Task LogAsync(
+        string message,
+        SeverityEnu severity = SeverityEnu.Debug,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+
+    Task LogAsync(
+        IEnumerable<string> messages,
+        SeverityEnu severity,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+
+    Task LogAsync(
+        Exception e,
+        SeverityEnu severity = SeverityEnu.Fatal,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+
+    Task LogAsync(
+        IMethodResult result,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+    
+    // TOPIC METHODS
+    Task LogAsync(
+        string message,
+        string? topic,
+        SeverityEnu severity = SeverityEnu.Debug,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+        
+    Task LogAsync(
+        IEnumerable<string> messages,
+        string? topic,
+        SeverityEnu severity,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = -1);
+
+    Task LogAsync(
+        Exception e,
+        string? topic,
+        SeverityEnu severity = SeverityEnu.Fatal,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string filePath = "",
         [CallerLineNumber] int lineNumber = -1);
@@ -149,3 +152,5 @@ public interface ILoggerService : IDisposable, IAsyncDisposable
         [CallerLineNumber] int lineNumber = -1);
 
 }
+
+public interface ILoggerService<out T>: ILogger<T>, ILoggerService{}
