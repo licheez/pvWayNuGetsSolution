@@ -4,6 +4,19 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Company>pvWay Ltd</Company>
+        <Description>This nuGet implements the SemaphoreService interfaces using a tiny DAO connection towards an PostgreSQL Database.</Description>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/</PackageProjectUrl>
+        <Copyright>pvWay Ltd 2024</Copyright>
+        <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>semaphore distributed lock mutex PostgreSQL Database DAO</PackageTags>
+        <PackageReleaseNotes>Initial version</PackageReleaseNotes>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,7 +29,7 @@
     <ItemGroup>
       <None Update="pvwayLogoTextLess256.png">
         <Pack>True</Pack>
-        <PackagePath></PackagePath>
+        <PackagePath>/</PackagePath>
       </None>
       <None Update="readme.md">
         <Pack>True</Pack>
