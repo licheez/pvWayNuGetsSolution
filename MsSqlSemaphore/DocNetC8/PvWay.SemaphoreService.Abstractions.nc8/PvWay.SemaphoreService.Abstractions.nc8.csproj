@@ -14,9 +14,9 @@
         <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>semaphore distributed lock mutex</PackageTags>
-        <PackageReleaseNotes>ISemaphoreInfo got Name field</PackageReleaseNotes>
+        <PackageReleaseNotes>new IConnectionStringProvider interface</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
