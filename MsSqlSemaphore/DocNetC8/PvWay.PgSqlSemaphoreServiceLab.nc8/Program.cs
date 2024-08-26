@@ -11,7 +11,7 @@ const string pgSqlCs = "Server=localhost;" +
                        "User Id=postgres;" +
                        "Password=S0mePwd_;";
 
-services.AddPvWayMsSqlSemaphoreService(
+services.AddPvWayPgSqlSemaphoreService(
     "mySchema",
     "mySemaphoreTable",
     async () => await Task.FromResult(pgSqlCs),
@@ -84,7 +84,7 @@ Console.WriteLine();
 var res = await svc.IsolateWorkAsync(
 	resourceName, Environment.MachineName,
 	TimeSpan.FromSeconds(10),
-	() => Task.FromResult("some work was done alone"),
+	() => Task.FromResult("some work was isolated"),
 	Console.WriteLine,
 	5);
 Console.WriteLine(res);

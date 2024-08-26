@@ -20,7 +20,7 @@ public static class PvWayPgSqlSemaphoreService
         return new Services.SemaphoreService(config);
     }
     
-    public static void AddPvWayMsSqlSemaphoreService(
+    public static void AddPvWayPgSqlSemaphoreService(
         this IServiceCollection services,
         string schemaName,
         string tableName,

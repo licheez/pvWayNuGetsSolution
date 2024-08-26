@@ -229,6 +229,27 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
         }
     }
 
+    public async Task IsolateWorkAsync(
+        string semaphoreName, 
+        string owner, 
+        TimeSpan timeout, 
+        Func<Task> workAsync, 
+        Action<string>? notify = null,
+        int sleepBetweenAttemptsInSeconds = 15)
+    {
+        await IsolateWorkAsync(
+            semaphoreName,
+            owner,
+            timeout,
+            async () =>
+            {
+                await workAsync.Invoke();
+                return 0;
+            },
+            notify,
+            sleepBetweenAttemptsInSeconds);
+    }
+
     private async Task<ISemaphoreInfo?> GetSemaphoreAsync(
         NpgsqlConnection cn, string name)
     {
