@@ -109,6 +109,27 @@ public interface ISemaphoreService
         Func<Task<T>> workAsync,
         Action<string>? notify = null,
         int sleepBetweenAttemptsInSeconds = 15);
+    
+    /// <summary>
+    /// this method provides a mutex (semaphore) protected
+    /// work session when a provided work can be performed.
+    /// </summary>
+    /// <param name="semaphoreName">The name of the mutex</param>
+    /// <param name="owner">the owner of the mutex (usually the machineName)</param>
+    /// <param name="timeout">The validity time of the lock</param>
+    /// <param name="workAsync">
+    /// The work to be performed.
+    /// </param>
+    /// <param name="notify">An optional notifier that will be used
+    /// for notifying sleep times</param>
+    /// <param name="sleepBetweenAttemptsInSeconds">
+    /// The number of seconds between two attempts for locking the semaphore</param>
+    Task IsolateWorkAsync(
+        string semaphoreName, string owner,
+        TimeSpan timeout,
+        Func<Task> workAsync,
+        Action<string>? notify = null,
+        int sleepBetweenAttemptsInSeconds = 15);
 }
 ```
 
