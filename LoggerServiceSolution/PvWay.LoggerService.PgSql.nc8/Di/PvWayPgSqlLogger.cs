@@ -3,8 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PvWay.LoggerService.Abstractions.nc8;
 using PvWay.LoggerService.nc8;
+using PvWay.LoggerService.PgSql.nc8.Services;
 
-namespace PvWay.LoggerService.PgSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8.Di;
 
 public static class PvWayPgSqlLogger
 {
@@ -60,6 +61,33 @@ public static class PvWayPgSqlLogger
         services.TryAddSingleton<IPgSqlLogWriter>(_ => logWriter);
         services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
     }
+
+    public static void AddPvWayPgSqlLogWriter(
+        this IServiceCollection services,
+        Func<SqlRoleEnu, Task<string>> getCsAsync,
+        string schemaName,
+        string? tableName = "Log",
+        string? userIdColumnName = "UserId",
+        string? companyIdColumnName = "CompanyId",
+        string? machineNameColumnName = "MachineName",
+        string? severityCodeColumnName = "SeverityCode",
+        string? contextColumnName = "Context",
+        string? topicColumnName = "Topic",
+        string? messageColumnName = "Message",
+        string? createDateUtcColumnName = "CreateDateUtc")
+    {
+        var csp = new PgSqlConnectionStringProvider(getCsAsync);
+        var cfg = new PgSqlLogWriterConfig(
+            schemaName, tableName,
+            userIdColumnName, companyIdColumnName,
+            machineNameColumnName, severityCodeColumnName,
+            contextColumnName, topicColumnName,
+            messageColumnName, createDateUtcColumnName);
+        var logWriter = new PgSqlLogWriter(csp, cfg); 
+        services.TryAddSingleton<IPgSqlLogWriter>(_ => logWriter);
+        services.TryAddSingleton<ISqlLogWriter>(_ => logWriter);
+    }
+
     
     // FACTORY
     public static void AddPvWayPgSqlLoggerServiceFactory(

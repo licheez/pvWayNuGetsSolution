@@ -1,7 +1,7 @@
 using PvWay.LoggerService.Abstractions.nc8;
 using PvWay.LoggerService.nc8;
 
-namespace PvWay.LoggerService.PgSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8.Services;
 
 internal class PgSqlLoggerService(
     ILoggerServiceConfig config,

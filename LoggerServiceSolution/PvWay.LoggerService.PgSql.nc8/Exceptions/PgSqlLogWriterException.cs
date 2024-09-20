@@ -1,4 +1,4 @@
-namespace PvWay.LoggerService.PgSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8.Exceptions;
 
 public sealed class PgSqlLogWriterException: Exception
 {

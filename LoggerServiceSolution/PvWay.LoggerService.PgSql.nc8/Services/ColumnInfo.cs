@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace PvWay.LoggerService.PgSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8.Services;
 
 internal class ColumnInfo
 {

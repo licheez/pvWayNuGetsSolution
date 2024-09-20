@@ -2,11 +2,16 @@
 using System.Text;
 using Npgsql;
 using PvWay.LoggerService.Abstractions.nc8;
+using PvWay.LoggerService.PgSql.nc8.Exceptions;
 
-namespace PvWay.LoggerService.PgSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8.Services;
 
 internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 {
+    private const string SqlVarChar = "character varying";
+    private const string SqlChar = "character";
+    private const string SqlUtcDateTime = "timestamp without time zone";
+    
     private readonly IConnectionStringProvider _csp;
 
     private readonly string _schemaName;
@@ -30,6 +35,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
     private int _contextLength;
 
     private readonly string _messageColumnName;
+    private int _messageLength;
 
     private readonly string _createDateColumnName;
 
@@ -48,8 +54,12 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         _topicColumnName = config.TopicColumnName;
         _messageColumnName = config.MessageColumnName;
         _createDateColumnName = config.CreateDateUtcColumnName;
-
-        CheckTable().Wait();
+        
+        var cs = _csp.GetConnectionStringAsync().Result;
+        using var cn = new NpgsqlConnection(cs);
+        cn.Open();
+        CreateTableIfNotExistsAsync(cn).Wait();
+        CheckTable(cn).Wait();
     }
 
     public void WriteLog(
@@ -198,12 +208,13 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 
         // message
         message = message.Replace("'", "''");
+        message = TruncateThenEscape(message, _messageLength);
         var pMessage = $"'{message}'";
 
         // date
         var pDate = $"'{dateUtc:yyyy-MM-dd HH:mm:ss.sss}'";
 
-        var cmdText = $"INSERT INTO {_schemaName}.\"{_tableName}\" "
+        var cmdText = $"INSERT INTO \"{_schemaName}\".\"{_tableName}\" "
                       + "( "
                       + $" \"{_userIdColumnName}\", "
                       + $" \"{_companyIdColumnName}\", "
@@ -239,7 +250,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         var cutoffUtc = DateTime.UtcNow - keep;
         var pDate = $"'{cutoffUtc:yyyy-MM-dd HH:mm:ss.sss}'";
 
-        var cmdText = $"DELETE FROM {_schemaName}.\"{_tableName}\" " +
+        var cmdText = $"DELETE FROM \"{_schemaName}\".\"{_tableName}\" " +
                       $"WHERE  \"{_severityCodeColumnName}\" = {pSeverityCode} " +
                       $"AND \"{_createDateColumnName}\" < {pDate}";
         return cmdText;
@@ -254,19 +265,15 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         return val.Replace("'", "''");
     }
 
-    private async Task CheckTable()
+    private async Task CheckTable(NpgsqlConnection cn)
     {
-        var cs = await _csp.GetConnectionStringAsync();
-        await using var cn = new NpgsqlConnection(cs);
-        await cn.OpenAsync();
-
         var cmdText = "SELECT \"column_name\", " +
                       "       \"data_type\", " +
                       "       \"is_nullable\", " +
                       "       \"character_maximum_length\" "
                       + "FROM \"information_schema\".\"columns\" "
-                      + $"WHERE \"table_schema\" = '{_schemaName}' " +
-                      $"AND \"table_name\" = '{_tableName}'";
+                      + $"WHERE table_schema = '{_schemaName}' " 
+                      + $"AND table_name = '{_tableName}'";
 
         var cmd = cn.CreateCommand();
         cmd.CommandText = cmdText;
@@ -290,26 +297,21 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         }
         else
         {
-            CheckColumn(errors, dic, _userIdColumnName, "character varying",
+            CheckColumn(errors, dic, _userIdColumnName, SqlVarChar,
                 true, out _userIdLength);
-            CheckColumn(errors, dic, _companyIdColumnName, "character varying",
+            CheckColumn(errors, dic, _companyIdColumnName, SqlVarChar,
                 true, out _companyIdLength);
-            CheckColumn(errors, dic, _severityCodeColumnName, "character",
+            CheckColumn(errors, dic, _severityCodeColumnName, SqlChar,
                 false, out _);
-            CheckColumn(errors, dic, _machineNameColumnName, "character varying",
+            CheckColumn(errors, dic, _machineNameColumnName, SqlVarChar,
                 false, out _machineNameLength);
-            CheckColumn(errors, dic, _topicColumnName, "character varying",
+            CheckColumn(errors, dic, _topicColumnName, SqlVarChar,
                 true, out _topicLength);
-            CheckColumn(errors, dic, _contextColumnName, "character varying",
+            CheckColumn(errors, dic, _contextColumnName, SqlVarChar,
                 false, out _contextLength);
-            CheckColumn(errors, dic, _messageColumnName, "text",
-                false, out var len);
-            if (len != 0)
-            {
-                errors.Add($"column {_messageColumnName} should be text");
-            }
-
-            CheckColumn(errors, dic, _createDateColumnName, "timestamp with time zone",
+            CheckColumn(errors, dic, _messageColumnName, SqlVarChar,
+                false, out _messageLength);
+            CheckColumn(errors, dic, _createDateColumnName, SqlUtcDateTime,
                 false, out _);
         }
 
@@ -328,7 +330,7 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
     }
 
     private static void CheckColumn(
-        ICollection<string> errors,
+        List<string> errors,
         IDictionary<string, ColumnInfo> dic,
         string columnName,
         string? expectedType,
@@ -336,13 +338,11 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
         out int length)
     {
         length = 0;
-        if (!dic.ContainsKey(columnName))
+        if (!dic.TryGetValue(columnName, out var info))
         {
             errors.Add($"{columnName} not found in log table");
             return;
         }
-
-        var info = dic[columnName];
 
         var type = info.Type.ToLower();
         expectedType = expectedType?.ToLower();
@@ -358,6 +358,58 @@ internal sealed class PgSqlLogWriter : IPgSqlLogWriter
 
         var neg = isNullable ? "" : "not ";
         errors.Add($"{columnName} should {neg}be nullable");
+    }
+
+    private async Task CreateTableIfNotExistsAsync(NpgsqlConnection cn)
+    {
+        var existsCommandText =
+            "SELECT 1 FROM information_schema.tables " +
+            $"   WHERE table_schema = '{_schemaName}' " +
+            $"   AND   table_name = '{_tableName}' ";
+
+        await using var existsCmd = cn.CreateCommand();
+        existsCmd.CommandText = existsCommandText;
+        await using var reader = await existsCmd.ExecuteReaderAsync();
+        var tableExists = await reader.ReadAsync();
+        await reader.CloseAsync();
+
+        if (tableExists) return;
+
+        Console.WriteLine("schema or table does not exists yet");
+
+        // need to be db owner for this to work
+        try
+        {
+            Console.WriteLine($"creating schema {_schemaName} if it does not yet exists");
+            var createSchemaText =
+                $"CREATE SCHEMA IF NOT EXISTS \"{_schemaName}\"";
+            await using var schemaCmd = cn.CreateCommand();
+            schemaCmd.CommandText = createSchemaText;
+            await schemaCmd.ExecuteNonQueryAsync();
+
+            Console.WriteLine($"creating table {_tableName}");
+            var createCommandText =
+                $"CREATE TABLE \"{_schemaName}\".\"{_tableName}\" (" +
+
+                $" \"Id\" integer GENERATED BY DEFAULT AS IDENTITY, " +
+                $" \"{_userIdColumnName}\" character varying(50) NULL, " +
+                $" \"{_companyIdColumnName}\" character varying (128) NULL, " +
+                $" \"{_severityCodeColumnName}\" character(1) NOT NULL, " +
+                $" \"{_machineNameColumnName}\" character varying (128) NOT NULL, " +
+                $" \"{_topicColumnName}\" character varying (128) NULL, " +
+                $" \"{_contextColumnName}\" character varying (512) NOT NULL, " +
+                $" \"{_messageColumnName}\" character varying (4096) NOT NULL, " +
+                $" \"{_createDateColumnName}\" timestamp without time zone NOT NULL" +
+                ")";
+            await using var tableCmd = cn.CreateCommand();
+            tableCmd.CommandText = createCommandText;
+            await tableCmd.ExecuteNonQueryAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new PgSqlLogWriterException(e.Message, e);
+        }
     }
 
     public void Dispose()

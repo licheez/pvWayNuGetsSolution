@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using PvWay.LoggerService.Abstractions.nc8;
 
-namespace PvWay.LoggerService.PgSql.nc8;
+namespace PvWay.LoggerService.PgSql.nc8.Services;
 
 public class PgSqlLogWriterConfig(
     string? schemaName = "public",
