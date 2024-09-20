@@ -155,10 +155,11 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
         name = DaoHelper.TruncateThenEscape(name, 50);
         var cs = await _getCsAsync();
         await using var cn = new NpgsqlConnection(cs);
+        await cn.OpenAsync();
+        await CreateTableIfNotExistsAsync(cn);
 
         try
         {
-            await cn.OpenAsync();
             await ReleaseSemaphoreAsync(cn, name);
             LogInfo($"{name} released");
         }
@@ -354,8 +355,8 @@ internal class SemaphoreService(ISemaphoreServiceConfig config) : ISemaphoreServ
                 $" \"{NameField}\" character varying (50) PRIMARY KEY, " +
                 $" \"{OwnerField}\" character varying (128) NOT NULL, " +
                 $" \"{TimeoutInSecondsField}\" integer NOT NULL, " +
-                $" \"{CreateDateUtcField}\" timestamptz NOT NULL, " +
-                $" \"{UpdateDateUtcField}\" timestamptz NOT NULL" +
+                $" \"{CreateDateUtcField}\" timestamp NOT NULL, " +
+                $" \"{UpdateDateUtcField}\" timestamp NOT NULL" +
                 ")";
             await using var tableCmd = cn.CreateCommand();
             tableCmd.CommandText = createCommandText;

@@ -12,7 +12,7 @@ const string pgSqlCs = "Server=localhost;" +
                        "Password=S0mePwd_;";
 
 services.AddPvWayPgSqlSemaphoreService(
-    "mySchema",
+    "semaTest",
     "mySemaphoreTable",
     async () => await Task.FromResult(pgSqlCs),
     Console.WriteLine,
@@ -23,6 +23,10 @@ var sp = services.BuildServiceProvider();
 var svc = sp.GetRequiredService<ISemaphoreService>();
 
 const string resourceName = "SharedResource";
+
+// Release the semaphore
+Console.WriteLine("Program: releasing the semaphore");
+await svc.ReleaseSemaphoreAsync(resourceName);
 
 // Acquire the semaphore
 Console.WriteLine("Program: acquiring the semaphore");
