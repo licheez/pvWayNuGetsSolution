@@ -4,6 +4,31 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>8.0.0</Version>
+        <Authors>Pierre Van Wallendael</Authors>
+        <Copyright>pvWay Ltd</Copyright>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageIcon>pvwayLogoTextLess128.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/EnumConv/nc8/Components/PvWayEnumConvNc8</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/EnumConv/nc8/Components/PvWayEnumConvNc8</RepositoryUrl>
+        <RepositoryType>Github</RepositoryType>
+        <PackageReleaseNotes>Initial</PackageReleaseNotes>
+        <Description>Provides utility static methods for converting between enum values and their associated codes. This class supports operations such as retrieving the primary code for an enum value, finding the enum value corresponding to a given code, and handling descriptions with multiple codes separated by commas.</Description>
+        <PackageTags>Enum Convert</PackageTags>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="readme.md" Pack="true" PackagePath="\"/>
+        <None Update="bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml">
+            <Pack>true</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Update="pvwayLogoTextLess128.png">
+          <Pack>True</Pack>
+          <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 
 </Project>
