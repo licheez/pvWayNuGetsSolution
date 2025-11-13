@@ -7,20 +7,20 @@
     <Description>Provides a generic wrapper that returns whether or not a method succeeded or failed carrying the method result on success or a list of notifications/errors in case of failure</Description>
     <Authors>Pierre Van Wallendael</Authors>
     <Company>pvWay Ltd</Company>
-    <Copyright>pvWay Ltd 2024</Copyright>
+    <Copyright>pvWay Ltd 2025</Copyright>
     <PackageProjectUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</PackageProjectUrl>
     <PackageIcon>pvwayLogoTextLess256.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/licheez/pvWayNuGetsSolution/tree/master/LoggerServiceSolution</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>method result wrapper error flow managment</PackageTags>
-    <PackageReleaseNotes>new documentation</PackageReleaseNotes>
+    <PackageReleaseNotes>Aligned with new abs package</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>3.0.3</Version>
+    <Version>6.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PvWay.LoggerService.Abstractions.nc6" Version="3.0.3" />
+    <PackageReference Include="PvWay.LoggerService.Abstractions.nc6" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
