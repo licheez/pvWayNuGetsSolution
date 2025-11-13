@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.LoggerService.Hybrid.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.LoggerServiceDebug.nc6", "PvWay.LoggerServiceDebug.nc6\PvWay.LoggerServiceDebug.nc6.csproj", "{4CCDD2D4-5402-4B7E-83A8-F3834EC5CB10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvWay.LoggerService.SeriConsole.nc6.it", "PvWay.LoggerService.SeriConsole.nc6.it\PvWay.LoggerService.SeriConsole.nc6.it.csproj", "{2D6B9ED1-BCDE-4719-BF89-25035CF8CF09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{4CCDD2D4-5402-4B7E-83A8-F3834EC5CB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CCDD2D4-5402-4B7E-83A8-F3834EC5CB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CCDD2D4-5402-4B7E-83A8-F3834EC5CB10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D6B9ED1-BCDE-4719-BF89-25035CF8CF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6B9ED1-BCDE-4719-BF89-25035CF8CF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6B9ED1-BCDE-4719-BF89-25035CF8CF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6B9ED1-BCDE-4719-BF89-25035CF8CF09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -243,5 +249,6 @@ Global
 		{29AFA465-4904-4C93-9DBF-C3F485C3393A} = {A775E406-DA1D-45D6-80ED-27D50ACEFCAA}
 		{C46BE56C-F449-4ED2-A153-11BB624E2D48} = {3B333583-BC73-4C16-A705-C78DB159E3FF}
 		{4CCDD2D4-5402-4B7E-83A8-F3834EC5CB10} = {3B333583-BC73-4C16-A705-C78DB159E3FF}
+		{2D6B9ED1-BCDE-4719-BF89-25035CF8CF09} = {3B333583-BC73-4C16-A705-C78DB159E3FF}
 	EndGlobalSection
 EndGlobal

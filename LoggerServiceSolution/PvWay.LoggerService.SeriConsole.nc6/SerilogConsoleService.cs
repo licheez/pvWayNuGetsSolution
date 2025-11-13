@@ -1,28 +1,22 @@
+using Microsoft.Extensions.Options;
 using PvWay.LoggerService.Abstractions.nc6;
-using PvWay.LoggerService.nc6;
 
 namespace PvWay.LoggerService.SeriConsole.nc6;
 
 internal sealed class SerilogConsoleService : 
-    LoggerService.nc6.LoggerService,
+    BaseLoggerService,
     ISeriConsoleLoggerService
 {
     public SerilogConsoleService(
-        ILoggerServiceConfig config,
+        IOptions<PvWayLoggerServiceConfig> options,
         IConsoleLogWriter logWriter) : 
-        base(config,logWriter)
+        base(options.Value.MinLevel,logWriter)
     {
     }
-}
 
-internal sealed class SerilogConsoleService<T> : 
-    LoggerService<T>,
-    ISeriConsoleLoggerService<T>
-{
     public SerilogConsoleService(
-        ILoggerServiceConfig config,
-        IConsoleLogWriter logWriter) : 
-        base(config, logWriter)
+        SeverityEnu minLogLevel,
+        IConsoleLogWriter logWriter) : base(minLogLevel, logWriter)
     {
     }
 }

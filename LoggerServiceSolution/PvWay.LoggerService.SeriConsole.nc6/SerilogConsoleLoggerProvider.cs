@@ -1,24 +1,27 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PvWay.LoggerService.Abstractions.nc6;
 
 namespace PvWay.LoggerService.SeriConsole.nc6;
 
-internal sealed class SerilogConsoleLoggerProvider: ILoggerProvider
+internal sealed class SerilogConsoleLoggerProvider: IConsoleLoggerProvider
 {
     private readonly SeverityEnu _minLogLevel;
 
     public SerilogConsoleLoggerProvider(
-        SeverityEnu minLogLevel = SeverityEnu.Trace)
+        IOptions<PvWayLoggerServiceConfig> options)
     {
-        _minLogLevel = minLogLevel;
+        _minLogLevel = options.Value.MinLevel;
     }
     
-    public void Dispose()
+    void IDisposable.Dispose()
     {
+        // No resources to dispose
     }
 
     public ILogger CreateLogger(string categoryName)
     {
-        return PvWaySerilogConsoleLogger.CreateService(_minLogLevel);
+        var lw = new SerilogConsoleWriter();
+        return new SerilogConsoleService(_minLogLevel, lw);
     }
 }
