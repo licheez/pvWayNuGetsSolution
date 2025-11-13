@@ -152,5 +152,3 @@ public interface ILoggerService : ILogger, IDisposable, IAsyncDisposable
         [CallerLineNumber] int lineNumber = -1);
 
 }
-
-public interface ILoggerService<out T>: ILogger<T>, ILoggerService{}

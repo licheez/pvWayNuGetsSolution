@@ -3,7 +3,7 @@
 using Microsoft.Extensions.Logging;
 using PvWay.LoggerServiceDebug.nc6;
 
-Console.WriteLine("Debugging LoggerService!");
+Console.WriteLine("Debugging BaseLoggerService!");
 
 ILogger logger = new DebugLoggerService();
 
