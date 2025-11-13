@@ -5,6 +5,11 @@ This nuget implements the ILoggerService using a DAO connection towards an **Pos
 
 This implementation is compliant with the concept of dynamic credentials as the connection string is actually provided via an injectable method.
 
+## Note
+
+This new version creates the schema and the table on the fly.
+Make sure to pass a connection string for a user that is allowed to create a schema and a table if you want the auto-create to work properly
+
 ## Severity enum
 
 ``` csharp
@@ -372,8 +377,8 @@ CREATE TABLE IF NOT EXISTS public."AppLog"
     "MachineName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Topic" character varying(50) COLLATE pg_catalog."default",
     "Context" character varying(256) COLLATE pg_catalog."default" NOT NULL,
-    "Message" text COLLATE pg_catalog."default" NOT NULL,
-    "CreateDateUtc" timestamp with time zone NOT NULL,
+    "Message" character varying(4096) COLLATE pg_catalog."default" NOT NULL,
+    "CreateDateUtc" timestamp without time zone NOT NULL,
     CONSTRAINT "ApplicationLog_pkey" PRIMARY KEY ("Id")
 )
 
@@ -463,7 +468,7 @@ If you define this column make sure the database will fill it accordingly by for
 
 * You can provide your own column name for this column
 * The Context column persists method name, filepath and code line number
-* This column should be non nullable
+* This column should be non-nullable
 * This column should be of type *character varying*
 * The logger will truncate any info exceeding the max column length
 
@@ -473,8 +478,9 @@ If you define this column make sure the database will fill it accordingly by for
 
 * You can provide your own column name for this column
 * The Message column persists the message info
-* This column should be non nullable.
-* This column should be of type *text*
+* This column should be non-nullable.
+* This column should be of type *varchar*
+* The logger will truncate any info exceeding the max column length
 
 #### CreateDateUtc
 
@@ -483,5 +489,5 @@ If you define this column make sure the database will fill it accordingly by for
 * You can provide your own column name for this column
 * The Message column persists the UTC date.
 * This column should be non nullable.
-* This column should be of type *timestamp with time zone*
+* This column should be of type *timestamp without time zone*
 
